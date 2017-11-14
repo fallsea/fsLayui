@@ -76,7 +76,13 @@ layui.define('layer', function(exports){
 	  layui.each(fieldElem, function(_, item){
 	      if(!item.name) return;
 	      if(/^checkbox|radio$/.test(item.type) && !item.checked) return;
-	      field[item.name] = item.value;
+	      var value = item.value;
+	      if(item.type == "checkbox"){//如果多选
+	      	if(field[item.name]){
+	      		value = field[item.name] + "," + value;
+	      	}
+	      }
+	      field[item.name] = value;
 	    });
 	  return field;
   };
