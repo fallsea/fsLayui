@@ -40,17 +40,23 @@ layui.config({
 	  layui.each(fieldElem, function(index, item){
 	      if(!item.name) return;
 	      if(/^checkbox|radio$/.test(item.type) && !item.checked) return;
+	      var value = item.value;
+	      if(item.type == "checkbox"){//如果多选
+	      	if(field[item.name]){
+	      		value = field[item.name] + "," + value;
+	      	}
+	      }
 	      if(isValid)
 	      {
 	    	 //如果为true,只需要处理有数据的值
-	    	 if(!_.isEmpty(item.value))
+	    	 if(!_.isEmpty(value))
 	         {
-	    		 data[item.name] = item.value;
+	    		 data[item.name] = value;
 	         }
 	      }
 	      else
 	      {
-	    	  data[item.name] = item.value;
+	    	  data[item.name] = value;
 	      }
 	    });
 	    return data;

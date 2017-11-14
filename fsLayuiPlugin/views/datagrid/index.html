@@ -16,7 +16,7 @@
 	<script type="text/javascript" src="/plugins/layui/layui.js"></script>
 	<script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="/plugins/jquery/lodash.min.js"></script>
-	<script type="text/javascript" src="/plugins/jquery/jquery.formautofill.min.js"></script>
+	<script type="text/javascript" src="/plugins/jquery/jquery.formautofill.js"></script>
 
 	<link rel="stylesheet" href="/plugins/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css"/>
 	<script type="text/javascript" src="/plugins/ztree/js/jquery.ztree.all.min.js"></script>
@@ -38,6 +38,7 @@
         <li class="layui-nav-item layui-nav-itemed">
           <a class="" href="javascript:;">案例</a>
           <dl class="layui-nav-child">
+          	<dd><a href="/index.html">首页</a></dd>
             <dd class="layui-this"><a href="/views/datagrid/index.html">数据表格</a></dd>
              <dd><a href="/views/treeDatagrid/index.html">树+表格</a></dd>
              <dd><a href="/views/multiDatagrid/index.html">多数据表格</a></dd>
@@ -86,7 +87,7 @@
   	 <div class="layui-col-md12">
   	 	<div class="layui-row grid-demo">
 	      <div class="layui-col-md3">
-        	<button class="layui-btn" function="top" topUrl="add.html" topWidth="500px" topHeight="200px" topTitle="新增demo">
+        	<button class="layui-btn" function="top" topUrl="add.html" topWidth="700px" topHeight="500px" topTitle="新增demo">
 			  <i class="layui-icon">&#xe654;</i>新增
 			</button>
 			<button class="layui-btn layui-btn-danger" function="submit" url="/fsbus/1002" isSelect="1" isConfirm="1" confirmMsg="是否确定删除选中的数据？" inputs="id:">
@@ -101,16 +102,41 @@
 
 	         <div class="fsDatagridCols">
 				<p checkbox="true"/>
-			    <p field="id" title="ID" width="200" sort="true"/>
-			    <p field="name" title="名称" width="300" sort="true"/>
+			    <p field="id" title="ID" width="100" sort="true"/>
+			    <p field="name" title="名称" width="200" sort="true"/>
+			    <p field="city" title="城市" width="100" templet="#cityTpl"/>
+			    <p field="sex" title="性别" width="100" />
+			    <p field="state" title="状态" width="100" templet="#stateTpl"/>
 			    <p field="createdTime" title="创建时间" width="180"/>
 			    <p field="modifiedTime" title="修改时间" width="180"/>
 			    <p toolbar="#barDemo" title="操作" width="150"/>
 			</div>
-				<script type="text/html" id="barDemo">
- 				 <a class="layui-btn layui-btn-mini" lay-event="top" topUrl="edit.html" topWidth="500px" topHeight="200px" topTitle="编辑demo" inputs="id:">编辑</a>
+			
+			<script type="text/html" id="cityTpl">
+  				{{# if(d.city == '0'){ }}
+  				     北京
+				{{# } else if(d.city == '1'){ }}
+					上海
+				{{# } else if(d.city == '2'){ }}
+					广州
+ 				{{# } else if(d.city == '3'){ }}
+					深圳
+ 				{{# } else if(d.city == '4'){ }}
+					杭州
+ 				{{#  } }}
+			</script>
+			
+			<script type="text/html" id="stateTpl">
+  				{{# if(d.state == '1'){ }}
+  				        启用
+ 				{{# } else{ }}
+					关闭
+ 				{{#  } }}
+			</script>
+			<script type="text/html" id="barDemo">
+ 				<a class="layui-btn layui-btn-mini" lay-event="top" topUrl="edit.html" topWidth="700px" topHeight="500px" topTitle="编辑demo" inputs="id:">编辑</a>
   				<a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="submit" url="/fsbus/1002" isConfirm="1" confirmMsg="是否确定删除当前记录？" inputs="id:">删除</a>
-				</script>
+			</script>
 	      </div>
 	    </div>
 
