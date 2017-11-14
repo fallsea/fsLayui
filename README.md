@@ -110,48 +110,92 @@ layui.use('form', function(){
 <!DOCTYPE html>
 <html>
 <head>
-	<meta content="text/html;charset=UTF-8"/>
-	<title>fsLayuiPlugin</title>
-	<meta name="keywords" content="fsLayuiPlugin,layui,layuiPlugin,layui插件" />
-    <meta name="description" content="fsLayuiPlugin,layui,layuiPlugin,layui插件" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-	<meta name="apple-mobile-web-app-capable" content="yes"/>
-	<meta name="format-detection" content="telephone=no"/>
-	<meta name="refreshTable" content="0"/>
-	<link rel="stylesheet" type="text/css" href="/plugins/layui/css/layui.css" media="all"/>
-	<link rel="stylesheet" type="text/css" href="/css/fs.css" media="all"/>
-	<script type="text/javascript" src="/plugins/layui/layui.js"></script>
-	<script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
-	<script type="text/javascript" src="/plugins/jquery/lodash.min.js"></script>
-	<script type="text/javascript" src="/plugins/jquery/jquery.formautofill.min.js"></script>
+  <meta content="text/html;charset=UTF-8"/>
+  <title>fsLayuiPlugin</title>
+  <meta name="keywords" content="fsLayuiPlugin,layui,layuiPlugin,layui插件" />
+  <meta name="description" content="fsLayuiPlugin,layui,layuiPlugin,layui插件" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="format-detection" content="telephone=no"/>
+  <meta name="refreshTable" content="0"/>
+  <link rel="stylesheet" type="text/css" href="/plugins/layui/css/layui.css" media="all"/>
+  <link rel="stylesheet" type="text/css" href="/css/fs.css" media="all"/>
+  <script type="text/javascript" src="/plugins/layui/layui.js"></script>
+  <script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/plugins/jquery/lodash.min.js"></script>
+  <script type="text/javascript" src="/plugins/jquery/jquery.formautofill.js"></script>
 
-	<link rel="stylesheet" href="/plugins/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css"/>
-	<script type="text/javascript" src="/plugins/ztree/js/jquery.ztree.all.min.js"></script>
+  <link rel="stylesheet" href="/plugins/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css"/>
+  <script type="text/javascript" src="/plugins/ztree/js/jquery.ztree.all.min.js"></script>
 
-	<script type="text/javascript" src="/plugins/frame/js/fs.js"></script>
-	
-	<script type="text/javascript" src="/plugins/frame/js/frame.js"></script>
+  <script type="text/javascript" src="/plugins/frame/js/fs.js"></script>
+  
+  <script type="text/javascript" src="/plugins/frame/js/frame.js"></script>
 </head>
 <body class="layui-layout-body">
-	<div class="layui-fluid">
-	<form class="layui-form">
-	  <div class="layui-form-item">
-	    <label class="layui-form-label">名称</label>
-	    <div class="layui-input-block">
-	      <input type="text" name="name" required=""  lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input"/>
-	    </div>
-	  </div>
-	  <hr/>
-	  <div class="layui-form-item">
-	    <div class="layui-input-block">
-	      <button class="layui-btn" lay-submit="" lay-filter="save" url="/fsbus/1001">新增</button>
-	      <button type="button" class="layui-btn layui-btn-primary" function="close">关闭</button>
-	    </div>
-	  </div>
-	</form>
-	</div>
+  <div class="layui-fluid">
+  <form class="layui-form">
+    <div class="layui-form-item">
+      <label class="layui-form-label">名称</label>
+      <div class="layui-input-block">
+        <input type="text" name="name" required=""  lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input"/>
+      </div>
+    </div>
+     <div class="layui-form-item">
+      <label class="layui-form-label">城市</label>
+      <div class="layui-input-block">
+        <select name="city" lay-verify="required">
+          <option value=""></option>
+          <option value="0">北京</option>
+          <option value="1">上海</option>
+          <option value="2">广州</option>
+          <option value="3">深圳</option>
+          <option value="4">杭州</option>
+        </select>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">类型</label>
+      <div class="layui-input-block">
+        <input type="checkbox" name="type" title="写作" value="write">
+        <input type="checkbox" name="type" title="阅读" value="read">
+        <input type="checkbox" name="type" title="发呆" value="dai">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">性别</label>
+      <div class="layui-input-inline">
+        <input type="radio" name="sex" value="男" title="男" checked="checked">
+        <input type="radio" name="sex" value="女" title="女">
+      </div>
+       <label class="layui-form-label">状态</label>
+      <div class="layui-input-inline">
+        <input type="checkbox" name="state" lay-skin="switch" lay-text="开启|关闭" value="1" checked>
+      </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+      <label class="layui-form-label">创建时间</label>
+      <div class="layui-input-inline">
+        <input type="text" id="createdTime" name="createdTime" autocomplete="off" class="layui-input fsDate" dateType="datetime" />
+      </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+      <label class="layui-form-label">描述</label>
+      <div class="layui-input-block">
+        <textarea name="description" placeholder="请输入描述" class="layui-textarea"></textarea>
+      </div>
+    </div>
+    <hr/>
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <button class="layui-btn" lay-submit="" lay-filter="save" url="/fsbus/1001">新增</button>
+        <button type="button" class="layui-btn layui-btn-primary" function="close">关闭</button>
+      </div>
+    </div>
+  </form>
+  </div>
 </body>
 </html>
 
