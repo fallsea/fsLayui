@@ -2,7 +2,7 @@
  * @Description: 基础配置
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.0.0
+ * @version 1.0.2
  * @date: 2017年11月11日 下午3:51:35
  */
 layui.define([], function (exports) {

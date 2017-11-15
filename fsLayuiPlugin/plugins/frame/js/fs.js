@@ -2,11 +2,12 @@
  * @Description: 入口
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.0.0
+ * @version 1.0.2
  * @date: 2017年11月12日 上午12:09:00
  */
 layui.config({
-    base : "/plugins/frame/js/"
+    base : "/plugins/frame/js/",
+	version : '1.0.2'
 });
 
 (function($){
@@ -88,8 +89,15 @@ layui.config({
     			var toolbar = _this.attr("toolbar");
     			var col = {};
     			
+    			if(!_.isEmpty(_this.attr("align"))){
+    				col["align"] = _this.attr("align");
+    			}
+    			if(!_.isEmpty(_this.attr("fixed"))){
+    				col["fixed"] = _this.attr("fixed");
+    			}
     			if(_.isEmpty(toolbar)){//普通列
     				
+    				var type = _this.attr("type");
     				var field = _this.attr("field");
         			var title = _this.attr("title");
         			var width = _this.attr("width");
@@ -97,6 +105,9 @@ layui.config({
         			var templet = _this.attr("templet");
         			var checkbox = _this.attr("checkbox");
         			
+        			if(!_.isEmpty(type)){
+        				col["type"] = type;
+        			}
         			
         			if(!_.isEmpty(field)){
         				col["field"] = field;
@@ -117,10 +128,29 @@ layui.config({
         				col["checkbox"] = checkbox;
         			}
         			
+        			if(!_.isEmpty(_this.attr("style"))){
+        				col["style"] = _this.attr("style");
+        			}
+        			
+        			if(!_.isEmpty(_this.attr("colspan"))){
+        				col["colspan"] = _this.attr("colspan");
+        			}
+        			if(!_.isEmpty(_this.attr("rowspan"))){
+        				col["rowspan"] = _this.attr("rowspan");
+        			}
+        			
+        			if(!_.isEmpty(_this.attr("LAY_CHECKED"))){
+        				col["LAY_CHECKED"] = _this.attr("LAY_CHECKED");
+        			}
+        			if(!_.isEmpty(_this.attr("edit"))){
+        				col["edit"] = _this.attr("edit");
+        			}
+        			if(!_.isEmpty(_this.attr("event"))){
+        				col["event"] = _this.attr("event");
+        			}
+        			
     			}else {//工具条
     				col["toolbar"] = toolbar;
-    				col["fixed"] = "right";
-    				col["align"] = "center";
     				
     				var width = _this.attr("width");
     				if(!_.isEmpty(width)){

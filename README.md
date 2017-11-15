@@ -100,7 +100,7 @@ layui.use('form', function(){
 ```
 ## fsLayuiPlugin解决的问题？
 
-> 通过引入**fsLayuiPlugin** js文件，快速开发datagrid增删该查操作。  
+> 通过引入**fsLayuiPlugin** js文件，快速开发datagrid增删改查操作。  
 
 * 数据表格的增删改查
 * 树+数据表格（树基于ztree实现，点击左边树，刷新表格数据）

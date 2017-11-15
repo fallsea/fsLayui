@@ -2,7 +2,7 @@
  * @Description: datagrid工具
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.0.0
+ * @version 1.0.2
  * @date: 2017年11月5日 上午11:26:44
  */
 layui.define(["common","table",'laypage','fsConfig'], function(exports){
@@ -93,6 +93,7 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
             where : formData, //增加条件
             page: isPage == "1",
             method : "post",
+            skin : 'row',
             height: height, //容器高度
             limits: [10,20,30,50,100],//每页数据选择项
             limit: pageSize ,//默认采用50
@@ -138,6 +139,16 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
               this.datagrid.query(param);
           }
       };
+      
+      /**
+       * 查询
+       */
+      FsDatagrid.prototype.reload = function(param){
+        if(!_.isEmpty(this.datagrid)){
+        		var options = {where:param};
+            this.datagrid.reload(options);
+        }
+    };
       
       
       /**

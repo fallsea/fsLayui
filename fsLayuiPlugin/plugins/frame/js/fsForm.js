@@ -2,7 +2,7 @@
  * @Description: form表单工具
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.0.0
+ * @version 1.0.2
  * @date: 2017年11月5日 上午11:30:20
  */
 layui.define(['layer',"common","form",'laydate',"fsConfig"], function(exports){
@@ -49,14 +49,13 @@ layui.define(['layer',"common","form",'laydate',"fsConfig"], function(exports){
 		$(thisForm.config.elem).find("input.fsDate").each(function(){
 			  var options = {};
 			  var _this = $(this);
-			  var id = _this.attr("id");
 			  var dateRange = _this.attr("dateRange");//区间选择，1 是
 			  var dateType = _this.attr("dateType");//控件选择类型
 			  var dateFormat = _this.attr("dateFormat");//自定义格式
 			  var dateMin = _this.attr("dateMin");//最大值
 			  var dateMax = _this.attr("dateMax");//最小值
 			  
-			  options["elem"] = "#"+id; //指定元素;
+			  options["elem"] = this; //指定元素;
 			  if(dateRange=="1"){
 				  options["range"] = true;
 			  }

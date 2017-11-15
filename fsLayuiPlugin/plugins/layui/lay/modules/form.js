@@ -69,24 +69,6 @@ layui.define('layer', function(exports){
     return layui.onevent.call(this, MOD_NAME, events, callback);
   };
   
-  //获取表单内容
-  Form.prototype.getData = function(events){
-	  var fieldElem = events.find('input,select,textarea'); //获取所有表单域
-	  var field ={};
-	  layui.each(fieldElem, function(_, item){
-	      if(!item.name) return;
-	      if(/^checkbox|radio$/.test(item.type) && !item.checked) return;
-	      var value = item.value;
-	      if(item.type == "checkbox"){//如果多选
-	      	if(field[item.name]){
-	      		value = field[item.name] + "," + value;
-	      	}
-	      }
-	      field[item.name] = value;
-	    });
-	  return field;
-  };
-  
   //表单控件渲染
   Form.prototype.render = function(type, filter){
     var that = this
@@ -213,15 +195,14 @@ layui.define('layer', function(exports){
               dl.find('.'+NONE).remove();
             }
           };
+          
           if(isSearch){
             input.on('keyup', search).on('blur', function(e){
               thatInput = input;
-              initValue = dl.find('.'+THIS).html();
+              initValue = dl.find('.' + THIS).html();
               setTimeout(function(){
                 notOption(input.val(), function(none){
-                  if(none && !initValue){
-                    input.val('');
-                  }
+                  initValue || input.val(''); //none && !initValue
                 }, 'blur');
               }, 200);
             });
@@ -428,22 +409,36 @@ layui.define('layer', function(exports){
  
     //开始校验
     layui.each(verifyElem, function(_, item){
-      var othis = $(this), ver = othis.attr('lay-verify').split('|');
-      var tips = '', value = othis.val();
+      var othis = $(this)
+      ,vers = othis.attr('lay-verify').split('|')
+      ,verType = othis.attr('lay-verType') //提示方式
+      ,value = othis.val();
+      
       othis.removeClass(DANGER);
-      layui.each(ver, function(_, thisVer){
-        var isFn = typeof verify[thisVer] === 'function';
-        if(verify[thisVer] && (isFn ? tips = verify[thisVer](value, item) : !verify[thisVer][0].test(value)) ){
-          layer.msg(tips || verify[thisVer][1], {
-            icon: 5
-            ,shift: 6
-          });
-          //非移动设备自动定位焦点
-          if(!device.android && !device.ios){
-            item.focus();
+      layui.each(vers, function(_, thisVer){
+        var isTrue //是否命中校验
+        ,errorText = '' //错误提示文本
+        ,isFn = typeof verify[thisVer] === 'function';
+        
+        //匹配验证规则
+        if(verify[thisVer]){
+          var isTrue = isFn ? errorText = verify[thisVer](value, item) : !verify[thisVer][0].test(value);
+          errorText = errorText || verify[thisVer][1];
+          
+          //如果是必填项或者非空命中校验，则阻止提交，弹出提示
+          if((isTrue && thisVer === 'required') || (isTrue && value)){
+            //提示层风格
+            if(verType === 'tips'){
+              layer.tips(errorText, othis, {tips: 1});
+            } else if(verType === 'alert') {
+              layer.alert(errorText, {title: '提示', shadeClose: true});
+            } else {
+              layer.msg(errorText, {icon: 5, shift: 6});
+            }
+            if(!device.android && !device.ios) item.focus(); //非移动设备自动定位焦点
+            othis.addClass(DANGER);
+            return stop = true;
           }
-          othis.addClass(DANGER);
-          return stop = true;
         }
       });
       if(stop) return stop;
