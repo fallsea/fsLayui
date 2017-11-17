@@ -62,11 +62,6 @@
 				<a href="https://github.com/fallsea/fsLayuiPlugin" target="-bark"><span class="layui-badge layui-bg-black">GitHub下载</span></a>
 				<a href="https://gitee.com/fallsea/fsLayuiPlugin" target="-bark"><span class="layui-badge">开源中国下载</span></a>
 			</blockquote>
-			
-			<div class="layui-upload">
-			  <button type="button" class="layui-btn layui-btn-normal" id="test8">选择文件</button>
-			  <button type="button" class="layui-btn" id="test9">开始上传</button>
-			</div>
 		</div>
 		
 		<div class="layui-col-md12">
@@ -127,25 +122,5 @@
     ©2017 www.fallsea.com
   </div>
 </div>
-
-<script>
-//JavaScript代码区域
-layui.use('upload', function(){
-  var upload = layui.upload;
-  
-//选完文件后不自动上传
-  upload.render({
-    elem: '#test8'
-    ,url: '/upload'
-    ,auto: false
-    //,multiple: true
-    ,bindAction: '#test9'
-    ,done: function(res){
-      console.log(res)
-    }
-  });
-
-});
-</script>
 </body>
 </html>
