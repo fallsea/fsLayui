@@ -25,6 +25,8 @@ layui.define([], function (exports) {
 	fsConfig["global"] = {
 		"servletUrl":"https://fs.fallsea.com", //异步请求地址
 		"loginUrl" : "/login", //登录url
+		"uploadUrl" : "https://fs.fallsea.com/upload", //上传附件url
+		"uploadHtmlUrl" : "/plugins/frame/views/upload.html", //上传附件html地址
 		"result" : { //响应结果配置
 	    "statusName": "errorNo", //数据状态的字段名称，默认：errorNo
 	    "msgName": "errorInfo", //状态信息的字段名称，默认：errorInfo

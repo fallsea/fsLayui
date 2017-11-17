@@ -214,16 +214,16 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 		    			{
 		    				layer.close(index);
 		                      
-		                      var url = _this.attr("url");//请求url
-		                      
-		                      if(_.isEmpty(_funcNo) && _.isEmpty(url)){
-		                          common.warnMsg("功能号或请求地址为空！");
-		                          return;
-		                      }
-		                      
-		                      if(_.isEmpty(url)){
-		                          url = "/fsbus/" + _funcNo;
-		                      }
+                var url = _this.attr("url");//请求url
+                
+                if(_.isEmpty(_funcNo) && _.isEmpty(url)){
+                    common.warnMsg("功能号或请求地址为空！");
+                    return;
+                }
+                
+                if(_.isEmpty(url)){
+                    url = "/fsbus/" + _funcNo;
+                }
 		                      
 		    				//获取参数
 		    				
@@ -240,19 +240,19 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 		    				//请求数据
 		    				common.invoke(url,param,function(data)
     						{
-    				        	if(data[statusName] == "0")
-    				        	{
-    				        		common.successMsg('操作成功!');
-    				        		common.setRefreshTable("1");
-    				        		
-    				        		//刷新
-    				        		getObj(_tableId).refresh();
-    				        	}
-    				        	else
-    				        	{
-    				        		//提示错误消息
-    				        		common.errorMsg(data[msgName]);
-    				        	}
+  				        	if(data[statusName] == "0")
+  				        	{
+  				        		common.successMsg('操作成功!');
+  				        		common.setRefreshTable("1");
+  				        		
+  				        		//刷新
+  				        		getObj(_tableId).refresh();
+  				        	}
+  				        	else
+  				        	{
+  				        		//提示错误消息
+  				        		common.errorMsg(data[msgName]);
+  				        	}
     						});
 		    			});
 		    		}
@@ -341,6 +341,63 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 					});
 		    		
 		    	}
+		    	else if(_function == "upload")
+		    	{
+		    		
+		    		var _title = "上传附件";
+		    		var _width = "400px";
+		    		var _height = "280px";
+		    		var _url = _.result(fsConfig,"global.uploadHtmlUrl","/plugins/frame/views/upload.html");
+		    		
+		    		var inputs = _this.attr("inputs");
+		    		
+		    		if(!_.isEmpty(inputs))
+		    		{
+			    		 _url = common.getUrlByInputs(_url,inputs,null);
+		    		}
+		    		
+		    		var fileParam = {};
+		    		if(!_.isEmpty(_this.attr("fileAccept"))){
+		    			fileParam["fileAccept"] = _this.attr("fileAccept");
+		    		}
+		    		if(!_.isEmpty(_this.attr("fileExts"))){
+		    			fileParam["fileExts"] = _this.attr("fileExts");
+		    		}
+		    		if(!_.isEmpty(_this.attr("fileSize"))){
+		    			fileParam["fileSize"] = _this.attr("fileSize");
+		    		}
+		    		
+		    		if(!_.isEmpty(fileParam)){
+		    			if(_url.indexOf('?') == -1)
+		    			{
+		    				_url +="?";
+		    			}else {
+		    				_url +="&";
+		    			}
+		    			_url += "fileParam="+ escape(JSON.stringify(fileParam));
+		    		}
+		    		
+		    		//打开窗口
+		    		top.layer.open({
+						  type: 2,
+						  title:_title,
+						  area: [_width, _height],
+						  fixed: false, //不固定
+						  scrollbar: false,
+						  maxmin: true,
+						  content: _url,
+						  end: function(){
+						  	
+						  	var uploadFilePath = top.$('meta[name="uploadFilePath"]').attr("content");
+						  	
+						  	if(!_.isEmpty(uploadFilePath)){
+						  		if(!_.isEmpty(_this.attr("fileElem"))){
+						  			$(_this.attr("fileElem")).val(uploadFilePath);
+						  		}
+						  	}
+						  }
+						});
+		    	} 
 			});
         },
         /**获取参数对象**/

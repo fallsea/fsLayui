@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta content="text/html;charset=UTF-8"/>
+	<title>fsLayuiPlugin</title>
+	<meta name="keywords" content="fsLayuiPlugin,layui,layuiPlugin,layui插件" />
+    <meta name="description" content="fsLayuiPlugin,layui,layuiPlugin,layui插件" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+	<meta http-equiv ="Pragma" content = "no-cache"/>
+	<meta http-equiv="Cache-Control" content="no cache" />
+	<meta http-equiv="Expires" content="0" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="format-detection" content="telephone=no"/>
+	<meta name="refreshTable" content="0"/>
+	<link rel="stylesheet" type="text/css" href="/plugins/layui/css/layui.css" media="all"/>
+	<link rel="stylesheet" type="text/css" href="/css/fs.css" media="all"/>
+	<script type="text/javascript" src="/plugins/layui/layui.js"></script>
+	<script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/plugins/jquery/lodash.min.js"></script>
+<!-- 	<script type="text/javascript" src="/plugins/jquery/jquery.formautofill.js"></script> -->
+	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.0.2"></script>
+<!-- 	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.0.2"></script> -->
+	
+</head>
+<body class="layui-layout-body">
+	<div class="layui-fluid">
+	  <div class="layui-form-item">
+	  	<div style="text-align: center;">
+		    <div class="layui-upload-drag" style="width: 320px;">
+			  <i class="layui-icon"></i>
+			  <p id="fileName">点击上传，或将文件拖拽到此处</p>
+			</div>
+	  	</div>
+	  </div>
+	  <hr/>
+	  <div class="layui-form-item">
+	    <div class="layui-input-block">
+	      <button id="upload" class="layui-btn">开始上传</button>
+	      <button type="button" class="layui-btn layui-btn-primary" function="close">关闭</button>
+	    </div>
+	  </div>
+
+	</div>
+</body>
+<script>
+layui.use(['upload','layer','fsConfig','common'], function(){
+  var upload = layui.upload,
+  fsConfig = layui.fsConfig,
+  layer = layui.layer,
+  common = layui.common,
+  isSelectFile = false,//是否选择文件，默认false
+  statusName = _.result(fsConfig,"global.result.statusName","errorNo"),
+  msgName = _.result(fsConfig,"global.result.msgName","errorInfo"),
+  uploadUrl = _.result(fsConfig,"global.uploadUrl",""),
+  dataName = _.result(fsConfig,"global.result.dataName","results.data");
+  
+  top.$('meta[name="uploadFilePath"]').attr("content","");
+  
+  
+  //获取参数
+  var paramUrl = common.getUrlParam();
+  
+  var fileAccept,fileExts,fileSize;
+  
+  //获取业务参数绑定
+  if(!_.isEmpty(paramUrl["fileParam"])){
+  	var fileParam = JSON.parse(unescape(paramUrl["fileParam"]));
+  	fileAccept = fileParam["fileAccept"];
+  	fileExts = fileParam["fileExts"];
+  	fileSize = fileParam["fileSize"];
+  }
+  
+  //绑定默认按钮
+  common.buttionEvent();
+  
+	//选完文件后不自动上传
+  upload.render({
+    elem: '.layui-upload-drag'
+    ,url: uploadUrl
+    ,accept :fileAccept
+    ,exts :fileExts
+    ,size :fileSize
+    ,auto: false
+    ,before: function(){
+    	if(!isSelectFile){
+    		common.warnMsg("请选择文件！");
+    		return;
+    	}
+    	
+    	layer.load(); //上传loading
+    }
+    //,multiple: true
+    ,bindAction: '#upload'
+    ,choose: function(obj){
+    	isSelectFile = true;
+    	obj.preview(function(index, file, result){
+    		$("#fileName").html(file.name);
+    	})
+    }
+    ,done: function(result){
+		layer.closeAll('loading'); //关闭loading
+		
+		if(result[statusName] != "0"){
+			var filters = fsConfig["filters"];
+		   	if(!_.isEmpty(filters)){
+	     	  var otherFunction = filters[result[statusName]];
+	      	  if(_.isFunction(otherFunction)){
+	       	     otherFunction(result);
+	      	      return;
+	     	   }
+		    }
+	   		common.errorMsg(result[msgName]);
+	   		return;
+		}
+		
+		//上传成功后，返回文件路径
+		var data = _.result(result,dataName);
+		
+		top.$('meta[name="uploadFilePath"]').attr("content",data["filePath"]);
+		
+		//关闭
+		var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+		parent.layer.close(index);
+		
+    },
+    error: function(index, upload){
+		layer.closeAll('loading'); //关闭loading
+    }
+  });
+
+});
+</script>
+</html>

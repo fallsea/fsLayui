@@ -38,19 +38,6 @@
 	      <input type="text" name="name" required=""  lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input"/>
 	    </div>
 	  </div>
-	   <div class="layui-form-item">
-	    <label class="layui-form-label">城市</label>
-	    <div class="layui-input-block">
-	      <select name="city" lay-verify="required">
-	        <option value=""></option>
-	        <option value="0">北京</option>
-	        <option value="1">上海</option>
-	        <option value="2">广州</option>
-	        <option value="3">深圳</option>
-	        <option value="4">杭州</option>
-	      </select>
-	    </div>
-	  </div>
 	  <div class="layui-form-item">
 	    <label class="layui-form-label">类型</label>
 	    <div class="layui-input-block">
@@ -70,10 +57,30 @@
 	      <input type="checkbox" name="state" lay-skin="switch" lay-text="开启|关闭" value="1" checked>
 	    </div>
 	  </div>
-	  <div class="layui-form-item layui-form-text">
+	  <div class="layui-form-item">
+	    <label class="layui-form-label">城市</label>
+	    <div class="layui-input-inline">
+	      <select name="city" lay-verify="required">
+	        <option value=""></option>
+	        <option value="0">北京</option>
+	        <option value="1">上海</option>
+	        <option value="2">广州</option>
+	        <option value="3">深圳</option>
+	        <option value="4">杭州</option>
+	      </select>
+	    </div>
 	    <label class="layui-form-label">创建时间</label>
 	    <div class="layui-input-inline">
 	      <input type="text" name="createdTime" autocomplete="off" class="layui-input fsDate" dateType="datetime" />
+	    </div>
+	  </div>
+	  <div class="layui-form-item layui-form-text">
+	    <label class="layui-form-label">附件</label>
+	    <div class="layui-input-inline">
+	      <input type="text" id="filePath" name="filePath" autocomplete="off" disabled="disabled" class="layui-input"/>
+	    </div>
+	    <div class="layui-input-inline">
+			 <button type="button"  class="layui-btn" function="upload" fileElem="#filePath" fileAccept="file" fileExts="" fileSize="1024" inputs="type:test">上传图片</button>
 	    </div>
 	  </div>
 	  <div class="layui-form-item layui-form-text">
