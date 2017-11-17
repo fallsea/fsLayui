@@ -7,7 +7,7 @@
  */
 layui.config({
     base : "/plugins/frame/js/",
-	version : '1.0.2'
+	version : '1.0.3'
 });
 
 (function($){

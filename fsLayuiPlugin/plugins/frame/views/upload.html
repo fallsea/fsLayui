@@ -71,6 +71,7 @@ layui.use(['upload','layer','fsConfig','common'], function(){
   	fileExts = fileParam["fileExts"];
   	fileSize = fileParam["fileSize"];
   }
+  delete paramUrl["fileParam"];
   
   //绑定默认按钮
   common.buttionEvent();
@@ -79,6 +80,7 @@ layui.use(['upload','layer','fsConfig','common'], function(){
   upload.render({
     elem: '.layui-upload-drag'
     ,url: uploadUrl
+    ,data: paramUrl
     ,accept :fileAccept
     ,exts :fileExts
     ,size :fileSize

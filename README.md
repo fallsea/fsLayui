@@ -1,8 +1,8 @@
 # fsLayuiPlugin
 
 > **fsLayuiPlugin** 是一个基于layui的快速开发插件，支持数据表格增删改查操作，提供通用的组件，通过配置html实现数据请求，减少前端js重复开发的工作。  
-> [GitHub下载](https://github.com/fallsea/fsLayuiPlugin) [开源中国下载](https://gitee.com/fallsea/fsLayuiPlugin)  
-> 演示环境 [http://fslayuiplugin.fallsea.com](http://fslayuiplugin.fallsea.com)  
+> [GitHub下载](https://github.com/fallsea/fsLayuiPlugin)   [开源中国下载](https://gitee.com/fallsea/fsLayuiPlugin)  
+> **演示环境** [http://fslayuiplugin.fallsea.com](http://fslayuiplugin.fallsea.com) ***最好先清空缓存***  
 > [版本更新说明](https://github.com/fallsea/fsLayuiPlugin/releases)
 
 ## 操作说明
@@ -13,7 +13,10 @@
 
 [3.fsLayuiPlugin数据表格使用](http://www.itcto.cn/2017/11/12/layui/fsLayuiPlugin%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E4%BD%BF%E7%94%A8/)  
 
-[4.fsLayuiPlugin数据表格弹出form表单说明](http://www.itcto.cn/2017/11/12/layui/fsLayuiPlugin%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E5%BC%B9%E5%87%BAform%E8%A1%A8%E5%8D%95%E8%AF%B4%E6%98%8E/)  
+[4.fsLayuiPlugin数据表格弹出form表单使用说明](http://www.itcto.cn/2017/11/12/layui/fsLayuiPlugin%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E5%BC%B9%E5%87%BAform%E8%A1%A8%E5%8D%95%E8%AF%B4%E6%98%8E/)  
+
+[5.fsLayuiPlugin文件上传使用说明](http://www.itcto.cn/2017/11/17/layui/fsLayuiPlugin%E9%99%84%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/)  
+
 
 ## 为什么要使用fsLayuiPlugin？
 
@@ -90,7 +93,7 @@
 ```javascript
 layui.use('form', function(){
   var form = layui.form;
-  
+
   //监听提交
   form.on('submit(formDemo)', function(data){
     layer.msg(JSON.stringify(data.field));
@@ -132,7 +135,7 @@ layui.use('form', function(){
   <script type="text/javascript" src="/plugins/ztree/js/jquery.ztree.all.min.js"></script>
 
   <script type="text/javascript" src="/plugins/frame/js/fs.js"></script>
-  
+
   <script type="text/javascript" src="/plugins/frame/js/frame.js"></script>
 </head>
 <body class="layui-layout-body">
@@ -206,9 +209,8 @@ layui.use('form', function(){
 
 ![](fsLayuiPlugin/images/datagrid.png)
 
+![](fsLayuiPlugin/images/add.png)
+
 ![](fsLayuiPlugin/images/treeDatagrid.png)
 
 ![](fsLayuiPlugin/images/multiDatagrid.png)
-
-
-
