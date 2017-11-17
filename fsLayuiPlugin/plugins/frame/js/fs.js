@@ -2,12 +2,12 @@
  * @Description: 入口
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.0.2
+ * @version 1.0.4
  * @date: 2017年11月12日 上午12:09:00
  */
 layui.config({
     base : "/plugins/frame/js/",
-	version : '1.0.3'
+	version : '1.0.4'
 });
 
 (function($){

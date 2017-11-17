@@ -2,7 +2,7 @@
  * @Description: 通用组件
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.0.2
+ * @version 1.0.4
  * @date: 2017年11月12日 上午12:08:17
  */
 layui.define(['layer','form','fsConfig'], function (exports) {
