@@ -1,6 +1,7 @@
 # fsLayuiPlugin
 
 > **fsLayuiPlugin** 是一个基于layui的快速开发插件，支持数据表格增删改查操作，提供通用的组件，通过配置html实现数据请求，减少前端js重复开发的工作。  
+qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k=5uImi0a)  
 > [GitHub下载](https://github.com/fallsea/fsLayuiPlugin)   [开源中国下载](https://gitee.com/fallsea/fsLayuiPlugin)  
 > **演示环境** [http://fslayuiplugin.fallsea.com](http://fslayuiplugin.fallsea.com) ***最好先清空缓存***  
 > [版本更新说明](https://github.com/fallsea/fsLayuiPlugin/releases)
