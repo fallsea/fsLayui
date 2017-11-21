@@ -31,57 +31,65 @@
 <body class="layui-layout-body">
 	<div class="layui-fluid">
 
-	<form class="layui-form" isLoad="1" loadUrl="/fsbus/S1004">
-  <input type="text" style="display: none;" name="menuId"/>
+	<form class="layui-form">
+	  <div class="layui-form-item">
+    <label class="layui-form-label">功能号：</label>
+    <div class="layui-input-inline">
+      <input type="text" name="funcNo" required=""  lay-verify="required" placeholder="请输入功能号" autocomplete="off" class="layui-input"/>
+    </div>
+    <label class="layui-form-label">名称：</label>
+    <div class="layui-input-inline">
+      <input type="text" name="funcName" required=""  lay-verify="required" placeholder="请输入功能号名称" autocomplete="off" class="layui-input"/>
+    </div>
+  </div>
   <div class="layui-form-item">
-    <label class="layui-form-label">中文名称：</label>
+    <label class="layui-form-label">类型</label>
+    <div class="layui-input-inline">
+      <select name="funcType" lay-verify="required">
+        <option value="">--请选择--</option>
+        <option value="c">功能号实现类</option>
+        <option value="s">service实现类</option>
+        <option value="m">mapper实现类</option>
+      </select>
+    </div>
+    <label class="layui-form-label">分类</label>
+    <div class="layui-input-inline">
+      <select name="type" lay-verify="required">
+        <option value="">--请选择--</option>
+        <option value="plat">后台系统</option>
+      </select>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">资源内容：</label>
     <div class="layui-input-block">
-      <input type="text" name="menuName" required=""  lay-verify="required" placeholder="请输入菜单中文名称" autocomplete="off" class="layui-input"/>
+      <input type="text" name="resource" required="" lay-verify="required" placeholder="请输入资源内容" autocomplete="off" class="layui-input"/>
     </div>
   </div>
   <div class="layui-form-item">
-    <label class="layui-form-label">访问地址：</label>
-    <div class="layui-input-block">
-      <input type="text" name="linkUrl" required=""  lay-verify="" placeholder="请输入访问地址" autocomplete="off" class="layui-input"/>
+  	<label class="layui-form-label">版本号：</label>
+    <div class="layui-input-inline">
+      <input type="text" name="version" placeholder="默认1.0" autocomplete="off" class="layui-input"/>
+    </div>
+    <label class="layui-form-label">状态</label>
+    <div class="layui-input-inline">
+      <input type="checkbox" name="state" lay-skin="switch" lay-text="启用|关闭" checked="" value="1"/>
     </div>
   </div>
   <div class="layui-form-item">
-    <label class="layui-form-label">父菜单：</label>
-    <div class="layui-input-inline">
-     <input type="text" name="parentId" required=""  placeholder="" autocomplete="off" class="layui-input" disabled=""/>
-    </div>
-    <label class="layui-form-label">图标：</label>
-    <div class="layui-input-inline">
-    	 <input type="text" name="logoUrl" required=""  placeholder="" autocomplete="off" class="layui-input"/>
-    </div>
-  </div>
-  <div class="layui-form-item">
-  </div>
-  <div class="layui-form-item">
-    <label class="layui-form-label">状态：</label>
-    <div class="layui-input-inline">
-      <input type="radio" name="state" value="1" title="有效" checked=""/>
-      <input type="radio" name="state" value="0" title="无效"/>
-    </div>
-    <label class="layui-form-label">排序值：</label>
-    <div class="layui-input-inline">
-       <input type="text" name="orderline" required="" lay-verify="number"  placeholder="" autocomplete="off" class="layui-input"/>
-    </div>
-  </div>
-  <div class="layui-form-item layui-form-text">
     <label class="layui-form-label">描述：</label>
     <div class="layui-input-block">
       <textarea name="description" placeholder="请输入描述" class="layui-textarea"></textarea>
     </div>
   </div>
   <hr/>
-  <div class="layui-form-item">
-    <div class="layui-input-block">
-      <button class="layui-btn" lay-submit="" lay-filter="submit" url="/fsbus/S1006">编辑</button>
-      <button type="button" class="layui-btn layui-btn-primary" function="close">关闭</button>
-    </div>
-  </div>
-</form>
+	  <div class="layui-form-item">
+	    <div class="layui-input-block">
+	      <button class="layui-btn" lay-submit="" lay-filter="save" url="/fsbus/S1024">新增</button>
+	      <button type="button" class="layui-btn layui-btn-primary" function="close">关闭</button>
+	    </div>
+	  </div>
+	</form>
 
 	</div>
 </body>

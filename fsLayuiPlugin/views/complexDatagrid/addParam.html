@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta content="text/html;charset=UTF-8"/>
+	<title>fsLayuiPlugin</title>
+	<meta name="keywords" content="fsLayuiPlugin,layui,layuiPlugin,layui插件" />
+    <meta name="description" content="fsLayuiPlugin,layui,layuiPlugin,layui插件" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+	<meta http-equiv ="Pragma" content = "no-cache"/>
+	<meta http-equiv="Cache-Control" content="no cache" />
+	<meta http-equiv="Expires" content="0" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="format-detection" content="telephone=no"/>
+	<meta name="refreshTable" content="0"/>
+	<link rel="stylesheet" type="text/css" href="/plugins/layui/css/layui.css" media="all"/>
+	<link rel="stylesheet" type="text/css" href="/css/fs.css" media="all"/>
+	<script type="text/javascript" src="/plugins/layui/layui.js"></script>
+	<script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/plugins/jquery/lodash.min.js"></script>
+	<script type="text/javascript" src="/plugins/jquery/jquery.formautofill.js"></script>
+
+	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.0.5"></script>
+	
+	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.0.5"></script>
+</head>
+<body>
+
+<div class="layui-fluid">  
+  	 
+<form class="layui-form" isLoad="0" loadFuncNo="">
+	<input type="hidden" name="funcId" autocomplete="off" class="layui-input"/>
+  <div class="layui-form-item">
+    <label class="layui-form-label">属性：</label>
+    <div class="layui-input-inline">
+      <input type="text" name="attribute" required=""  lay-verify="required" placeholder="请输入属性" autocomplete="off" class="layui-input"/>
+    </div>
+    <label class="layui-form-label">名称：</label>
+    <div class="layui-input-inline">
+      <input type="text" name="name" required=""  lay-verify="required" placeholder="请输入参数名称" autocomplete="off" class="layui-input"/>
+    </div>
+  </div>
+  
+  <div class="layui-form-item">
+  	<label class="layui-form-label">验证类型</label>
+    <div class="layui-input-inline">
+      <select name="verifyType">
+        <option value="">--请选择--</option>
+        <option value="Numeric">数字</option>
+        <option value="AlphaNumeric">字母数字</option>
+        <option value="Email">邮箱</option>
+        <option value="Mobile">手机</option>
+        <option value="NumberFloat">浮点数</option>
+        <option value="Date">日期</option>
+        <option value="DateTime">日期时间</option>
+        <option value="Time">时间</option>
+        <option value="PostalCode">邮编</option>
+        <option value="CardID">身份证</option>
+        <option value="BankCode">银行卡号</option>
+        <option value="URL">url地址</option>
+      </select>
+    </div>
+    <label class="layui-form-label">必输：</label>
+    <div class="layui-input-inline">
+      <input type="checkbox" name="notEmpty" lay-skin="switch" lay-text="是|否" value="1"/>
+    </div>
+  </div>
+  
+  <div class="layui-form-item">
+    <label class="layui-form-label">最小长度：</label>
+    <div class="layui-input-inline">
+      <input type="text" name="minLength" required=""  lay-verify="" placeholder="请输入最小长度" autocomplete="off" class="layui-input"/>
+    </div>
+    <label class="layui-form-label">最大长度：</label>
+    <div class="layui-input-inline">
+      <input type="text" name="maxLength" required=""  lay-verify="" placeholder="请输入最大长度" autocomplete="off" class="layui-input"/>
+    </div>
+  </div>
+  
+  <div class="layui-form-item">
+    <label class="layui-form-label">值：</label>
+    <div class="layui-input-inline">
+      <input type="text" name="value" required=""  lay-verify="" placeholder="请输入最小长度" autocomplete="off" class="layui-input"/>
+    </div>
+    <label class="layui-form-label">默认值：</label>
+    <div class="layui-input-inline">
+      <input type="text" name="defaultValue" required=""  lay-verify="" placeholder="请输入最大长度" autocomplete="off" class="layui-input"/>
+    </div>
+  </div>
+  
+  <div class="layui-form-item">
+    <label class="layui-form-label">描述：</label>
+    <div class="layui-input-block">
+      <textarea name="description" placeholder="请输入描述" class="layui-textarea"></textarea>
+    </div>
+  </div>
+  <hr/>
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" lay-submit="" lay-filter="submit" url="/fsbus/S1031">新增</button>
+      <button type="button" class="layui-btn layui-btn-primary" function="close">关闭</button>
+    </div>
+  </div>
+</form>
+
+</div>
+</body>
+</html>

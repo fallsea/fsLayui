@@ -423,6 +423,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
         type: options.method || 'get'
         ,url: options.url
         ,data: $.extend(params, options.where)
+        ,timeout : 30000 
         ,dataType: 'json'
         ,success: function(res){
           if(_.result(res,response.statusName) != response.statusCode){
@@ -805,8 +806,13 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
       that.elem.css('height', height);
     }
 
+    //解决tab隐藏获取不到表头高度问题
+    var layHeaderHeight = that.layHeader.height();
+    if(layHeaderHeight<38){
+    	layHeaderHeight = 38;
+    }
     //tbody区域高度
-    bodyHeight = parseFloat(height) - parseFloat(that.layHeader.height()) - 1;  
+    bodyHeight = parseFloat(height) - parseFloat(layHeaderHeight) - 1;  
     if(options.toolbar){
       bodyHeight = bodyHeight - that.layTool.outerHeight();
     }

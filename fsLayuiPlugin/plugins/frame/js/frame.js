@@ -2,13 +2,14 @@
  * @Description: 通用框架
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.0.4
+ * @version 1.0.5
  * @date: 2017年11月5日 下午12:45:13
  */
-layui.use(['fsForm','fsDatagrid','fsTree','common'], function(){
+layui.use(['fsForm','fsDatagrid','fsTree','common','element'], function(){
 	var fsForm = layui.fsForm,
 	fsDatagrid = layui.fsDatagrid,
 	fsTree = layui.fsTree,
+	element = layui.element;
 	common = layui.common;
 	
 	

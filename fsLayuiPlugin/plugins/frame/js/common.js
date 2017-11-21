@@ -2,7 +2,7 @@
  * @Description: 通用组件
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.0.4
+ * @version 1.0.5
  * @date: 2017年11月12日 上午12:08:17
  */
 layui.define(['layer','form','fsConfig'], function (exports) {
@@ -269,7 +269,7 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 		    		var obj = getObj(_tableId);
 		    		if(!_.isEmpty(obj)){
 //		    			obj.query($(this).parentsUntil('form').getFormData(true));
-		    			var formData = $(this).parentsUntil('form').getFormData(true);
+		    			var formData = $(this).parentsUntil('form').parent().getFormData();
 		    			obj.reload(formData);
 		    		}
 		    	}

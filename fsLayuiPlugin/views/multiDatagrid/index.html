@@ -24,9 +24,9 @@
 	<link rel="stylesheet" href="/plugins/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css"/>
 	<script type="text/javascript" src="/plugins/ztree/js/jquery.ztree.all.min.js"></script>
 
-	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.0.4"></script>
+	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.0.5"></script>
 	
-	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.0.4"></script>
+	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.0.5"></script>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -45,6 +45,8 @@
             <dd><a href="/views/datagrid/index.html">数据表格</a></dd>
              <dd><a href="/views/treeDatagrid/index.html">树+表格</a></dd>
             <dd class="layui-this"><a href="/views/multiDatagrid/index.html">多数据表格</a></dd>
+             <dd><a href="/views/tabDatagrid/index.html">tab数据表格</a></dd>
+            <dd><a href="/views/complexDatagrid/index.html">复杂数据表格</a></dd>
           </dl>
         </li>
       </ul>
@@ -73,12 +75,6 @@
 							<input type="text" name="name" autocomplete="off" class="layui-input"/>
 						</div>
 					</div>
-					<!-- <div class="layui-inline">
-						<label class="layui-form-mid">时间：</label>
-						<div class="layui-input-inline" style="">
-							<input type="text" id="createDate" name="createDate" autocomplete="off" class="layui-input fsDate" dateRange="1" placeholder=" - "/>
-						</div>
-					</div> -->
 					<div class="layui-inline">
 						<div class="layui-input-inline">
 							<button class="layui-btn" type="button" function="query"><i class="layui-icon">&#xe615;</i>查询</button>
@@ -122,10 +118,7 @@
 	
 	  	 </div>
   	</div>
-  
   </div>
-  
-  
   <div class="layui-col-md6">
   	<div class="layui-row">
   		<div class="layui-col-md12">
@@ -144,19 +137,12 @@
 							<input type="text" name="name" autocomplete="off" class="layui-input"/>
 						</div>
 					</div>
-					<!-- <div class="layui-inline">
-						<label class="layui-form-mid">时间：</label>
-						<div class="layui-input-inline" style="">
-							<input type="text" id="createDate" name="createDate" autocomplete="off" class="layui-input fsDate" dateRange="1" placeholder=" - "/>
-						</div>
-					</div> -->
 					<div class="layui-inline">
 						<div class="layui-input-inline">
 							<button class="layui-btn" type="button" function="query" tableId="fsDatagrid2"><i class="layui-icon">&#xe615;</i>查询</button>
 						</div>
 					</div>
 				</div>
-			
 			</form>
 			</div>
 		</div>
@@ -190,10 +176,8 @@
 				</script>
 		      </div>
 		    </div>
-	
 	  	 </div>
   	</div>
-  
   </div>
   
   	 

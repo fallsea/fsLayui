@@ -14,6 +14,7 @@
 	<meta name="apple-mobile-web-app-capable" content="yes"/>
 	<meta name="format-detection" content="telephone=no"/>
 	<meta name="refreshTable" content="0"/>
+	<meta name="uploadFilePath" content=""/>
 	<link rel="stylesheet" type="text/css" href="/plugins/layui/css/layui.css" media="all"/>
 	<link rel="stylesheet" type="text/css" href="/css/fs.css" media="all"/>
 	<script type="text/javascript" src="/plugins/layui/layui.js"></script>
@@ -24,7 +25,7 @@
 	<link rel="stylesheet" href="/plugins/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css"/>
 	<script type="text/javascript" src="/plugins/ztree/js/jquery.ztree.all.min.js"></script>
 
-	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.0.4"></script>
+	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.0.5"></script>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -42,6 +43,8 @@
             <dd><a href="/views/datagrid/index.html">数据表格</a></dd>
             <dd><a href="/views/treeDatagrid/index.html">树+表格</a></dd>
             <dd><a href="/views/multiDatagrid/index.html">多数据表格</a></dd>
+            <dd><a href="/views/tabDatagrid/index.html">tab数据表格</a></dd>
+            <dd><a href="/views/complexDatagrid/index.html">复杂数据表格</a></dd>
           </dl>
         </li>
       </ul>
@@ -58,7 +61,7 @@
 				<span style="color: #FF5722;">fsLayuiPlugin</span>是一个基于layui的快速开发插件，支持数据表格增删改查操作，提供通用的组件，通过配置html实现数据请求，减少前端js重复开发的工作。
 			</blockquote>
 			<blockquote class="layui-elem-quote layui-quote-nm">
-				<p>感兴趣的可以关注一下，最好先清理缓存在访问。</p>
+				<p>感兴趣的可以关注一下，最好先清理缓存在访问。<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=ec423b1a69e63af26c66e3756dbeaefd0f7d1ef793d4d8321ec9ef7cf74008f8"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="fsLayuiPlugin交流" title="fsLayuiPlugin交流"></a></p>
 				<a href="https://github.com/fallsea/fsLayuiPlugin" target="-bark"><span class="layui-badge layui-bg-black">GitHub下载</span></a>
 				<a href="https://gitee.com/fallsea/fsLayuiPlugin" target="-bark"><span class="layui-badge">开源中国下载</span></a>
 			</blockquote>
@@ -69,6 +72,20 @@
 				版本更新记录
 			</blockquote>
 			<ul class="layui-timeline">
+			  <li class="layui-timeline-item">
+		        <i class="layui-icon layui-timeline-axis"></i>
+		        <div class="layui-timeline-content layui-text">
+		          <div class="layui-timeline-title">
+		            <h2>1.0.5</h2>
+		            <span class="layui-badge-rim">2017-11-21</span>
+		          </div>
+		          <ul>
+		            <li>优化datagird获取查询条件问题</li>
+		            <li>新增tab数据表格案例</li>
+		            <li>新增复杂数据表格案例</li>
+		          </ul>
+		        </div>
+		      </li>
 			  <li class="layui-timeline-item">
 		        <i class="layui-icon layui-timeline-axis"></i>
 		        <div class="layui-timeline-content layui-text">

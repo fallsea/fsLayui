@@ -43,11 +43,11 @@
           <a class="" href="javascript:;">案例</a>
           <dl class="layui-nav-child">
           	<dd><a href="/index.html">首页</a></dd>
-            <dd class="layui-this"><a href="/views/datagrid/index.html">数据表格</a></dd>
+            <dd><a href="/views/datagrid/index.html">数据表格</a></dd>
              <dd><a href="/views/treeDatagrid/index.html">树+表格</a></dd>
              <dd><a href="/views/multiDatagrid/index.html">多数据表格</a></dd>
               <dd><a href="/views/tabDatagrid/index.html">tab数据表格</a></dd>
-             <dd><a href="/views/complexDatagrid/index.html">复杂数据表格</a></dd>
+              <dd class="layui-this"><a href="/views/complexDatagrid/index.html">复杂数据表格</a></dd>
           </dl>
         </li>
       </ul>
@@ -62,21 +62,26 @@
 <form class="layui-form" id="query_form">
 	<div class="layui-form-item">
 		<div class="layui-inline">
-			<label class="layui-form-mid">id：</label>
+			<label class="layui-form-mid">功能号：</label>
 			<div class="layui-input-inline" style="width: 100px;">
-				<input type="tel" name="id" autocomplete="off" class="layui-input"/>
+				<input type="text" name="funcNo" autocomplete="off" class="layui-input"/>
 			</div>
 		</div>
 		<div class="layui-inline">
 			<label class="layui-form-mid">名称：</label>
-			<div class="layui-input-inline" style="width: 100px;">
-				<input type="text" name="name" autocomplete="off" class="layui-input"/>
+			<div class="layui-input-inline" style="width: 150px;">
+				<input type="text" name="funcName" autocomplete="off" class="layui-input"/>
 			</div>
 		</div>
 		<div class="layui-inline">
-			<label class="layui-form-mid">时间：</label>
-			<div class="layui-input-inline" style="">
-				<input type="text" name="createDate" autocomplete="off" class="layui-input fsDate" dateRange="1" placeholder=" - "/>
+			<label class="layui-form-mid">类型：</label>
+			<div class="layui-input-inline" style="width: 150px;">
+				<select name="funcType" lay-verify="required">
+			        <option value="">--请选择--</option>
+			        <option value="c">功能号实现类</option>
+			        <option value="s">service实现类</option>
+			        <option value="m">mapper实现类</option>
+			      </select>
 			</div>
 		</div>
 		<div class="layui-inline">
@@ -85,61 +90,59 @@
 			</div>
 		</div>
 	</div>
-
-
 </form>
 </div>
   	 </div>
   	 <div class="layui-col-md12">
   	 	<div class="layui-row grid-demo">
 	      <div class="layui-col-md3">
-        	<button class="layui-btn" function="top" topUrl="add.html" topWidth="700px" topHeight="500px" topTitle="新增demo">
+        	<button class="layui-btn" function="top" topUrl="add.html" topWidth="700px" topHeight="450px" topTitle="新增功能号信息">
 			  <i class="layui-icon">&#xe654;</i>新增
 			</button>
-			<button class="layui-btn layui-btn-danger" function="submit" url="/fsbus/1002" isSelect="1" isConfirm="1" confirmMsg="是否确定删除选中的数据？" inputs="id:">
-			  <i class="layui-icon">&#xe640;</i>删除
+			<button class="layui-btn" function="top" topUrl="edit.html" topWidth="700px" topHeight="450px" isSelect="1" topTitle="编辑功能号信息" inputs="id:">
+			  <i class="layui-icon">&#xe642;</i>编辑
 			</button>
 			<button class="layui-btn" function="refresh">
 			  <i class="layui-icon">&#x1002;</i>刷新
 			</button>
 	      </div>
 	      <div class="layui-col-md12">
-	         <table id="fsDatagrid" lay-filter="fsDatagrid" class="fsDatagrid" url="/fsbus/1000" isPage="1" defaultForm="query_form" height="full-235"></table>
+	         <table id="fsDatagrid" lay-filter="fsDatagrid" class="fsDatagrid" url="/fsbus/S1023" isPage="1" defaultForm="query_form" height="full-235"></table>
 
-	         <div class="fsDatagridCols">
-	         	<p type="numbers" title="#"/>
+			<div class="fsDatagridCols">
+				<p type="numbers" title="#"/>
 				<p checkbox="true"/>
-			    <p field="id" title="ID" width="100" sort="true"/>
-			    <p field="name" title="名称" width="30%"sort="true" />
-			    <p field="city" title="城市" width="100" templet="#cityTpl"/>
-			    <p field="sex" title="性别" width="100" />
+			    <p field="funcNo" title="功能号" width="100" sort="true"/>
+			    <p field="funcName" title="名称" width="200"/>
+			    <p field="funcType" title="类型" width="150" templet="#typeTpl"/>
 			    <p field="state" title="状态" width="100" templet="#stateTpl"/>
+			    <p field="resource" title="资源信息" width="300"/>
 			    <p field="createdTime" title="创建时间" width="180"/>
-			    <p field="modifiedTime" title="修改时间" width="180"/>
 			    <p fixed="right" align="center" toolbar="#barDemo" title="操作" width="150"/>
 			</div>
-			
-			<script type="text/html" id="cityTpl">
-  				{{# if(d.city == '0'){ }}
-  				     北京
-				{{# } else if(d.city == '1'){ }}
-					上海
-				{{# } else if(d.city == '2'){ }}
-					广州
- 				{{# } else if(d.city == '3'){ }}
-					深圳
- 				{{# } else if(d.city == '4'){ }}
-					杭州
- 				{{#  } }}
-			</script>
-			
-			<script type="text/html" id="stateTpl">
-				<input type="checkbox" name="state" lay-skin="switch" disabled lay-text="开启|关闭" {{ d.state == 1 ? 'checked' : '' }}>
-			</script>
-			<script type="text/html" id="barDemo">
- 				<a class="layui-btn layui-btn-xs" lay-event="top" topUrl="edit.html" topWidth="700px" topHeight="500px" topTitle="编辑demo" inputs="id:">编辑</a>
-  				<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="submit" url="/fsbus/1002" isConfirm="1" confirmMsg="是否确定删除当前记录？" inputs="id:">删除</a>
-			</script>
+		
+		<script type="text/html" id="typeTpl">
+  			{{#  if(d.funcType == 'c'){ }}
+  			      功能号实现类
+			{{# } else if(d.funcType == 's'){ }}
+				service实现类
+			{{# } else if(d.funcType == 'm'){ }}
+				mapper实现类
+ 			{{#  } }}
+		</script>
+		<script type="text/html" id="stateTpl">
+  			{{#  if(d.state == 0){ }}
+  			    <span style="color: #c2c2c2">关闭</span>
+			{{# } else if(d.state == 1){ }}
+				<span style="color: #5FB878">启用</span>
+			{{# } else if(d.state == 2){ }}
+				<span style="color: #FF5722;">作废</span>
+ 			{{#  } }}
+		</script>
+		
+		<script type="text/html" id="barDemo">
+ 		 <a class="layui-btn layui-btn-xs" lay-event="top" topUrl="paramIndex.html" topWidth="800px" topHeight="460px" isMaxWindow="" topTitle="入参管理" inputs="funcId:$id">入参管理</a>
+		</script>
 	      </div>
 	    </div>
 

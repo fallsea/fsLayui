@@ -17,4 +17,6 @@ fieldset { min-width: 100px; }
 
 .layui-form-query{padding:10px 15px 0px 15px}
 
+.fsDatagrid{display: none;}
+
 .fsDatagridCols{display: none;}

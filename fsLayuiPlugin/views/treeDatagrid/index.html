@@ -24,9 +24,9 @@
 	<link rel="stylesheet" href="/plugins/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css"/>
 	<script type="text/javascript" src="/plugins/ztree/js/jquery.ztree.all.min.js"></script>
 
-	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.0.4"></script>
+	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.0.5"></script>
 	
-	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.0.4"></script>
+	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.0.5"></script>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -45,6 +45,8 @@
             <dd><a href="/views/datagrid/index.html">数据表格</a></dd>
             <dd class="layui-this"><a href="/views/treeDatagrid/index.html">树+表格</a></dd>
              <dd><a href="/views/multiDatagrid/index.html">多数据表格</a></dd>
+              <dd><a href="/views/tabDatagrid/index.html">tab数据表格</a></dd>
+             <dd><a href="/views/complexDatagrid/index.html">复杂数据表格</a></dd>
           </dl>
         </li>
       </ul>
@@ -108,6 +110,7 @@
 					</table>
 					
 					<div class="fsDatagridCols">
+						<p type="numbers" title="#"/>
 						<p checkbox="true"/>
 					    <p field="name" title="名称" width="200" sort="true"/>
 					    <p field="linkUrl" title="访问地址" width="300"/>
