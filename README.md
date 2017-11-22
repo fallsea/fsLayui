@@ -8,15 +8,15 @@ qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k
 
 ## 操作说明
 
-[1.fsLayuiPlugin介绍](http://www.itcto.cn/2017/11/11/layui/fsLayuiPlugin%E4%BB%8B%E7%BB%8D/)  
+[1.fsLayuiPlugin介绍](http://www.itcto.cn/layui/fsLayuiPlugin%E4%BB%8B%E7%BB%8D/)  
 
-[2.fsLayuiPlugin配置说明](http://www.itcto.cn/2017/11/12/layui/fsLayuiPlugin%E9%85%8D%E7%BD%AE%E8%AF%B4%E6%98%8E/)  
+[2.fsLayuiPlugin配置说明](http://www.itcto.cn/layui/fsLayuiPlugin%E9%85%8D%E7%BD%AE%E8%AF%B4%E6%98%8E/)  
 
-[3.fsLayuiPlugin数据表格使用](http://www.itcto.cn/2017/11/12/layui/fsLayuiPlugin%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E4%BD%BF%E7%94%A8/)  
+[3.fsLayuiPlugin数据表格使用](http://www.itcto.cn/layui/fsLayuiPlugin%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E4%BD%BF%E7%94%A8/)  
 
-[4.fsLayuiPlugin数据表格弹出form表单使用说明](http://www.itcto.cn/2017/11/12/layui/fsLayuiPlugin%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E5%BC%B9%E5%87%BAform%E8%A1%A8%E5%8D%95%E8%AF%B4%E6%98%8E/)  
+[4.fsLayuiPlugin数据表格弹出form表单使用说明](http://www.itcto.cn/layui/fsLayuiPlugin%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E5%BC%B9%E5%87%BAform%E8%A1%A8%E5%8D%95%E8%AF%B4%E6%98%8E/)  
 
-[5.fsLayuiPlugin文件上传使用说明](http://www.itcto.cn/2017/11/17/layui/fsLayuiPlugin%E9%99%84%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/)  
+[5.fsLayuiPlugin文件上传使用说明](http://www.itcto.cn/layui/fsLayuiPlugin%E9%99%84%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/)  
 
 
 ## 为什么要使用fsLayuiPlugin？
