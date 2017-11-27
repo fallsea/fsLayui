@@ -105,6 +105,7 @@ layui.use(['fsForm','fsDatagrid','fsTree','common','element'], function(){
             var tableId=$(this).attr("id");
             var datagrid = fsDatagrid.render({id:tableId});
             datagrid.bindDatagridTool(getDatagrid);
+            //cloneDeep 克隆对象
             _.set(datagrids,tableId,_.cloneDeep(datagrid));
         });
         common.buttionEvent("datagrid",getDatagrid,getDatagridCheckData);

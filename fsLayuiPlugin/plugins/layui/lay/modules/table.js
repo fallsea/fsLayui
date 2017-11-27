@@ -641,7 +641,9 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
     
     render();
 
-    
+    if(that.config.clickCallBack){
+ 		 that.clickCallBack(0);
+    }
   };
   
   //找到对应的列元素
@@ -888,6 +890,17 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
     that.layFixRight.css('right', scollWidth - 1); 
   };
 
+  //点击回调
+  Class.prototype.clickCallBack = function(index){
+  	var that =this;
+  	var ELEM_CLICK = 'layui-table-click'
+      ,data = table.cache[that.key][index];
+  		//选中的样式
+//  	alert(that.layBody.find('tr[data-index="'+ index +'"]').length);
+  	  that.layBody.find('tr[data-index="'+ index +'"]').addClass(ELEM_CLICK).siblings('tr').removeClass(ELEM_CLICK);
+  		that.config.clickCallBack(data);
+  }
+  
   //事件处理
   Class.prototype.events = function(){
     var that = this
@@ -1108,6 +1121,16 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
         });
       }
     });
+    
+    if(that.config.clickCallBack){
+    	//行点击事件
+      that.layBody.on('click', 'tr', function(){
+      	var othis = $(this)
+        ,index = othis.data('index');
+      	that.clickCallBack(index);
+      });
+    }
+   
     
     //工具条操作事件
     that.layBody.on('click', '*[lay-event]', function(){
