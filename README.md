@@ -18,6 +18,8 @@ qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k
 
 [5.fsLayuiPlugin文件上传使用说明](http://www.itcto.cn/layui/fsLayuiPlugin%E9%99%84%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/)  
 
+[6.fsLayuiPlugin联动表格使用(一)](http://www.itcto.cn/layui/linkageDatagrid/)  
+
 
 ## 为什么要使用fsLayuiPlugin？
 
