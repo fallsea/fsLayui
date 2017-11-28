@@ -215,3 +215,5 @@ layui.use('form', function(){
 ![](fsLayuiPlugin/images/treeDatagrid.png)
 
 ![](fsLayuiPlugin/images/multiDatagrid.png)
+
+![](fsLayuiPlugin/images/linkageDatagrid2.png)

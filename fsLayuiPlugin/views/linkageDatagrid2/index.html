@@ -48,8 +48,8 @@
              <dd><a href="/views/multiDatagrid/index.html">多数据表格</a></dd>
              <dd><a href="/views/tabDatagrid/index.html">tab数据表格</a></dd>
              <dd><a href="/views/complexDatagrid/index.html">复杂数据表格</a></dd>
-             <dd class="layui-this"><a href="/views/linkageDatagrid/index.html">联动数据表格</a></dd>
-             <dd><a href="/views/linkageDatagrid2/index.html">联动数据表格(复杂)</a></dd>
+             <dd><a href="/views/linkageDatagrid/index.html">联动数据表格</a></dd>
+             <dd class="layui-this"><a href="/views/linkageDatagrid2/index.html">联动数据表格(复杂)</a></dd>
           </dl>
         </li>
       </ul>
@@ -60,9 +60,53 @@
    <div class="layui-fluid">
   <div class="layui-row layui-col-space1">
   	 <div class="layui-col-md12">
+  	 	<div class="layui-form-query">
+			<form class="layui-form" id="query_form">
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-mid">功能号：</label>
+						<div class="layui-input-inline" style="width: 100px;">
+							<input type="text" name="funcNo" autocomplete="off" class="layui-input"/>
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-mid">名称：</label>
+						<div class="layui-input-inline" style="width: 150px;">
+							<input type="text" name="funcName" autocomplete="off" class="layui-input"/>
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-mid">类型：</label>
+						<div class="layui-input-inline" style="width: 150px;">
+							<select name="funcType" lay-verify="required">
+						        <option value="">--请选择--</option>
+						        <option value="c">功能号实现类</option>
+						        <option value="s">service实现类</option>
+						        <option value="m">mapper实现类</option>
+						      </select>
+						</div>
+					</div>
+					<div class="layui-inline">
+						<div class="layui-input-inline">
+							<button class="layui-btn" type="button" function="query"><i class="layui-icon">&#xe615;</i>查询</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+     </div>
+     <div class="layui-col-md12">
+       	<button class="layui-btn" function="top" topUrl="../complexDatagrid/add.html" topWidth="700px" topHeight="450px" topTitle="新增功能号信息">
+		  <i class="layui-icon">&#xe654;</i>新增
+		</button>
+		<button class="layui-btn" function="refresh">
+		  <i class="layui-icon">&#x1002;</i>刷新
+		</button>
+      </div>
+  	 <div class="layui-col-md12">
   	 	<div class="layui-row grid-demo">
 	      <div class="layui-col-md12">
-	         <table id="fsDatagrid" lay-filter="fsDatagrid" class="fsDatagrid" clickRenderTable="fsDatagrid2" clickRenderTableInputs="funcId:$id" isLoad="1" url="/fsbus/S1023" isPage="1" height="260"></table>
+	         <table id="fsDatagrid" lay-filter="fsDatagrid" class="fsDatagrid" clickRenderTable="fsDatagrid2" clickRenderTableInputs="funcId:$id" isLoad="1" defaultForm="query_form" url="/fsbus/S1023" isPage="1" height="260"></table>
 
 			<div class="fsDatagridCols">
 				<p type="numbers" title="#"/>
@@ -72,6 +116,7 @@
 			    <p field="state" title="状态" width="100" templet="#stateTpl"/>
 			    <p field="resource" title="资源信息" width="300"/>
 			    <p field="createdTime" title="创建时间" width="180"/>
+			    <p fixed="right" align="center" toolbar="#barDemo" title="操作" width="150"/>
 			</div>
 		
 			<script type="text/html" id="typeTpl">
@@ -92,12 +137,53 @@
 				<span style="color: #FF5722;">作废</span>
  			{{#  } }}
 			</script>
+			<script type="text/html" id="barDemo">
+ 			 <a class="layui-btn layui-btn-xs" lay-event="top" topUrl="../complexDatagrid/edit.html" topWidth="700px" topHeight="450px" topTitle="编辑功能号信息" inputs="id:">编辑</a>
+			</script>
 	      </div>
 	    </div>
   	 </div>
+  	 
   	 <hr class="layui-bg-red">
+  	 
   	 <div class="layui-col-md12">
-  	 	<table id="fsDatagrid2" class="fsDatagrid" lay-filter="fsDatagrid2" url="/fsbus/S1030" isLoad="0" height="260" isPage="0">
+  	 	<div class="layui-form-query">
+			<form class="layui-form" id="query_form2">
+				<div class="layui-form-item">
+					<input type="hidden" id="funcId" name="funcId" autocomplete="off" class="layui-input"/>
+					<div class="layui-inline">
+						<label class="layui-form-mid">参数：</label>
+						<div class="layui-input-inline" style="width: 150px;">
+							<input type="text" name="attribute" autocomplete="off" class="layui-input"/>
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-mid">名称：</label>
+						<div class="layui-input-inline" style="width: 150px;">
+							<input type="text" name="name" autocomplete="off" class="layui-input"/>
+						</div>
+					</div>
+					<div class="layui-inline">
+						<div class="layui-input-inline">
+							<button class="layui-btn layui-btn-sm" type="button" function="query" tableId="fsDatagrid2"><i class="layui-icon">&#xe615;</i>查询</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+  	 </div>
+  	 <div class="layui-col-md12">
+    	<div id="table_buttion_div">
+	    	<button class="layui-btn layui-btn-sm" function="top" tableId="fsDatagrid2" topUrl="../complexDatagrid/addParam.html" topWidth="700px" topHeight="450px" isMaxWindow="" topTitle="新增参数" inputs="funcId:#funcId">
+			  <i class="layui-icon">&#xe654;</i>新增
+			</button>
+			<button class="layui-btn layui-btn-sm" function="refresh" tableId="fsDatagrid2">
+			  <i class="layui-icon">&#x1002;</i>刷新
+			</button>
+    	</div>
+    </div>
+  	 <div class="layui-col-md12">
+  	 	<table id="fsDatagrid2" class="fsDatagrid" lay-filter="fsDatagrid2" url="/fsbus/S1030" isLoad="0" defaultForm="query_form2" height="260" isPage="0">
 		</table>
 		
 		<div class="fsDatagridCols">
@@ -110,6 +196,7 @@
 		    <p field="defaultValue" title="默认值" width="100"/>
 		    <p field="minLength" title="最小长度" width="100"/>
 		    <p field="maxLength" title="最大长度" width="100"/>
+		    <p fixed="right" align="center" toolbar="#barDemo2" title="操作" width="150"/>
 		</div>
 		
 		<script type="text/html" id="notEmptyTpl">
@@ -118,6 +205,10 @@
 			{{# } else{ }}
 				<span style="color: #c2c2c2">否</span>
  			{{#  } }}
+		</script>
+		<script type="text/html" id="barDemo2">
+			<a class="layui-btn layui-btn-xs" lay-event="top" topUrl="../complexDatagrid/editParam.html" topWidth="700px" topHeight="510px" topTitle="编辑参数" inputs="id:">编辑</a>
+ 			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="submit" isConfirm="1" url="/fsbus/S1034" inputs="id:">删除</a>
 		</script>
 
   	 </div>

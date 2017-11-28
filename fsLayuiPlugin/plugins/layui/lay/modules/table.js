@@ -406,6 +406,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
     ,options = that.config
     ,request = options.request
     ,response = options.response
+    ,isLoad = options.isLoad
     ,sort = function(){
       if(typeof options.initSort === 'object'){
         that.sort(options.initSort.field, options.initSort.type);
@@ -414,7 +415,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
     
     that.startTime = new Date().getTime(); //渲染开始时间
     
-    if(options.url){ //Ajax请求
+    if(options.url && isLoad == "1"){ //Ajax请求
       var params = {};
       params[request.pageName] = curr;
       params[request.limitName] = options.limit;
@@ -427,7 +428,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
         ,dataType: 'json'
         ,success: function(res){
           if(_.result(res,response.statusName) != response.statusCode){
-          	 //未登录处理
+            //未登录处理
           	var filters = fsConfig["filters"];
             if(!_.isEmpty(filters)){
                 var otherFunction = filters[res[response.statusName]];
@@ -460,6 +461,11 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
       that.renderData(res, curr, options.data.length), sort();
       typeof options.done === 'function' && options.done(res, curr, _.result(res,response.countName));
     }
+    
+    //改变isLoad状态
+    options.isLoad = "1";
+    that.config = $.extend({}, that.config, options);
+    
   };
   
   //遍历表头
@@ -553,8 +559,9 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
               if(item3.type === 'checkbox'){
                 return '<input type="checkbox" name="layTableCheckbox" lay-skin="primary" '+ function(){
                   var checkName = table.config.checkName;
+                  //如果是全选
                   if(item3[checkName]){
-                    tplData[checkName] = item3[checkName];
+                    item1[checkName] = item3[checkName];
                     return item3[checkName] ? 'checked' : '';
                   }
                   return tplData[checkName] ? 'checked' : '';
@@ -582,12 +589,14 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
         trs_fixed_r.push('<tr data-index="'+ i1 +'">'+ tds_fixed_r.join('') + '</tr>');
       });
       
+      //if(data.length === 0) return;
+      
       that.layBody.scrollTop(0);
       that.layMain.find('.'+ NONE).remove();
       that.layMain.find('tbody').html(trs.join(''));
       that.layFixLeft.find('tbody').html(trs_fixed.join(''));
       that.layFixRight.find('tbody').html(trs_fixed_r.join(''));
-      
+
       that.renderForm();
       that.syncCheckAll();
       that.haveInit ? that.scrollPatch() : setTimeout(function(){
@@ -604,6 +613,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
     if(sort){
       return render();
     }
+    
     
     //同步分页状态
     if(options.page){
@@ -630,7 +640,6 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
       options.page.count = count; //更新总条数
       laypage.render(options.page);
     }
-    
     if(data.length === 0){
       that.renderForm();
       that.layFixed.remove();
@@ -640,7 +649,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
     }
     
     render();
-
+    
     if(that.config.clickCallBack){
  		 that.clickCallBack(0);
     }
@@ -715,7 +724,6 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
     
     res[options.response.dataName] = thisData;
     that.renderData(res, that.page, that.count, true);
-    layer.close(that.tipsIndex);
     
     if(formEvent){
       layui.event.call(th, MOD_NAME, 'sort('+ filter +')', {
@@ -766,7 +774,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
       return checked;
     };
     
-    if(!checkAllElem[0]) return
+    if(!checkAllElem[0]) return;
 
     if(table.checkStatus(that.key).isAll){
       if(!checkAllElem[0].checked){
@@ -787,7 +795,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
   Class.prototype.getCssRule = function(field, callback){
     var that = this
     ,style = that.elem.find('style')[0]
-    ,sheet = style.sheet || style.styleSheet
+    ,sheet = style.sheet || style.styleSheet || {}
     ,rules = sheet.cssRules || sheet.rules;
     layui.each(rules, function(i, item){
       if(item.selectorText === ('.laytable-cell-'+ that.index +'-'+ field)){
@@ -849,19 +857,21 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
     ,scollWidth = that.layMain.width() - that.layMain.prop('clientWidth') //纵向滚动条宽度
     ,scollHeight = that.layMain.height() - that.layMain.prop('clientHeight') //横向滚动条高度
     ,getScrollWidth = that.getScrollWidth(that.layMain[0]) //获取主容器滚动条宽度，如果有的话
-    ,outWidth = layMainTable.width() - that.layMain.width(); //表格内容器的超出宽度
-    
-    //如果存在自动列宽，则要保证绝对填充满，并且不能出现滚动条
-    if(that.autoColNums && !that.scrollPatchWStatus){
+    ,outWidth = layMainTable.outerWidth() - that.layMain.width(); //表格内容器的超出宽度
+
+    //如果存在自动列宽，则要保证绝对填充满，并且不能出现横向滚动条
+    if(that.autoColNums && outWidth < 5 && !that.scrollPatchWStatus){
       var th = that.layHeader.eq(0).find('thead th:last-child')
       ,field = th.data('field');
-      
       that.getCssRule(field, function(item){
         var width = item.style.width || th.outerWidth();
-        item.style.width = (parseFloat(width) - getScrollWidth - function(){
-          if(outWidth < 0) return outWidth;
-          if(outWidth < 5) return outWidth;
-        }()) + 'px';
+        item.style.width = (parseFloat(width) - getScrollWidth - outWidth) + 'px';
+        
+        //二次校验，如果仍然出现横向滚动条
+        if(that.layMain.height() - that.layMain.prop('clientHeight') > 0){
+          item.style.width = parseFloat(item.style.width) - 1 + 'px';
+        }
+
         that.scrollPatchWStatus = true;
       });
     }
@@ -890,13 +900,12 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
     that.layFixRight.css('right', scollWidth - 1); 
   };
 
-  //点击回调
+	//点击回调
   Class.prototype.clickCallBack = function(index){
   	var that =this;
   	var ELEM_CLICK = 'layui-table-click'
       ,data = table.cache[that.key][index];
   		//选中的样式
-//  	alert(that.layBody.find('tr[data-index="'+ index +'"]').length);
   	  that.layBody.find('tr[data-index="'+ index +'"]').addClass(ELEM_CLICK).siblings('tr').removeClass(ELEM_CLICK);
   		that.config.clickCallBack(data);
   }
@@ -1016,7 +1025,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
       }
       layui.event.call(this, MOD_NAME, 'checkbox('+ filter +')', {
         checked: checked
-        ,data: table.cache[that.key][index]
+        ,data: table.cache[that.key] ? (table.cache[that.key][index] || {}) : {}
         ,type: isAll ? 'all' : 'one'
       });
     });
@@ -1130,7 +1139,6 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
       	that.clickCallBack(index);
       });
     }
-   
     
     //工具条操作事件
     that.layBody.on('click', '*[lay-event]', function(){
@@ -1269,8 +1277,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
     var nums = 0
     ,invalidNum = 0
     ,arr = []
-    ,data = table.cache[id];
-    if(!data) return {};
+    ,data = table.cache[id] || [];
     //计算全选个数
     layui.each(data, function(i, item){
       if(item.constructor === Array){
@@ -1284,7 +1291,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
     });
     return {
       data: arr //选中的数据
-      ,isAll: nums === (data.length - invalidNum) //是否全选
+      ,isAll: data.length ? (nums === (data.length - invalidNum)) : false //是否全选
     };
   };
   

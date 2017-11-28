@@ -103,10 +103,35 @@ layui.use(['fsForm','fsDatagrid','fsTree','common','element'], function(){
     if(tabs.length > 0){
         $(tabs).each(function(){
             var tableId=$(this).attr("id");
-            var datagrid = fsDatagrid.render({id:tableId});
+            if(!_.isEmpty(datagrids[tableId])){
+            	return;
+            }
+            var clickRenderTable = $(this).attr("clickRenderTable");//点击需要渲染的tableid
+            var clickCallBack;//点击事件
+        	  if(!_.isEmpty(clickRenderTable)){
+        	  	
+        	  	var defaultForm= $("#"+clickRenderTable).attr("defaultForm");//默认form表单id
+        	  	
+        	  	var clickRenderTableInputs = $(this).attr("clickRenderTableInputs");//点击需要传入的参数信息
+        	  	
+        	  	clickCallBack = function(data){
+        	  		//获取参数
+        	  		var formData = common.getParamByInputs(clickRenderTableInputs,data);
+        	  		
+        	  		//点击后，为查询form表单赋值
+        	  		if(!_.isEmpty(defaultForm)){
+        	  			$("#"+defaultForm).setFormData(formData);
+        	  		}
+      	  			_.get(datagrids,clickRenderTable).reload(formData);
+        	  	}
+        	  }
+            
+            var datagrid = fsDatagrid.render({id:tableId,clickCallBack:clickCallBack});
             datagrid.bindDatagridTool(getDatagrid);
             //cloneDeep 克隆对象
             _.set(datagrids,tableId,_.cloneDeep(datagrid));
+            
+            
         });
         common.buttionEvent("datagrid",getDatagrid,getDatagridCheckData);
     }else{

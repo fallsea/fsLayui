@@ -2,7 +2,7 @@
  * @Description: datagrid工具
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.0.4
+ * @version 1.1.0
  * @date: 2017年11月5日 上午11:26:44
  */
 layui.define(["common","table",'laypage','fsConfig'], function(exports){
@@ -88,6 +88,24 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
 	  if(!_.isEmpty(servletUrl)){
 	      url = servletUrl + url;
 	  }
+	  
+	  var isLoad =  _table.attr("isLoad");//是否自动加载数据，1 :默认加载，0 ：不加载
+	  if(isLoad != "0"){
+	  	isLoad = "1";
+	  }
+	  
+	  //点击回调处理，如果外部有传入函数，优先获取外部，如果没有传，使用默认
+	  /*var clickRenderTable = _table.attr("clickRenderTable");//点击需要渲染的tableid
+	  var clickCallBack = thisDatagrid.config.clickCallBack;
+	  if(_.isEmpty(clickCallBack) && !_.isEmpty(clickRenderTable)){
+	  	
+	  	clickCallBack = function(){
+	  		
+	  		alert();
+	  		
+	  	}
+	  }*/
+	  
 	  //执行渲染
 	  thisDatagrid.datagrid = table.render({
 	    id:tableId,
@@ -102,6 +120,8 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
 	    limit: pageSize ,//默认采用50
 	    cols:  [_table.getDatagridCols()],
 	    clickCallBack: thisDatagrid.config.clickCallBack,
+	    data: [],
+	    isLoad : isLoad,
 	    request: {
 	        pageName: _.result(fsConfig,"global.page.request.pageName","pageNum"), //页码的参数名称，默认：pageNum
 	        limitName: _.result(fsConfig,"global.page.request.limitName","pageSize") //每页数据量的参数名，默认：pageSize
