@@ -20,6 +20,8 @@ qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k
 
 [6.fsLayuiPlugin联动表格使用(一)](http://www.itcto.cn/layui/linkageDatagrid/)  
 
+[7.fsLayuiPlugin联动表格使用(二)](http://www.itcto.cn/layui/linkageDatagrid2/)  
+
 
 ## 为什么要使用fsLayuiPlugin？
 
@@ -106,11 +108,14 @@ layui.use('form', function(){
 ```
 ## fsLayuiPlugin解决的问题？
 
-> 通过引入**fsLayuiPlugin** js文件，快速开发datagrid增删改查操作。  
+> 通过引入**fsLayuiPlugin** js文件，快速开发datagrid增删改查操作，简化开发。  
 
 * 数据表格的增删改查
 * 树+数据表格（树基于ztree实现，点击左边树，刷新表格数据）
 * 多数据表格操作
+* tab表格支持
+* 复杂表格支持
+* 联动表格支持
 
 ### 新增demo
 ```html
