@@ -284,7 +284,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
     }
     
     //请求数据
-    that.pullData(that.page);
+    that.pullData(that.page,that.loading());
     that.events();
   };
   
@@ -650,6 +650,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
     
     render();
     
+    //判断是否需要自动触发点击回调事件
     if(that.config.clickCallBack){
  		 that.clickCallBack(0);
     }
@@ -745,6 +746,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
           ,that.elem.offset().left + that.elem.width()/2 - 90 - _WIN.scrollLeft() + 'px'
         ]
         ,anim: -1
+        ,time: 0
         ,fixed: false
       });
     }
