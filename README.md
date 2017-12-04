@@ -27,6 +27,10 @@ qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k
 
 [9.fsLayuiPlugin树+数据表格使用](http://www.itcto.cn/layui/fsLayuiPlugin%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E6%A0%91%E4%BD%BF%E7%94%A8/)  
 
+
+[10.fsLayuiPlugin多数据表格使用](http://www.itcto.cn/layui/%E5%A4%9A%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E4%BD%BF%E7%94%A8/)  
+
+
 ## 为什么要使用fsLayuiPlugin？
 
 > 传统的开发一般需要实现增删改查功能，每个功能都需要对应一个html页面和js绑定操作。  
