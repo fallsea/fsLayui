@@ -2,7 +2,8 @@
 
 > **fsLayuiPlugin** 是一个基于layui的快速开发插件，支持数据表格增删改查操作，提供通用的组件，通过配置html实现数据请求，减少前端js重复开发的工作。  
 qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k=5uImi0a)  
-> [GitHub下载](https://github.com/fallsea/fsLayuiPlugin)   [开源中国下载](https://gitee.com/fallsea/fsLayuiPlugin)  
+> [GitHub下载](https://github.com/fallsea/fsLayuiPlugin)   
+[码云下载](https://gitee.com/fallsea/fsLayuiPlugin)  
 > **演示环境** [http://fslayuiplugin.fallsea.com](http://fslayuiplugin.fallsea.com) ***最好先清空缓存***  
 > [版本更新说明](https://github.com/fallsea/fsLayuiPlugin/releases)
 
@@ -10,18 +11,21 @@ qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k
 
 [1.fsLayuiPlugin介绍](http://www.itcto.cn/layui/fsLayuiPlugin%E4%BB%8B%E7%BB%8D/)  
 
-[2.fsLayuiPlugin配置说明](http://www.itcto.cn/layui/fsLayuiPlugin%E9%85%8D%E7%BD%AE%E8%AF%B4%E6%98%8E/)  
+[2.fsLayuiPlugin快速开始](http://www.itcto.cn/layui/fsLayuiPlugin%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B/)  
 
-[3.fsLayuiPlugin数据表格使用](http://www.itcto.cn/layui/fsLayuiPlugin%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E4%BD%BF%E7%94%A8/)  
+[3.fsLayuiPlugin配置说明](http://www.itcto.cn/layui/fsLayuiPlugin%E9%85%8D%E7%BD%AE%E8%AF%B4%E6%98%8E/)  
 
-[4.fsLayuiPlugin数据表格弹出form表单使用说明](http://www.itcto.cn/layui/fsLayuiPlugin%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E5%BC%B9%E5%87%BAform%E8%A1%A8%E5%8D%95%E8%AF%B4%E6%98%8E/)  
+[4.fsLayuiPlugin数据表格使用](http://www.itcto.cn/layui/fsLayuiPlugin%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E4%BD%BF%E7%94%A8/)  
 
-[5.fsLayuiPlugin文件上传使用说明](http://www.itcto.cn/layui/fsLayuiPlugin%E9%99%84%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/)  
+[5.fsLayuiPlugin数据表格弹出form表单使用说明](http://www.itcto.cn/layui/fsLayuiPlugin%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E5%BC%B9%E5%87%BAform%E8%A1%A8%E5%8D%95%E8%AF%B4%E6%98%8E/)  
 
-[6.fsLayuiPlugin联动表格使用(一)](http://www.itcto.cn/layui/linkageDatagrid/)  
+[6.fsLayuiPlugin文件上传使用说明](http://www.itcto.cn/layui/fsLayuiPlugin%E9%99%84%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/)  
 
-[7.fsLayuiPlugin联动表格使用(二)](http://www.itcto.cn/layui/linkageDatagrid2/)  
+[7.fsLayuiPlugin联动表格使用(一)](http://www.itcto.cn/layui/linkageDatagrid/)  
 
+[8.fsLayuiPlugin联动表格使用(二)](http://www.itcto.cn/layui/linkageDatagrid2/)  
+
+[9.fsLayuiPlugin树+数据表格使用](http://www.itcto.cn/layui/fsLayuiPlugin%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E6%A0%91%E4%BD%BF%E7%94%A8/)  
 
 ## 为什么要使用fsLayuiPlugin？
 
@@ -138,12 +142,7 @@ layui.use('form', function(){
   <script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="/plugins/jquery/lodash.min.js"></script>
   <script type="text/javascript" src="/plugins/jquery/jquery.formautofill.js"></script>
-
-  <link rel="stylesheet" href="/plugins/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css"/>
-  <script type="text/javascript" src="/plugins/ztree/js/jquery.ztree.all.min.js"></script>
-
   <script type="text/javascript" src="/plugins/frame/js/fs.js"></script>
-
   <script type="text/javascript" src="/plugins/frame/js/frame.js"></script>
 </head>
 <body class="layui-layout-body">

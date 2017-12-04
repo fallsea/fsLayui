@@ -14,7 +14,6 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
   msgName = _.result(fsConfig,"global.result.msgName","errorInfo"),
   dataName = _.result(fsConfig,"global.result.dataName","results.data"),
   FsDatagrid = function (){
-  	
   };
   
   FsDatagrid.prototype.render = function(options,params){
@@ -28,11 +27,11 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
     $.extend(true, thisDatagrid.config, options);
     
     if(_.isEmpty(thisDatagrid.config.id)){
-        common.warnMsg("表格id不能为空!");
-        return;
+      common.warnMsg("表格id不能为空!");
+      return;
     }
     if(!_.isEmpty(thisDatagrid.config.id)){
-        thisDatagrid.config.elem = $("#"+thisDatagrid.config.id);
+      thisDatagrid.config.elem = $("#"+thisDatagrid.config.id);
     }
     
     thisDatagrid.loadDatagrid(params);
@@ -50,14 +49,14 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
 	  var _table = $(thisDatagrid.config.elem);
 	  var tableId = _table.attr("id");
 	  if(_.isEmpty(tableId)){
-	      return ;
+      return ;
 	  }
 	  
 	  //获取table属性
 	  var defaultForm = _table.attr("defaultForm");//查询条件formid
 	  
 	  if(_.isEmpty(defaultForm)){
-	      defaultForm = "query_form";
+      defaultForm = "query_form";
 	  }
 	  
 	  //获取查询表单的参数
@@ -72,39 +71,27 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
 	  
 	  var height = _table.attr("height");//高度
 	  if(_.isEmpty(height)){
-	      height = "full-130";
+      height = "full-130";
 	  }
 	  
 	  var pageSize = _table.attr("pageSize");//每页数量
 	  if(_.isEmpty(pageSize)){
-	      pageSize ="20";
+      pageSize ="20";
 	  }
 	  
 	  var url = _table.attr("url");//请求url
 	  if(_.isEmpty(url)){
-	      url = "/fsbus/" + funcNo;
+      url = "/fsbus/" + funcNo;
 	  }
 	  var servletUrl = _.result(fsConfig,"global.servletUrl");
 	  if(!_.isEmpty(servletUrl)){
-	      url = servletUrl + url;
+      url = servletUrl + url;
 	  }
 	  
 	  var isLoad =  _table.attr("isLoad");//是否自动加载数据，1 :默认加载，0 ：不加载
 	  if(isLoad != "0"){
 	  	isLoad = "1";
 	  }
-	  
-	  //点击回调处理，如果外部有传入函数，优先获取外部，如果没有传，使用默认
-	  /*var clickRenderTable = _table.attr("clickRenderTable");//点击需要渲染的tableid
-	  var clickCallBack = thisDatagrid.config.clickCallBack;
-	  if(_.isEmpty(clickCallBack) && !_.isEmpty(clickRenderTable)){
-	  	
-	  	clickCallBack = function(){
-	  		
-	  		alert();
-	  		
-	  	}
-	  }*/
 	  
 	  //执行渲染
 	  thisDatagrid.datagrid = table.render({
@@ -123,8 +110,8 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
 	    data: [],
 	    isLoad : isLoad,
 	    request: {
-	        pageName: _.result(fsConfig,"global.page.request.pageName","pageNum"), //页码的参数名称，默认：pageNum
-	        limitName: _.result(fsConfig,"global.page.request.limitName","pageSize") //每页数据量的参数名，默认：pageSize
+        pageName: _.result(fsConfig,"global.page.request.pageName","pageNum"), //页码的参数名称，默认：pageNum
+        limitName: _.result(fsConfig,"global.page.request.limitName","pageSize") //每页数据量的参数名，默认：pageSize
 	    },
 	    response: {
 	      statusName: _.result(fsConfig,"global.result.statusName","errorNo") //数据状态的字段名称，默认：errorNo
@@ -141,7 +128,6 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
    * 刷新
    */
   FsDatagrid.prototype.refresh = function(){
-      
     if(!_.isEmpty(this.datagrid)){
         this.datagrid.refresh();
     }
@@ -190,85 +176,80 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
       
       var _this = $(this);
       if(layEvent === 'submit'){ //提交
-          
         if(_.eq("1",_this.attr("isConfirm")))
         {
-            var confirmMsg = _this.attr("confirmMsg");
-            if(_.isEmpty(confirmMsg))
-            {
-                confirmMsg="是否确定操作选中的数据?";
+          var confirmMsg = _this.attr("confirmMsg");
+          if(_.isEmpty(confirmMsg))
+          {
+            confirmMsg="是否确定操作选中的数据?";
+          }
+          
+          common.confirm("提示", confirmMsg, function(index)
+          {
+            layer.close(index);
+            var funcNO = _this.attr("funcNo");
+            
+            var url = _this.attr("url");//请求url
+            
+            if(_.isEmpty(funcNO) && _.isEmpty(url)){
+              common.warnMsg("功能号或请求地址为空！");
+              return;
             }
             
-            common.confirm("提示", confirmMsg, function(index)
+            if(_.isEmpty(url)){
+              url = "/fsbus/" + funcNo;
+            }
+            
+            
+            //获取参数
+            var inputs = _this.attr("inputs");
+            var param = {};//参数
+            if(!_.isEmpty(inputs)){
+              param = common.getParamByInputs(inputs,data);
+            }
+            
+            //请求数据
+            common.invoke(url,param,function(data)
             {
-                layer.close(index);
-                var funcNO = _this.attr("funcNo");
+              if(data[statusName] == "0")
+              {
+                common.successMsg('操作成功!');
+                common.setRefreshTable("1");
                 
-                var url = _this.attr("url");//请求url
-                
-                if(_.isEmpty(funcNO) && _.isEmpty(url)){
-                    common.warnMsg("功能号或请求地址为空！");
-                    return;
-                }
-                
-                if(_.isEmpty(url)){
-                    url = "/fsbus/" + funcNo;
-                }
-                
-                
-                //获取参数
-                var inputs = _this.attr("inputs");
-                var param = {};//参数
-                if(!_.isEmpty(inputs)){
-                    param = common.getParamByInputs(inputs,data);
-                }
-                
-                //请求数据
-                common.invoke(url,param,function(data)
-                    {
-                        if(data[statusName] == "0")
-                        {
-                            common.successMsg('操作成功!');
-                            common.setRefreshTable("1");
-                            
-                            getDatagrid(tableId).refresh();
-                        }
-                        else
-                        {
-                            //提示错误消息
-                            common.errorMsg(data[msgName]);
-                        }
-                    });
+                getDatagrid(tableId).refresh();
+              }
+              else
+              {
+                //提示错误消息
+                common.errorMsg(data[msgName]);
+              }
             });
-            
-            
+          });
         }
       }else if(layEvent === 'top'){ //打开新窗口
         var _url = _this.attr("topUrl");
         if(_.isEmpty(_url))
         {
-            common.warnMsg("url地址为空！");
-            return false;
+          common.warnMsg("url地址为空！");
+          return false;
         }
         
         var inputs = _this.attr("inputs");
         
         if(!_.isEmpty(inputs))
         {
-            _url = common.getUrlByInputs(_url,inputs,data);
+          _url = common.getUrlByInputs(_url,inputs,data);
         }
-        
-        
         var _title = _this.attr("topTitle");
         var _width = _this.attr("topWidth");
         if(_.isEmpty(_width))
         {
-            _width = "700px";
+          _width = "700px";
         }
         var _height = _this.attr("topHeight");
         if(_.isEmpty(_height))
         {
-            _height = "400px";
+          _height = "400px";
         }
         
         //打开窗口
@@ -281,16 +262,15 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
           maxmin: true,
           content: _url,
           end: function(){
-              if(common.isRefreshTable())
-              {
-                  getDatagrid(tableId).refresh();
-              }
+            if(common.isRefreshTable())
+            {
+              getDatagrid(tableId).refresh();
+            }
           }
         });
       }
     });
   };
-      
       
   var fsDatagrid = new FsDatagrid();
   exports("fsDatagrid",fsDatagrid);

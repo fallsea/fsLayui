@@ -2,7 +2,7 @@
  * @Description: 基础配置
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.0.4
+ * @version 1.1.1
  * @date: 2017年11月11日 下午3:51:35
  */
 layui.define([], function (exports) {
@@ -13,8 +13,9 @@ layui.define([], function (exports) {
 	 * 错误码处理定义
 	 */
 	fsConfig["filters"] = {
-		// 未登录
+		//配置统一未登录错误码处理
 		"-999" : function(result) {
+			//未登录，跳转登陆页
 			top.window.location.href = fsConfig["global"]["loginUrl"];
 		}
 	};
@@ -23,7 +24,7 @@ layui.define([], function (exports) {
 	 * 项目中需要调用到的常量、变量这里配置
 	 */
 	fsConfig["global"] = {
-		"servletUrl":"https://fs.fallsea.com", //异步请求地址
+		"servletUrl":"https://fs.fallsea.com", //异步请求地址,本地工程可以不填
 		"loginUrl" : "/login", //登录url
 		"uploadUrl" : "https://fs.fallsea.com/upload", //上传附件url
 		"uploadHtmlUrl" : "/plugins/frame/views/upload.html", //上传附件html地址，默认/plugins/frame/views/upload.html

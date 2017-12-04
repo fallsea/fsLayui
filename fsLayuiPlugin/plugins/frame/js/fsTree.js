@@ -29,37 +29,34 @@ layui.define(['layer',"common",'fsConfig'], function(exports){
 	 */
 	FsTree.prototype.render = function(options){
 		var _this = this;
-	    $.extend(true, _this.config, options);
-	    
-	    if(_.isEmpty(_this.config.id)){
+    $.extend(true, _this.config, options);
+    
+    if(_.isEmpty(_this.config.id)){
 			common.warnMsg("id不能为空!");
 			return;
-		}
-	    
-	    this.queryTree();
-	    
-	    return _this;
+    }
+    this.queryTree();
+    return _this;
 	};
 	
 	//显示树
 	FsTree.prototype.showTree = function(data) {
 		var _this = this;
-		
 		var funcNo = _this.config.funcNo;
 
-        var url = _this.config.url;//请求url
-        
-        if(_.isEmpty(funcNo) && _.isEmpty(url)){
+    var url = _this.config.url;//请求url
+    
+    if(_.isEmpty(funcNo) && _.isEmpty(url)){
 			common.warnMsg("功能号或请求地址为空!");
 			return;
 		}
 		if(_.isEmpty(url)){
-            url = "/fsbus/" + funcNo;
-        }
-         var servletUrl = _.result(fsConfig,"global.servletUrl");
-         if(!_.isEmpty(servletUrl)){
-             url = servletUrl + url;
-         }
+      url = "/fsbus/" + funcNo;
+    }
+		var servletUrl = _.result(fsConfig,"global.servletUrl");
+		if(!_.isEmpty(servletUrl)){
+			url = servletUrl + url;
+		}
 		var setting = {
 			view: {
 				showLine: false
@@ -69,17 +66,16 @@ layui.define(['layer',"common",'fsConfig'], function(exports){
 				url:url,
 				autoParam:_this.config.autoParam,
 				dataFilter: function ajaxDataFilter(treeId, parentNode, responseData) {
-					
-				    if(responseData[statusName] == "0")
+			    if(responseData[statusName] == "0")
 					{
-				    	return _.result(responseData,_this.config.dataName);
+			    	return _.result(responseData,_this.config.dataName);
 					}
 					else
 					{
 						//提示错误消息
 						layer.alert(data[msgName], {icon:0})
 					}
-				    return responseData;
+			    return responseData;
 				}
 			},
 			data: {
@@ -96,23 +92,22 @@ layui.define(['layer',"common",'fsConfig'], function(exports){
 	
 	//查询菜单树列表
 	FsTree.prototype.queryTree = function() {
-  		var _this = this;
-  		var funcNo = _this.config.funcNo;
-  		 var url = _this.config.url;//请求url
-         
-         if(_.isEmpty(funcNo) && _.isEmpty(url)){
-             common.warnMsg("功能号或请求地址为空!");
-             return;
-         }
-         if(_.isEmpty(url)){
-             url = "/fsbus/" + funcNo;
-         }
-  		
-  		common.invoke(url,{},function(data)
+		var _this = this;
+		var funcNo = _this.config.funcNo;
+		var url = _this.config.url;//请求url
+       
+		if(_.isEmpty(funcNo) && _.isEmpty(url)){
+			common.warnMsg("功能号或请求地址为空!");
+			return;
+		}
+		if(_.isEmpty(url)){
+			url = "/fsbus/" + funcNo;
+		}
+		
+		common.invoke(url,{},function(data)
 		{
 			if(data[statusName] == "0")
 			{
-				
 				var array = _.result(data,_this.config.dataName);
 				if(!_.isArray(array)){
 					array = new Array();
@@ -127,11 +122,11 @@ layui.define(['layer',"common",'fsConfig'], function(exports){
 				layer.alert(data[msgName], {icon:0})
 			}
 		});
-  	}
+	}
   	
-  	/**
-  	 * 刷新节点
-  	 */
+	/**
+	 * 刷新节点
+	 */
 	FsTree.prototype.refresh = function() {
 		var _this = this;
 		var zTree = $.fn.zTree.getZTreeObj(_this.config.id),
@@ -161,9 +156,8 @@ layui.define(['layer',"common",'fsConfig'], function(exports){
 		var _this = this;
 		var zTree = $.fn.zTree.getZTreeObj(_this.config.id);
 		return zTree.getSelectedNodes();
-		
 	}
 	
-  	var fsTree = new FsTree();
+	var fsTree = new FsTree();
 	exports("fsTree",fsTree);
 });
