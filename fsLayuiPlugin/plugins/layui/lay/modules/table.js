@@ -632,7 +632,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
             //而并非用的是 options.page 中的参数（以确保分页未开启的情况仍能正常使用）
             that.page = obj.curr; //更新页码
             options.limit = obj.limit; //更新每页条数
-            
+            that.config.limit= obj.limit;
             that.pullData(obj.curr, that.loading());
           }
         }

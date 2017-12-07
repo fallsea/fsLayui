@@ -2,7 +2,7 @@
  * @Description: 通用组件
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.0.5
+ * @version 1.2.0
  * @date: 2017年11月12日 上午12:08:17
  */
 layui.define(['layer','form','fsConfig'], function (exports) {
@@ -76,6 +76,15 @@ layui.define(['layer','form','fsConfig'], function (exports) {
         },
         error : function (XMLHttpRequest, textStatus, errorThrown)
         {
+        	 if(textStatus=="404"){  
+                 common.errorMsg("请求地址出错!");
+             }else if(textStatus=="302"){  
+            	 common.errorMsg('连接网页出错!');  
+             }else if(textStatus=="timeout"){  
+            	 common.errorMsg("请求超时!");  
+             }else{
+            	 common.errorMsg('请求异常!');  
+             }
         },
         complete : function(XMLHttpRequest, textStatus)
         {
@@ -402,15 +411,18 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 						{
 							//多结果集,分割
 							var newValue = "";
-							//如果多选，获取多选数据
-							$(data).each(function(index,dom)
-							{
-								if(!_.isEmpty(newValue))
+							if(!_.isEmpty(data)){
+								//如果多选，获取多选数据
+								$(data).each(function(index,dom)
 								{
-									newValue += ",";
-								}
-								newValue += dom[paramArr[0]];
-							});
+									if(!_.isEmpty(newValue))
+									{
+										newValue += ",";
+									}
+									newValue += dom[paramArr[0]];
+								});
+							}
+							
 				    		_vaule = newValue;
 						}else if(_.startsWith(_vaule,"$")){
 					    var xxxx = _vaule.substring(1);

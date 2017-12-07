@@ -20,8 +20,8 @@
 	<script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="/plugins/jquery/lodash.min.js"></script>
 	<script type="text/javascript" src="/plugins/jquery/jquery.formautofill.js"></script>
-	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.0.5"></script>
-	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.0.5"></script>
+	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.2.0"></script>
+	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.2.0"></script>
 </head>
 <body class="layui-layout-body">
 	<div class="layui-fluid">
@@ -70,6 +70,23 @@
 	      <input type="text" name="createdTime" autocomplete="off" class="layui-input fsDate" dateType="datetime" />
 	    </div>
 	  </div>
+	   <div class="layui-form-item">
+	    <label class="layui-form-label">省份</label>
+	    <div class="layui-input-inline" style="width: 100px;">
+	      <select name="area1" lay-filter="xxxxxx1" class="fsSelect" loadUrl="/fsbus/1005" inputs="parentid:0" labelField="name" valueField="id" addNull="1" childrenSelectId="xxxxxx2">
+	      </select>
+	    </div>
+	    <label class="layui-form-label">城市</label>
+	    <div class="layui-input-inline" style="width: 100px;">
+	      <select id="xxxxxx2" name="area2" lay-filter="xxxxxx2" class="fsSelect" isLoad="0" loadUrl="/fsbus/1005" inputs="parentid:" labelField="name" valueField="id" addNull="1" childrenSelectId="xxxxxx3">
+	      </select>
+	    </div>
+	     <label class="layui-form-label">区</label>
+	    <div class="layui-input-inline" style="width: 100px;">
+	      <select id="xxxxxx3" name="area3" class="fsSelect" isLoad="0" loadUrl="/fsbus/1005" inputs="parentid:" labelField="name" valueField="id" addNull="1">
+	      </select>
+	    </div>
+	  </div>
 	  <div class="layui-form-item layui-form-text">
 	    <label class="layui-form-label">附件</label>
 	    <div class="layui-input-inline">
@@ -82,7 +99,7 @@
 	  <div class="layui-form-item layui-form-text">
 	    <label class="layui-form-label">描述</label>
 	    <div class="layui-input-block">
-	      <textarea name="description" placeholder="请输入描述" class="layui-textarea"></textarea>
+	      <textarea id="description" name="description" placeholder="请输入描述" class="fsLayedit" height="80"></textarea>
 	    </div>
 	  </div>
   <hr/>

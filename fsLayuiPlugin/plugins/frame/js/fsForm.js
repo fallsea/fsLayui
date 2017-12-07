@@ -2,24 +2,28 @@
  * @Description: form表单工具
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.0.4
+ * @version 1.2.0
  * @date: 2017年11月5日 上午11:30:20
  */
-layui.define(['layer',"common","form",'laydate',"fsConfig"], function(exports){
+layui.define(['layer',"common","form",'laydate',"fsConfig",'layedit'], function(exports){
   var layer = layui.layer,
   common = layui.common,
   laydate = layui.laydate,
   fsConfig = layui.fsConfig,
+  layedit = layui.layedit,
   form = layui.form,
   statusName = _.result(fsConfig,"global.result.statusName","errorNo"),
   msgName = _.result(fsConfig,"global.result.msgName","errorInfo"),
   dataName = _.result(fsConfig,"global.result.dataName","results.data"),
+  selectVals = {},//下拉框默认值
   FsForm = function (){
 		this.config = {
 			id:"",//form表单id
 			elem:null//form对象
 		}
 	};
+	
+	var layEdits = {};
 	
 	FsForm.prototype.render = function(options){
 		var thisForm = this;
@@ -34,9 +38,11 @@ layui.define(['layer',"common","form",'laydate',"fsConfig"], function(exports){
       thisForm.config.elem = $("#"+thisForm.config.id);
     }
     
+    thisForm.loadFormData();
+    
     thisForm.renderDate();
     
-    thisForm.loadFormData();
+    thisForm.renderLayedit();
     
     thisForm.bindButtionSubmit();
     
@@ -81,6 +87,170 @@ layui.define(['layer',"common","form",'laydate',"fsConfig"], function(exports){
 	};
 	
 	/**
+	 * 渲染lay编辑器
+	 */
+	FsForm.prototype.renderLayedit = function(){
+		 var thisForm = this;
+		//lay编辑器设置
+    layedit.set({
+      uploadImage: {
+        url: _.result(fsConfig,"global.uploadUrl") //接口url
+        ,type: 'post' //默认post
+      }
+    });
+    $(thisForm.config.elem).find("textarea.fsLayedit").each(function(){
+    	var _this = $(this);
+    	var id = _this.attr("id");
+    	var name = _this.attr("name");
+    	var _height = _this.attr("height");
+    	if(!_.isEmpty(id) && !_.isEmpty(name)){
+    		layEdits[name]=layedit.build(id,{
+    			height: _height
+    		}); //建立编辑器
+    	}
+    });
+	};
+	
+	/**
+	 * 渲染全部下拉框
+	 */
+	FsForm.prototype.renderSelectAll = function(){
+		var thisForm = this;
+		 
+	  $(thisForm.config.elem).find("select.fsSelect").each(function(){
+	   	var _this = $(this);
+	   	thisForm.renderSelect(_this);
+	  });
+	};
+	
+	/**
+	 * 渲染下拉框
+	 */
+	FsForm.prototype.renderSelect = function(_this,b,value){
+		var thisForm = this;
+   	thisForm.loadSelectData(_this,b,value);
+   	//绑定选择器
+   	var childrenSelectId = _this.attr("childrenSelectId");
+   	var lay_filter = _this.attr("lay-filter");
+   	if(!_.isEmpty(childrenSelectId) && !_.isEmpty(lay_filter)){
+   		form.on('select('+lay_filter+')', function(data){
+   			
+   			//如果选择项为空，清空所有的子选择项
+   			thisForm.cleanSelectData(_this);
+   			if(!_.isEmpty(data.value)){
+   				thisForm.loadSelectData($("#"+childrenSelectId),true,data.value);
+   			}
+   			
+   		});
+   		
+   	}
+   	
+   	form.render("select"); //更新全部
+	};
+	
+	/**
+	 * 清空下拉框
+	 */
+	FsForm.prototype.cleanSelectData =function(_this){
+		var childrenSelectId = _this.attr("childrenSelectId");
+		if(_.isEmpty(childrenSelectId)){
+			return;
+		}
+		var _childerThis = $("#"+childrenSelectId);
+		if(_childerThis.length==0){
+			return;
+		}
+		var addNull = _childerThis.attr("addNull");//是否显示空值，1 显示
+		_childerThis.empty();//清空
+    if(addNull == "1"){
+    	_childerThis.append("<option></option>");
+    }
+    form.render("select"); //更新全部
+    
+    this.cleanSelectData(_childerThis);//递推处理子选择器
+	};
+	
+	/**
+	 * 加载下拉框数据
+	 */
+	FsForm.prototype.loadSelectData =function(_this,b,value){
+		var thisForm = this;
+		var funcNo = _this.attr("loadFuncNo");
+    var url = _this.attr("loadUrl");//请求url
+    var inputs = _this.attr("inputs");
+    var param = {};//参数
+		if(!_.isEmpty(inputs))
+		{
+			var inputArr = _.split(inputs, ',');
+			_(inputArr).forEach(function(v) {
+				var paramArr = _.split(v, ':',2);
+				if(!_.isEmpty(paramArr[0]))
+				{
+					//获取参数值，如果值为空，获取datagrid选中行数据
+					var _vaule = paramArr[1];
+					if(_.isEmpty(_vaule))
+					{
+						_vaule = value;
+					}
+					param[paramArr[0]] = _vaule;
+				}
+			});
+			
+		}
+    if(_.isEmpty(url)){
+      url = "/fsbus/" + funcNo;
+    }
+    var addNull = _this.attr("addNull");//是否显示空值，1 显示
+    
+    var isLoad = _this.attr("isLoad");//是否自动加载，1 是
+    
+    _this.empty();//清空
+    
+    if(addNull == "1"){
+    	_this.append("<option></option>");
+    }
+   	if(!_.isEmpty(url) && (isLoad !="0" || b)){
+   		common.invoke(url,param,function(data){
+				if(data[statusName] == "0")
+		  	{
+					
+					var labelField = _this.attr("labelField");//显示的列
+					var valueField = _this.attr("valueField");//value值
+					
+					var list = _.result(data,dataName);
+					
+					$(list).each(function(i,v){
+						var option="<option value=\""+v[valueField]+"\">"+v[labelField]+"</option>";
+						_this.append(option);
+					});
+					
+					//默认值
+					var defaultValue = selectVals[_this.attr("name")];
+					if(!_.isEmpty(defaultValue)){
+						_this.val(defaultValue);
+						//如果有子联动，继续渲染
+						var childrenSelectId = _this.attr("childrenSelectId");
+						if(!_.isEmpty(childrenSelectId)){
+							thisForm.renderSelect($("#"+childrenSelectId),true,defaultValue);
+						}
+						
+					}
+					form.render("select"); //更新全部
+					
+					
+					
+		  	}
+		  	else
+		  	{
+		  		//提示错误消息
+		  		common.errorMsg(data[msgName]);
+		  	}
+		  });
+   	}
+	}
+	
+	
+	/**
 	 * 自动填充form表单数据
 	 */
 	FsForm.prototype.loadFormData = function(){
@@ -100,7 +270,6 @@ layui.define(['layer',"common","form",'laydate',"fsConfig"], function(exports){
       if(_.isEmpty(url)){
         url = "/fsbus/" + funcNo;
       }
-		    
 			common.invoke(url,urlParam,function(data){
 				if(data[statusName] == "0")
 		  	{
@@ -111,6 +280,23 @@ layui.define(['layer',"common","form",'laydate',"fsConfig"], function(exports){
 					}
 					formDom.setFormData(formData);
 					form.render(); //更新全部
+					
+					//联动下拉框处理，
+					//1.先把联动下拉框数据缓存
+					//2.异步加载完后，赋值
+					$(thisForm.config.elem).find("select.fsSelect").each(function(){
+						var _name = $(this).attr("name");
+						selectVals[_name] = formData[_name];
+					});
+					
+					$(thisForm.config.elem).find("select.fsSelect").each(function(){
+						var selectDom = $(this);
+						if(selectDom.attr("isLoad") != "0"){//一级下拉
+							thisForm.renderSelect(selectDom);
+						}
+					});
+					
+					
 		  	}
 		  	else
 		  	{
@@ -119,6 +305,8 @@ layui.define(['layer',"common","form",'laydate',"fsConfig"], function(exports){
 		  	}
 		  });
 			  
+	  }else{
+	  	thisForm.renderSelectAll();
 	  }
 		  
 	};
@@ -174,6 +362,13 @@ layui.define(['layer',"common","form",'laydate',"fsConfig"], function(exports){
   	if(_.isEmpty(url)){
       url = "/fsbus/" + funcNo;
     }
+  	
+  	//处理layedit编辑器内容
+  	$.each(layEdits, function(key, val) {
+  		param[key] = layedit.getContent(val);
+  	});
+  	
+  	
   	common.invoke(url,param,function(data)
 		{
     	if(data[statusName] == "0")

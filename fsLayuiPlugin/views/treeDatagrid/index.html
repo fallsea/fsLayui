@@ -64,17 +64,17 @@
          	<div class="layui-row layui-col-space10">
          		<div class="layui-col-md12">
          			<div class="layui-btn-group">
-				    	<button class="layui-btn fsTree" function="top" topUrl="add.html" topWidth="700px" topHeight="450px" isSelect="1" topTitle="新增菜单信息" inputs="parentId:$id">
-						  <i class="layui-icon">&#xe654;</i>新增
+				    	<button class="layui-btn layui-btn-primary layui-btn-sm fsTree" function="top" topUrl="add.html" topWidth="700px" topHeight="450px" isSelect="1" topTitle="新增菜单信息" inputs="parentId:$id">
+						  <i class="layui-icon">&#xe654;</i>
 						</button>
-						<button class="layui-btn fsTree" function="top" topUrl="edit.html" topWidth="700px" topHeight="450px" isSelect="1" topTitle="编辑菜单信息" inputs="menuId:$id">
-						  <i class="layui-icon">&#xe642;</i>编辑
+						<button class="layui-btn layui-btn-primary layui-btn-sm fsTree" function="top" topUrl="edit.html" topWidth="700px" topHeight="450px" isSelect="1" topTitle="编辑菜单信息" inputs="menuId:$id">
+						  <i class="layui-icon">&#xe642;</i>
 						</button>
-						<button class="layui-btn layui-btn-danger fsTree" function="submit" url="/fsbus/S1007" url="" isSelect="1" isConfirm="1" confirmMsg="是否确定删除选中的数据？" inputs="menuId:$id">
-						  <i class="layui-icon">&#xe640;</i>删除
+						<button class="layui-btn layui-btn-sm layui-btn-danger fsTree" function="submit" url="/fsbus/S1007" url="" isSelect="1" isConfirm="1" confirmMsg="是否确定删除选中的数据？" inputs="menuId:$id">
+						  <i class="layui-icon">&#xe640;</i>
 						</button>
-						<button class="layui-btn fsTree" function="refresh">
-						  <i class="layui-icon">&#x1002;</i>刷新
+						<button class="layui-btn layui-btn-primary layui-btn-sm fsTree" function="refresh">
+						  <i class="layui-icon">&#x1002;</i>
 						</button>
 					</div>
          		</div>
@@ -96,10 +96,10 @@
 			    		<form id="query_form" style="display: none;">
 			    			<input type="text" id="menuId" name="menuId" value="0"/>
 			    		</form>
-				    	<button class="layui-btn" function="top" topUrl="addFunc.html" topWidth="700px" topHeight="350px" topTitle="新增功能号信息" inputs="menuId:#menuId">
+				    	<button class="layui-btn layui-btn-sm" function="top" topUrl="addFunc.html" topWidth="700px" topHeight="350px" topTitle="新增功能号信息" inputs="menuId:#menuId">
 						  <i class="layui-icon">&#xe654;</i>新增
 						</button>
-						<button class="layui-btn" function="refresh">
+						<button class="layui-btn layui-btn-sm" function="refresh">
 						  <i class="layui-icon">&#x1002;</i>刷新
 						</button>
 			    	</div>

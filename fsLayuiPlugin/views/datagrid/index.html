@@ -22,8 +22,8 @@
 	<script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="/plugins/jquery/lodash.min.js"></script>
 	<script type="text/javascript" src="/plugins/jquery/jquery.formautofill.js"></script>
-	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.0.5"></script>
-	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.0.5"></script>
+	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.2.0"></script>
+	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.2.0"></script>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -91,7 +91,7 @@
   	 <div class="layui-col-md12">
   	 	<div class="layui-row grid-demo">
 	      <div class="layui-col-md3">
-        	<button class="layui-btn" function="top" topUrl="add.html" topWidth="700px" topHeight="500px" topTitle="新增demo">
+        	<button class="layui-btn" function="top" topUrl="add.html" topWidth="800px" topHeight="600px" topTitle="新增demo">
 			  <i class="layui-icon">&#xe654;</i>新增
 			</button>
 			<button class="layui-btn layui-btn-danger" function="submit" url="/fsbus/1002" isSelect="1" isConfirm="1" confirmMsg="是否确定删除选中的数据？" inputs="id:">
@@ -135,7 +135,7 @@
 				<input type="checkbox" name="state" lay-skin="switch" disabled lay-text="开启|关闭" {{ d.state == 1 ? 'checked' : '' }}>
 			</script>
 			<script type="text/html" id="barDemo">
- 				<a class="layui-btn layui-btn-xs" lay-event="top" topUrl="edit.html" topWidth="700px" topHeight="500px" topTitle="编辑demo" inputs="id:">编辑</a>
+ 				<a class="layui-btn layui-btn-xs" lay-event="top" topUrl="edit.html" topWidth="800px" topHeight="600px" topTitle="编辑demo" inputs="id:">编辑</a>
   				<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="submit" url="/fsbus/1002" isConfirm="1" confirmMsg="是否确定删除当前记录？" inputs="id:">删除</a>
 			</script>
 	      </div>
