@@ -406,7 +406,8 @@ layui.define('layer', function(exports){
     ,formElem = button.parents('form')[0] //获取当前所在的form元素，如果存在的话
     ,fieldElem = elem.find('input,select,textarea') //获取所有表单域
     ,filter = button.attr('lay-filter'); //获取过滤器
- 
+   
+    
     //开始校验
     layui.each(verifyElem, function(_, item){
       var othis = $(this)
@@ -429,7 +430,14 @@ layui.define('layer', function(exports){
           if(isTrue){
             //提示层风格
             if(verType === 'tips'){
-              layer.tips(errorText, othis, {tips: 1});
+              layer.tips(errorText, function(){
+                if(typeof othis.attr('lay-ignore') !== 'string'){
+                  if(item.tagName.toLowerCase() === 'select' || /^checkbox|radio$/.test(item.type)){
+                    return othis.next();
+                  }
+                }
+                return othis;
+              }(), {tips: 1});
             } else if(verType === 'alert') {
               layer.alert(errorText, {title: '提示', shadeClose: true});
             } else {
@@ -446,9 +454,20 @@ layui.define('layer', function(exports){
     
     if(stop) return false;
     
+    var nameIndex = {}; //数组 name 索引
     layui.each(fieldElem, function(_, item){
+      item.name = (item.name || '').replace(/^\s*|\s*&/, '');
+      
       if(!item.name) return;
-      if(/^checkbox|radio$/.test(item.type) && !item.checked) return;
+      
+      //用于支持数组 name
+      if(/^.*\[\]$/.test(item.name)){
+        var key = item.name.match(/^(.*)\[\]$/g)[0];
+        nameIndex[key] = nameIndex[key] | 0;
+        item.name = item.name.replace(/^(.*)\[\]$/, '$1['+ (nameIndex[key]++) +']');
+      }
+      
+      if(/^checkbox|radio$/.test(item.type) && !item.checked) return;      
       var value = item.value;
       if(item.type == "checkbox"){//如果多选
       	if(field[item.name]){

@@ -323,7 +323,9 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
         var width, isNone;
         parent = parent || options.elem.parent()
         width = parent.width();
-        isNone = parent.css('display') === 'none';
+        try {
+          isNone = parent.css('display') === 'none';
+        } catch(e){}
         if(parent[0] && (!width || isNone)) return getWidth(parent.parent());
         return width;
       };
@@ -393,6 +395,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
   //表格重载
   Class.prototype.reload = function(options){
     var that = this;
+    if(that.config.data && that.config.data.constructor === Array) delete that.config.data;
     that.config = $.extend({}, that.config, options);
     that.render();
   };
@@ -419,7 +422,6 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
       var params = {};
       params[request.pageName] = curr;
       params[request.limitName] = options.limit;
-      
       $.ajax({
         type: options.method || 'get'
         ,url: options.url
@@ -428,7 +430,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
         ,dataType: 'json'
         ,success: function(res){
           if(_.result(res,response.statusName) != response.statusCode){
-            //未登录处理
+          	//未登录处理
           	var filters = fsConfig["filters"];
             if(!_.isEmpty(filters)){
                 var otherFunction = filters[res[response.statusName]];
@@ -640,6 +642,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
       options.page.count = count; //更新总条数
       laypage.render(options.page);
     }
+    
     if(data.length === 0){
       that.renderForm();
       that.layFixed.remove();
@@ -745,8 +748,8 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
           that.elem.offset().top + that.elem.height()/2 - 35 - _WIN.scrollTop() + 'px'
           ,that.elem.offset().left + that.elem.width()/2 - 90 - _WIN.scrollLeft() + 'px'
         ]
-        ,anim: -1
         ,time: 0
+        ,anim: -1
         ,fixed: false
       });
     }
@@ -824,7 +827,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
     	layHeaderHeight = 38;
     }
     //tbody区域高度
-    bodyHeight = parseFloat(height) - parseFloat(layHeaderHeight) - 1;  
+    bodyHeight = parseFloat(height) - parseFloat(layHeaderHeight) - 1; 
     if(options.toolbar){
       bodyHeight = bodyHeight - that.layTool.outerHeight();
     }
@@ -901,8 +904,8 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
     //操作栏
     that.layFixRight.css('right', scollWidth - 1); 
   };
-
-	//点击回调
+  
+  //点击回调
   Class.prototype.clickCallBack = function(index){
   	var that =this;
   	var ELEM_CLICK = 'layui-table-click'
@@ -911,7 +914,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
   	  that.layBody.find('tr[data-index="'+ index +'"]').addClass(ELEM_CLICK).siblings('tr').removeClass(ELEM_CLICK);
   		that.config.clickCallBack(data);
   }
-  
+
   //事件处理
   Class.prototype.events = function(){
     var that = this
@@ -1301,7 +1304,9 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
   thisTable.config = {};
   table.reload = function(id, options){
     var config = thisTable.config[id];
+    options = options || {};
     if(!config) return hint.error('The ID option was not found in the table instance');
+    if(options.data && options.data.constructor === Array) delete config.data;
     return table.render($.extend(true, {}, config, options));
   };
  

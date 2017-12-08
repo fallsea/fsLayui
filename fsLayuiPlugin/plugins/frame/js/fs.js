@@ -2,13 +2,37 @@
  * @Description: 入口
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.1.1
+ * @version 1.3.0
  * @date: 2017年11月12日 上午12:09:00
  */
 layui.config({
   base : "/plugins/frame/js/",
 	version : '1.2.0'
 });
+
+var fsData = {};//全局变量
+
+layui.fsUtil={};
+/**
+ * 转移字典工具
+ */
+layui.fsUtil.toDict = function(field,value){
+	var data = fsData[field];
+	var _value = "";
+	if(!_.isEmpty(data) && !_.isEmpty(field) && !_.isEmpty(value) && !_.isEmpty(data["list"]) && !_.isEmpty(data["labelField"]) && !_.isEmpty(data["valueField"])){
+		var labelField = data["labelField"];
+		var valueField = data["valueField"];
+		
+		$.each(data["list"],function(index,elem){
+			if(_.eq(elem[valueField],value)){
+				_value = elem[labelField];
+				return false;
+			}
+		});
+		return _value;
+	}
+	return _value;
+};
 
 (function($){
 	
@@ -78,7 +102,10 @@ layui.config({
    * 获取datagrid 列集合
    */
   $.fn.getDatagridCols = function () {
+  	var data = {};
+  	
   	var colsArr = new Array();
+  	var formatArr = new Array();//需要格式化的集合
   	var datagrid_cols = $(this).next(".fsDatagridCols");
   	if(!_.isEmpty(datagrid_cols))
   	{
@@ -147,6 +174,32 @@ layui.config({
   			if(!_.isEmpty(_this.attr("event"))){
   				col["event"] = _this.attr("event");
   			}
+  			
+  			
+  			if(!_.isEmpty(_this.attr("format"))){
+  				
+  				var format = {};
+  				if(!_.isEmpty(_this.attr("loadUrl"))){
+  					format["loadUrl"] = _this.attr("loadUrl");
+    			}
+  				if(!_.isEmpty(_this.attr("inputs"))){
+  					format["inputs"] = _this.attr("inputs");
+    			}
+  				if(!_.isEmpty(_this.attr("labelField"))){
+  					format["labelField"] = _this.attr("labelField");
+    			}
+  				if(!_.isEmpty(_this.attr("valueField"))){
+  					format["valueField"] = _this.attr("valueField");
+    			}
+  				format["field"] = field;
+  				formatArr.push(format);
+  				
+  				//自定义模板
+  				col["templet"] = "<div>{{ layui.fsUtil.toDict('"+field+"',d."+field+") }}</div>";
+  				
+  			}
+  			
+  			colsArr.push(col);
       			
 			}else {//工具条
 				col["toolbar"] = toolbar;
@@ -158,11 +211,13 @@ layui.config({
 				if(!_.isEmpty(title)){
   				col["title"] = title;
   			}
+				colsArr.push(col);
 			}
-			colsArr.push(col);
   		});
   	}
-  	return colsArr;
+  	data["colsArr"] = colsArr;
+  	data["formatArr"] = formatArr;
+  	return data;
   };
 
 }(jQuery));

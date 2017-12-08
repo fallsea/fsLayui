@@ -2,7 +2,7 @@
  * @Description: form表单工具
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.2.0
+ * @version 1.3.0
  * @date: 2017年11月5日 上午11:30:20
  */
 layui.define(['layer',"common","form",'laydate',"fsConfig",'layedit'], function(exports){
@@ -134,11 +134,10 @@ layui.define(['layer',"common","form",'laydate',"fsConfig",'layedit'], function(
    	var lay_filter = _this.attr("lay-filter");
    	if(!_.isEmpty(childrenSelectId) && !_.isEmpty(lay_filter)){
    		form.on('select('+lay_filter+')', function(data){
-   			
    			//如果选择项为空，清空所有的子选择项
    			thisForm.cleanSelectData(_this);
    			if(!_.isEmpty(data.value)){
-   				thisForm.loadSelectData($("#"+childrenSelectId),true,data.value);
+   				thisForm.renderSelect($("#"+childrenSelectId),true,data.value);
    			}
    			
    		});
@@ -186,7 +185,7 @@ layui.define(['layer',"common","form",'laydate',"fsConfig",'layedit'], function(
 				var paramArr = _.split(v, ':',2);
 				if(!_.isEmpty(paramArr[0]))
 				{
-					//获取参数值，如果值为空，获取datagrid选中行数据
+					//获取参数值，如果值为空，获取选中行数据
 					var _vaule = paramArr[1];
 					if(_.isEmpty(_vaule))
 					{
@@ -213,7 +212,6 @@ layui.define(['layer',"common","form",'laydate',"fsConfig",'layedit'], function(
    		common.invoke(url,param,function(data){
 				if(data[statusName] == "0")
 		  	{
-					
 					var labelField = _this.attr("labelField");//显示的列
 					var valueField = _this.attr("valueField");//value值
 					
@@ -236,9 +234,6 @@ layui.define(['layer',"common","form",'laydate',"fsConfig",'layedit'], function(
 						
 					}
 					form.render("select"); //更新全部
-					
-					
-					
 		  	}
 		  	else
 		  	{

@@ -2,7 +2,7 @@
  * @Description: 通用组件
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.2.0
+ * @version 1.3.0
  * @date: 2017年11月12日 上午12:08:17
  */
 layui.define(['layer','form','fsConfig'], function (exports) {
@@ -18,11 +18,11 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 
     /**错误msg提示 */
   	errorMsg:function (text) {
-      top.layer.msg(text, {icon: 2});
+      top.layer.msg(text, {icon: 2,time:5000});
     },
     /**成功 msg提示 */
     successMsg:function (text) {
-    	top.layer.msg(text, {icon: 1});
+    	top.layer.msg(text, {icon: 1,time:5000});
     },
     /**警告弹出提示*/
     warnMsg:function (text) {
@@ -41,24 +41,26 @@ layui.define(['layer','form','fsConfig'], function (exports) {
       })
 
     },
-    invokeServer : function (funcNo,param,callBackFunc)
+    invokeServer : function (funcNo,param,callBackFunc,async)
     {
       var url = "/fsbus/" + funcNo;
-    	common.invoke(url, param, callBackFunc);
+    	common.invoke(url, param, callBackFunc,async);
     },
-    invoke : function (url,param,callBackFunc)
+    invoke : function (url,param,callBackFunc,async)
     {
       var servletUrl = _.result(fsConfig,"global.servletUrl");
       if(!_.isEmpty(servletUrl)){
         url = servletUrl + url;
       }
-            
+      if(_.isEmpty(async)){
+      	async = false;
+      }
     	//打开加载层
     	var index = layer.load();
       $.ajax({
         url: url,
         type: 'post',
-        async: false,
+        async: async,
         data: param,
         dataType : "json",
         success: function(result){
@@ -242,11 +244,11 @@ layui.define(['layer','form','fsConfig'], function (exports) {
   						{
 			        	if(data[statusName] == "0")
 			        	{
-			        		common.successMsg('操作成功!');
 			        		common.setRefreshTable("1");
-			        		
 			        		//刷新
 			        		getObj(_tableId).refresh();
+			        		
+			        		common.successMsg('操作成功!');
 			        	}
 			        	else
 			        	{

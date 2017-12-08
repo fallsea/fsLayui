@@ -8,6 +8,8 @@ qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k
 > [版本更新说明](https://github.com/fallsea/fsLayuiPlugin/releases)  
 
 
+`如果你觉得对你有说帮助，请Star关注一下，谢谢。`
+
 ## 操作说明
 
 [1.fsLayuiPlugin介绍](http://www.itcto.cn/layui/fsLayuiPlugin%E4%BB%8B%E7%BB%8D/)  
@@ -28,8 +30,11 @@ qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k
 
 [9.fsLayuiPlugin树+数据表格使用](http://www.itcto.cn/layui/fsLayuiPlugin%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E6%A0%91%E4%BD%BF%E7%94%A8/)  
 
-
 [10.fsLayuiPlugin多数据表格使用](http://www.itcto.cn/layui/%E5%A4%9A%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E4%BD%BF%E7%94%A8/)  
+
+[11.fsLayuiPlugin联动下拉框使用(下拉框异步加载数据)](http://www.itcto.cn/layui/fsLayuiPluginSelect/)  
+
+[12.fsLayuiPlugin富文本编辑器使用(layedit)](http://www.itcto.cn/layui/fsLayuiPluginLayedit/)  
 
 
 ## 为什么要使用fsLayuiPlugin？

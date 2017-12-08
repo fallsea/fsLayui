@@ -2,7 +2,7 @@
  * @Description: datagrid工具
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.1.0
+ * @version 1.3.0
  * @date: 2017年11月5日 上午11:26:44
  */
 layui.define(["common","table",'laypage','fsConfig'], function(exports){
@@ -30,6 +30,7 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
       common.warnMsg("表格id不能为空!");
       return;
     }
+    
     if(!_.isEmpty(thisDatagrid.config.id)){
       thisDatagrid.config.elem = $("#"+thisDatagrid.config.id);
     }
@@ -92,6 +93,11 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
 	  if(isLoad != "0"){
 	  	isLoad = "1";
 	  }
+	  var datagridCols = _table.getDatagridCols();
+	  
+	  var cols = datagridCols["colsArr"];
+	  
+	  thisDatagrid.formatDataQuery(datagridCols["formatArr"]);
 	  
 	  //执行渲染
 	  thisDatagrid.datagrid = table.render({
@@ -105,7 +111,7 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
 	    height: height, //容器高度
 	    limits: [10,20,30,50,100],//每页数据选择项
 	    limit: pageSize ,//默认采用50
-	    cols:  [_table.getDatagridCols()],
+	    cols:  [cols],
 	    clickCallBack: thisDatagrid.config.clickCallBack,
 	    data: [],
 	    isLoad : isLoad,
@@ -122,6 +128,57 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
 	    }
 	  });
       
+  };
+  
+  /**
+   * 格式化数据查询
+   */
+  FsDatagrid.prototype.formatDataQuery = function(formatArr){
+  	if(!_.isEmpty(formatArr)){
+  		$.each(formatArr,function(index,elem){
+  			
+  			var url = elem["loadUrl"];//请求url
+  			
+  			if(!_.isEmpty(url)){
+  				
+  				var inputs =elem["inputs"];
+  		    var param = {};//参数
+  				if(!_.isEmpty(inputs))
+  				{
+  					var inputArr = _.split(inputs, ',');
+  					_(inputArr).forEach(function(v) {
+  						var paramArr = _.split(v, ':',2);
+  						if(!_.isEmpty(paramArr[0]))
+  						{
+  							param[paramArr[0]] = paramArr[1];
+  						}
+  					});
+  					
+  				}
+  				
+  				common.invoke(url,param,function(result){
+  					if(result[statusName] == "0")
+  			  	{
+  						var list = _.result(result,dataName);
+  						
+  						var obj = {};
+  						obj["list"] = list;
+  						obj["labelField"] = elem["labelField"];
+  						obj["valueField"] = elem["valueField"];
+  						
+  						fsData[elem["field"]] = obj ;
+  						
+  			  	}
+  					else
+  			  	{
+  			  		//提示错误消息
+  			  		common.errorMsg(result[msgName]);
+  			  	}
+  				},true);
+  			}
+  			
+  		});
+  	}
   };
       
   /**
@@ -213,10 +270,9 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
             {
               if(data[statusName] == "0")
               {
-                common.successMsg('操作成功!');
                 common.setRefreshTable("1");
-                
                 getDatagrid(tableId).refresh();
+                common.successMsg('操作成功!');
               }
               else
               {

@@ -22,8 +22,8 @@
 	<script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="/plugins/jquery/lodash.min.js"></script>
 	<script type="text/javascript" src="/plugins/jquery/jquery.formautofill.js"></script>
-	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.2.0"></script>
-	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.2.0"></script>
+	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.3.0"></script>
+	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.3.0"></script>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -112,6 +112,7 @@
 			    <p field="city" title="城市" width="100" templet="#cityTpl"/>
 			    <p field="sex" title="性别" width="100" />
 			    <p field="state" title="状态" width="100" templet="#stateTpl"/>
+			    <p field="area1" title="省份" width="100" format="select" loadUrl="/fsbus/1005" inputs="parentid:0" labelField="name" valueField="id"/>
 			    <p field="createdTime" title="创建时间" width="180"/>
 			    <p field="modifiedTime" title="修改时间" width="180"/>
 			    <p fixed="right" align="center" toolbar="#barDemo" title="操作" width="150"/>
