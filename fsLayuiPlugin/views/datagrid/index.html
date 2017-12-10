@@ -22,8 +22,9 @@
 	<script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="/plugins/jquery/lodash.min.js"></script>
 	<script type="text/javascript" src="/plugins/jquery/jquery.formautofill.js"></script>
-	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.3.0"></script>
-	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.3.0"></script>
+	<script type="text/javascript" src="/plugins/frame/js/fsDict.js?v=1.3.1"></script>
+	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.3.1"></script>
+	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.3.1"></script>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -94,7 +95,7 @@
         	<button class="layui-btn" function="top" topUrl="add.html" topWidth="800px" topHeight="600px" topTitle="新增demo">
 			  <i class="layui-icon">&#xe654;</i>新增
 			</button>
-			<button class="layui-btn layui-btn-danger" function="submit" url="/fsbus/1002" isSelect="1" isConfirm="1" confirmMsg="是否确定删除选中的数据？" inputs="id:">
+			<button class="layui-btn layui-btn-danger" function="submit" url="/fsbus/1002" isMutiDml="1" isConfirm="1" confirmMsg="是否确定删除选中的数据？" inputs="id:">
 			  <i class="layui-icon">&#xe640;</i>删除
 			</button>
 			<button class="layui-btn" function="refresh">
@@ -109,16 +110,17 @@
 				<p checkbox="true"/>
 			    <p field="id" title="ID" width="100" sort="true"/>
 			    <p field="name" title="名称" width="30%"sort="true" />
-			    <p field="city" title="城市" width="100" templet="#cityTpl"/>
+			    <p field="city" title="城市" width="100" formatType="local" dict="city" labelField="name" valueField="code"/>
+<!-- 			    <p field="city" title="城市" width="100" templet="#cityTpl"/> -->
 			    <p field="sex" title="性别" width="100" />
 			    <p field="state" title="状态" width="100" templet="#stateTpl"/>
-			    <p field="area1" title="省份" width="100" format="select" loadUrl="/fsbus/1005" inputs="parentid:0" labelField="name" valueField="id"/>
+			    <p field="area1" title="省份" width="100" formatType="server" loadUrl="/fsbus/1005" inputs="parentid:0" labelField="name" valueField="id"/>
 			    <p field="createdTime" title="创建时间" width="180"/>
 			    <p field="modifiedTime" title="修改时间" width="180"/>
 			    <p fixed="right" align="center" toolbar="#barDemo" title="操作" width="150"/>
 			</div>
 			
-			<script type="text/html" id="cityTpl">
+			<!-- <script type="text/html" id="cityTpl">
   				{{# if(d.city == '0'){ }}
   				     北京
 				{{# } else if(d.city == '1'){ }}
@@ -130,7 +132,7 @@
  				{{# } else if(d.city == '4'){ }}
 					杭州
  				{{#  } }}
-			</script>
+			</script> -->
 			
 			<script type="text/html" id="stateTpl">
 				<input type="checkbox" name="state" lay-skin="switch" disabled lay-text="开启|关闭" {{ d.state == 1 ? 'checked' : '' }}>

@@ -13,6 +13,8 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
   statusName = _.result(fsConfig,"global.result.statusName","errorNo"),
   msgName = _.result(fsConfig,"global.result.msgName","errorInfo"),
   dataName = _.result(fsConfig,"global.result.dataName","results.data"),
+  defaultLimit = _.result(fsConfig,"global.page.limit",20),//默认分页数量
+  defaultLimits = _.result(fsConfig,"global.page.limits",[10,20,30,50,100]),//默认每页数据选择项
   FsDatagrid = function (){
   };
   
@@ -77,7 +79,7 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
 	  
 	  var pageSize = _table.attr("pageSize");//每页数量
 	  if(_.isEmpty(pageSize)){
-      pageSize ="20";
+      pageSize = defaultLimit;
 	  }
 	  
 	  var url = _table.attr("url");//请求url
@@ -109,8 +111,8 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
 	    method : "post",
 	    skin : 'row',
 	    height: height, //容器高度
-	    limits: [10,20,30,50,100],//每页数据选择项
-	    limit: pageSize ,//默认采用50
+	    limits: defaultLimits,//每页数据选择项
+	    limit: defaultLimit ,//默认采用50
 	    cols:  [cols],
 	    clickCallBack: thisDatagrid.config.clickCallBack,
 	    data: [],
@@ -137,45 +139,50 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
   	if(!_.isEmpty(formatArr)){
   		$.each(formatArr,function(index,elem){
   			
-  			var url = elem["loadUrl"];//请求url
+  			var obj = {};
+  			obj["labelField"] = elem["labelField"];
+				obj["valueField"] = elem["valueField"];
   			
-  			if(!_.isEmpty(url)){
+  			var formatType = elem["formatType"];//格式化类型
+  			
+  			if(formatType == "server"){
+  				var url = elem["loadUrl"];//请求url
   				
-  				var inputs =elem["inputs"];
-  		    var param = {};//参数
-  				if(!_.isEmpty(inputs))
-  				{
-  					var inputArr = _.split(inputs, ',');
-  					_(inputArr).forEach(function(v) {
-  						var paramArr = _.split(v, ':',2);
-  						if(!_.isEmpty(paramArr[0]))
-  						{
-  							param[paramArr[0]] = paramArr[1];
-  						}
-  					});
+  				if(!_.isEmpty(url)){
   					
+  					var inputs =elem["inputs"];
+  					var param = {};//参数
+  					if(!_.isEmpty(inputs))
+  					{
+  						var inputArr = _.split(inputs, ',');
+  						_(inputArr).forEach(function(v) {
+  							var paramArr = _.split(v, ':',2);
+  							if(!_.isEmpty(paramArr[0]))
+  							{
+  								param[paramArr[0]] = paramArr[1];
+  							}
+  						});
+  						
+  					}
+  					
+  					common.invoke(url,param,function(result){
+  						if(result[statusName] == "0")
+  						{
+  							var list = _.result(result,dataName);
+  							obj["list"] = list;
+  						}
+  						else
+  						{
+  							//提示错误消息
+  							common.errorMsg(result[msgName]);
+  						}
+  					},true);
   				}
-  				
-  				common.invoke(url,param,function(result){
-  					if(result[statusName] == "0")
-  			  	{
-  						var list = _.result(result,dataName);
-  						
-  						var obj = {};
-  						obj["list"] = list;
-  						obj["labelField"] = elem["labelField"];
-  						obj["valueField"] = elem["valueField"];
-  						
-  						fsData[elem["field"]] = obj ;
-  						
-  			  	}
-  					else
-  			  	{
-  			  		//提示错误消息
-  			  		common.errorMsg(result[msgName]);
-  			  	}
-  				},true);
+  			}else if(formatType == "local"){
+  				obj["dict"] = elem["dict"];
   			}
+  			
+  			fsData[elem["field"]] = obj ;
   			
   		});
   	}

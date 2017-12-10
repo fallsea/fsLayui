@@ -20,6 +20,7 @@
 	<script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="/plugins/jquery/lodash.min.js"></script>
 	<script type="text/javascript" src="/plugins/jquery/jquery.formautofill.js"></script>
+	<script type="text/javascript" src="/plugins/frame/js/fsDict.js?v=1.3.1"></script>
 	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.2.0"></script>
 	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.2.0"></script>
 </head>
@@ -30,7 +31,7 @@
 	  <div class="layui-form-item">
 	    <label class="layui-form-label">名称</label>
 	    <div class="layui-input-block">
-	      <input type="text" name="name" required=""  lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input"/>
+	      <input type="text" name="name" required="" lay-verType="tips" lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input"/>
 	    </div>
 	  </div>
 	  <div class="layui-form-item">
@@ -55,13 +56,7 @@
 	  <div class="layui-form-item">
 	    <label class="layui-form-label">城市</label>
 	    <div class="layui-input-inline">
-	      <select name="city" lay-verify="required">
-	        <option value=""></option>
-	        <option value="0">北京</option>
-	        <option value="1">上海</option>
-	        <option value="2">广州</option>
-	        <option value="3">深圳</option>
-	        <option value="4">杭州</option>
+	      <select name="city" lay-verify="required"  lay-verType="tips" class="fsSelect" formatType="local" dict="city" labelField="name" valueField="code" addNull="1">
 	      </select>
 	    </div>
 	    <label class="layui-form-label">创建时间</label>

@@ -20,8 +20,8 @@
 	<script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="/plugins/jquery/lodash.min.js"></script>
 	<script type="text/javascript" src="/plugins/jquery/jquery.formautofill.js"></script>
-	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.0.5"></script>
-	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.0.5"></script>
+	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.3.1"></script>
+	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.3.1"></script>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -88,7 +88,7 @@
 	        	<button class="layui-btn" function="top" topUrl="../datagrid/add.html" topWidth="800px" topHeight="600px" topTitle="新增demo">
 				  <i class="layui-icon">&#xe654;</i>新增
 				</button>
-				<button class="layui-btn layui-btn-danger" function="submit" url="/fsbus/1002" isSelect="1" isConfirm="1" confirmMsg="是否确定删除选中的数据？" inputs="id:">
+				<button class="layui-btn layui-btn-danger" function="submit" url="/fsbus/1002" isMutiDml="1" isConfirm="1" confirmMsg="是否确定删除选中的数据？" inputs="id:">
 				  <i class="layui-icon">&#xe640;</i>删除
 				</button>
 				<button class="layui-btn" function="refresh">
@@ -149,7 +149,7 @@
 	        	<button class="layui-btn" function="top" topUrl="../datagrid/add.html" tableId="fsDatagrid2" topWidth="800px" topHeight="600px" topTitle="新增demo">
 				  <i class="layui-icon">&#xe654;</i>新增
 				</button>
-				<button class="layui-btn layui-btn-danger" function="submit" tableId="fsDatagrid2" url="/fsbus/1002" isSelect="1" isConfirm="1" confirmMsg="是否确定删除选中的数据？" inputs="id:">
+				<button class="layui-btn layui-btn-danger" function="submit" tableId="fsDatagrid2" url="/fsbus/1002" isMutiDml="1" isConfirm="1" confirmMsg="是否确定删除选中的数据？" inputs="id:">
 				  <i class="layui-icon">&#xe640;</i>删除
 				</button>
 				<button class="layui-btn" function="refresh" tableId="fsDatagrid2">

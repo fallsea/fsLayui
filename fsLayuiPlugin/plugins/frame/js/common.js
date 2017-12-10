@@ -2,7 +2,7 @@
  * @Description: 通用组件
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.3.0
+ * @version 1.3.1
  * @date: 2017年11月12日 上午12:08:17
  */
 layui.define(['layer','form','fsConfig'], function (exports) {
@@ -12,7 +12,8 @@ layui.define(['layer','form','fsConfig'], function (exports) {
     fsConfig = layui.fsConfig,
     statusName = _.result(fsConfig,"global.result.statusName","errorNo"),
     msgName = _.result(fsConfig,"global.result.msgName","errorInfo"),
-    dataName = _.result(fsConfig,"global.result.dataName","results.data");
+    dataName = _.result(fsConfig,"global.result.dataName","results.data"),
+  	servletUrl = _.result(fsConfig,"global.servletUrl");
   
   var common = {
 
@@ -48,7 +49,6 @@ layui.define(['layer','form','fsConfig'], function (exports) {
     },
     invoke : function (url,param,callBackFunc,async)
     {
-      var servletUrl = _.result(fsConfig,"global.servletUrl");
       if(!_.isEmpty(servletUrl)){
         url = servletUrl + url;
       }
@@ -235,7 +235,7 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 			    		{
 			    			//获取选中的数据
   			    		var data = getCheckData(_tableId);
-  			    		param = common.getParamByInputs(inputs,data[0]);
+  			    		param = common.getParamByInputs(inputs,data);
 			    		}
 	    				
 	    				

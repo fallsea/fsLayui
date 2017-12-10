@@ -7,7 +7,7 @@
  */
 layui.config({
   base : "/plugins/frame/js/",
-	version : '1.2.0'
+	version : '1.3.1'
 });
 
 var fsData = {};//全局变量
@@ -19,11 +19,22 @@ layui.fsUtil={};
 layui.fsUtil.toDict = function(field,value){
 	var data = fsData[field];
 	var _value = "";
-	if(!_.isEmpty(data) && !_.isEmpty(field) && !_.isEmpty(value) && !_.isEmpty(data["list"]) && !_.isEmpty(data["labelField"]) && !_.isEmpty(data["valueField"])){
+	
+	if(!_.isEmpty(data) && !_.isEmpty(field) && !_.isEmpty(value) && !_.isEmpty(data["labelField"]) && !_.isEmpty(data["valueField"])){
 		var labelField = data["labelField"];
 		var valueField = data["valueField"];
 		
-		$.each(data["list"],function(index,elem){
+		var list;
+		
+		if(_.isEmpty(data["dict"])){
+			list = data["list"];
+		}else{
+			//获取本地数据
+			list = _.result(fsDict,data["dict"]);
+		}
+		
+		
+		$.each(list,function(index,elem){
 			if(_.eq(elem[valueField],value)){
 				_value = elem[labelField];
 				return false;
@@ -176,9 +187,10 @@ layui.fsUtil.toDict = function(field,value){
   			}
   			
   			
-  			if(!_.isEmpty(_this.attr("format"))){
+  			if(!_.isEmpty(_this.attr("formatType"))){
   				
   				var format = {};
+  				format["formatType"] = _this.attr("formatType");
   				if(!_.isEmpty(_this.attr("loadUrl"))){
   					format["loadUrl"] = _this.attr("loadUrl");
     			}
@@ -191,11 +203,19 @@ layui.fsUtil.toDict = function(field,value){
   				if(!_.isEmpty(_this.attr("valueField"))){
   					format["valueField"] = _this.attr("valueField");
     			}
+  				var dict = _this.attr("dict");
+  				if(!_.isEmpty(dict)){
+  					format["dict"] = dict;
+    			}else{
+    				dict="";
+    			}
+  				
   				format["field"] = field;
+  				
   				formatArr.push(format);
   				
   				//自定义模板
-  				col["templet"] = "<div>{{ layui.fsUtil.toDict('"+field+"',d."+field+") }}</div>";
+  				col["templet"] = "<div>{{ layui.fsUtil.toDict('"+field+"',d."+field+",'"+dict+"') }}</div>";
   				
   			}
   			

@@ -2,7 +2,7 @@
  * @Description: 基础配置
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.1.1
+ * @version 1.3.1
  * @date: 2017年11月11日 下午3:51:35
  */
 layui.define([], function (exports) {
@@ -43,6 +43,8 @@ layui.define([], function (exports) {
 				"dataName" : "results.data", //数据列表的字段名称，默认：results.data
 				"dataNamePage": "results.data.list" //分页数据列表的字段名称，默认：results.data.list
 			}
+//			"limit":10,//每页分页数量。默认20
+//			"limits":[10,20,30,50,100]//每页数据选择项，默认[10,20,30,50,100]
 		}
 	};
 	

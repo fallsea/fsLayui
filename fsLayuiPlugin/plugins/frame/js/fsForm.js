@@ -2,7 +2,7 @@
  * @Description: form表单工具
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.3.0
+ * @version 1.3.1
  * @date: 2017年11月5日 上午11:30:20
  */
 layui.define(['layer',"common","form",'laydate',"fsConfig",'layedit'], function(exports){
@@ -174,76 +174,95 @@ layui.define(['layer',"common","form",'laydate',"fsConfig",'layedit'], function(
 	 */
 	FsForm.prototype.loadSelectData =function(_this,b,value){
 		var thisForm = this;
-		var funcNo = _this.attr("loadFuncNo");
-    var url = _this.attr("loadUrl");//请求url
-    var inputs = _this.attr("inputs");
-    var param = {};//参数
-		if(!_.isEmpty(inputs))
-		{
-			var inputArr = _.split(inputs, ',');
-			_(inputArr).forEach(function(v) {
-				var paramArr = _.split(v, ':',2);
-				if(!_.isEmpty(paramArr[0]))
-				{
-					//获取参数值，如果值为空，获取选中行数据
-					var _vaule = paramArr[1];
-					if(_.isEmpty(_vaule))
-					{
-						_vaule = value;
-					}
-					param[paramArr[0]] = _vaule;
-				}
-			});
-			
-		}
-    if(_.isEmpty(url)){
-      url = "/fsbus/" + funcNo;
-    }
-    var addNull = _this.attr("addNull");//是否显示空值，1 显示
-    
+		
+		var addNull = _this.attr("addNull");//是否显示空值，1 显示
     var isLoad = _this.attr("isLoad");//是否自动加载，1 是
-    
     _this.empty();//清空
-    
     if(addNull == "1"){
     	_this.append("<option></option>");
     }
-   	if(!_.isEmpty(url) && (isLoad !="0" || b)){
-   		common.invoke(url,param,function(data){
-				if(data[statusName] == "0")
-		  	{
-					var labelField = _this.attr("labelField");//显示的列
-					var valueField = _this.attr("valueField");//value值
-					
-					var list = _.result(data,dataName);
-					
-					$(list).each(function(i,v){
-						var option="<option value=\""+v[valueField]+"\">"+v[labelField]+"</option>";
-						_this.append(option);
-					});
-					
-					//默认值
-					var defaultValue = selectVals[_this.attr("name")];
-					if(!_.isEmpty(defaultValue)){
-						_this.val(defaultValue);
-						//如果有子联动，继续渲染
-						var childrenSelectId = _this.attr("childrenSelectId");
-						if(!_.isEmpty(childrenSelectId)){
-							thisForm.renderSelect($("#"+childrenSelectId),true,defaultValue);
-						}
-						
-					}
-					form.render("select"); //更新全部
-		  	}
-		  	else
-		  	{
-		  		//提示错误消息
-		  		common.errorMsg(data[msgName]);
-		  	}
-		  });
-   	}
-	}
+    
+    var formatType = _this.attr("formatType");//格式化类型
+    if(_.isEmpty(formatType) || formatType == "server"){
+    	var funcNo = _this.attr("loadFuncNo");
+    	var url = _this.attr("loadUrl");//请求url
+    	var inputs = _this.attr("inputs");
+    	var param = {};//参数
+    	if(!_.isEmpty(inputs))
+    	{
+    		var inputArr = _.split(inputs, ',');
+    		_(inputArr).forEach(function(v) {
+    			var paramArr = _.split(v, ':',2);
+    			if(!_.isEmpty(paramArr[0]))
+    			{
+    				//获取参数值，如果值为空，获取选中行数据
+    				var _vaule = paramArr[1];
+    				if(_.isEmpty(_vaule))
+    				{
+    					_vaule = value;
+    				}
+    				param[paramArr[0]] = _vaule;
+    			}
+    		});
+    		
+    	}
+    	if(_.isEmpty(url)){
+    		url = "/fsbus/" + funcNo;
+    	}
+    	
+    	if(!_.isEmpty(url) && (isLoad !="0" || b)){
+    		common.invoke(url,param,function(data){
+    			if(data[statusName] == "0")
+    			{
+    				var list = _.result(data,dataName);
+    				thisForm.selectDataRender(_this,list);
+    			}
+    			else
+    			{
+    				//提示错误消息
+    				common.errorMsg(data[msgName]);
+    			}
+    		});
+    	}
+    }else if(formatType == "local"){
+    	
+    	var dict = _this.attr("dict");
+    	if(!_.isEmpty(dict)){
+    		var list = _.result(fsDict,dict);
+    		thisForm.selectDataRender(_this,list);
+    	}
+    	
+    }
+    
+	};
 	
+	/**
+	 * select数据渲染
+	 */
+	FsForm.prototype.selectDataRender = function(_this,list){
+		var thisForm = this;
+		
+		var labelField = _this.attr("labelField");//显示的列
+		var valueField = _this.attr("valueField");//value值
+		
+		$(list).each(function(i,v){
+			var option="<option value=\""+v[valueField]+"\">"+v[labelField]+"</option>";
+			_this.append(option);
+		});
+		
+		//默认值
+		var defaultValue = selectVals[_this.attr("name")];
+		if(!_.isEmpty(defaultValue)){
+			_this.val(defaultValue);
+			//如果有子联动，继续渲染
+			var childrenSelectId = _this.attr("childrenSelectId");
+			if(!_.isEmpty(childrenSelectId)){
+				thisForm.renderSelect($("#"+childrenSelectId),true,defaultValue);
+			}
+			
+		}
+		form.render("select"); //更新全部
+	};
 	
 	/**
 	 * 自动填充form表单数据
