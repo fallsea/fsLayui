@@ -61,7 +61,7 @@ qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k
 
 ## 版本号规范
 
-> 版本号遵循[语义化版本2.0.0](http://www.itcto.cn/news/%E8%AF%AD%E4%B9%89%E5%8C%96%E7%89%88%E6%9C%AC2/)
+> [语义化版本2.0.0](http://www.itcto.cn/news/%E8%AF%AD%E4%B9%89%E5%8C%96%E7%89%88%E6%9C%AC2/)
 
 
 ## 效果图
