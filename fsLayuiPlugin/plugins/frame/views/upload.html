@@ -43,11 +43,11 @@
 	</div>
 </body>
 <script>
-layui.use(['upload','layer','fsConfig','common'], function(){
+layui.use(['upload','layer','fsConfig','fsCommon'], function(){
   var upload = layui.upload,
   fsConfig = layui.fsConfig,
   layer = layui.layer,
-  common = layui.common,
+  fsCommon = layui.fsCommon,
   isSelectFile = false,//是否选择文件，默认false
   statusName = _.result(fsConfig,"global.result.statusName","errorNo"),
   msgName = _.result(fsConfig,"global.result.msgName","errorInfo"),
@@ -58,7 +58,7 @@ layui.use(['upload','layer','fsConfig','common'], function(){
   
   
   //获取参数
-  var paramUrl = common.getUrlParam();
+  var paramUrl = fsCommon.getUrlParam();
   
   var fileAccept,fileExts,fileSize;
   
@@ -72,9 +72,11 @@ layui.use(['upload','layer','fsConfig','common'], function(){
   delete paramUrl["fileParam"];
   
   //绑定默认按钮
-  common.buttionEvent();
+  fsCommon.buttionEvent();
   
-	//选完文件后不自动上传
+  var loadIndex;
+  
+  //选完文件后不自动上传
   upload.render({
     elem: '.layui-upload-drag'
     ,url: uploadUrl
@@ -85,11 +87,11 @@ layui.use(['upload','layer','fsConfig','common'], function(){
     ,auto: false
     ,before: function(){
     	if(!isSelectFile){
-    		common.warnMsg("请选择文件！");
+    		fsCommon.warnMsg("请选择文件！");
     		return;
     	}
     	
-    	layer.load(); //上传loading
+    	loadIndex = layer.load(); //上传loading
     }
     //,multiple: true
     ,bindAction: '#upload'
@@ -100,7 +102,7 @@ layui.use(['upload','layer','fsConfig','common'], function(){
     	})
     }
     ,done: function(result){
-		layer.closeAll('loading'); //关闭loading
+		layer.closeAll(loadIndex); //关闭loading
 		
 		if(result[statusName] != "0"){
 			var filters = fsConfig["filters"];
@@ -111,7 +113,7 @@ layui.use(['upload','layer','fsConfig','common'], function(){
 	      	      return;
 	     	   }
 		    }
-	   		common.errorMsg(result[msgName]);
+	   		fsCommon.errorMsg(result[msgName]);
 	   		return;
 		}
 		
@@ -126,7 +128,7 @@ layui.use(['upload','layer','fsConfig','common'], function(){
 		
     },
     error: function(index, upload){
-		layer.closeAll('loading'); //关闭loading
+		layer.closeAll(loadIndex); //关闭loading
     }
   });
 

@@ -2,11 +2,11 @@
  * @Description: datagrid工具
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.3.0
+ * @version 1.4.0
  * @date: 2017年11月5日 上午11:26:44
  */
-layui.define(["common","table",'laypage','fsConfig'], function(exports){
-  var common = layui.common,
+layui.define(["fsCommon","table",'laypage','fsConfig'], function(exports){
+  var fsCommon = layui.fsCommon,
   table = layui.table,
   laypage = layui.laypage,
   fsConfig = layui.fsConfig,
@@ -29,7 +29,7 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
     $.extend(true, thisDatagrid.config, options);
     
     if(_.isEmpty(thisDatagrid.config.id)){
-      common.warnMsg("表格id不能为空!");
+    	fsCommon.warnMsg("表格id不能为空!");
       return;
     }
     
@@ -137,11 +137,18 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
    */
   FsDatagrid.prototype.formatDataQuery = function(formatArr){
   	if(!_.isEmpty(formatArr)){
-  		$.each(formatArr,function(index,elem){
+  		$.each(formatArr,function(index,dict){
   			
-  			var obj = {};
+  			/*var obj = {};
   			obj["labelField"] = elem["labelField"];
 				obj["valueField"] = elem["valueField"];
+				obj["spaceMode"] = elem["spaceMode"];*/
+				
+  			var elem = layui.fsDict[dict];
+  			
+  			if(_.isEmpty(elem)){
+  				return false;
+  			}
   			
   			var formatType = elem["formatType"];//格式化类型
   			
@@ -165,24 +172,20 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
   						
   					}
   					
-  					common.invoke(url,param,function(result){
+  					fsCommon.invoke(url,param,function(result){
   						if(result[statusName] == "0")
   						{
   							var list = _.result(result,dataName);
-  							obj["list"] = list;
+  							elem["data"]=list;
   						}
   						else
   						{
   							//提示错误消息
-  							common.errorMsg(result[msgName]);
+  							fsCommon.errorMsg(result[msgName]);
   						}
   					},true);
   				}
-  			}else if(formatType == "local"){
-  				obj["dict"] = elem["dict"];
   			}
-  			
-  			fsData[elem["field"]] = obj ;
   			
   		});
   	}
@@ -248,7 +251,7 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
             confirmMsg="是否确定操作选中的数据?";
           }
           
-          common.confirm("提示", confirmMsg, function(index)
+          fsCommon.confirm("提示", confirmMsg, function(index)
           {
             layer.close(index);
             var funcNO = _this.attr("funcNo");
@@ -256,7 +259,7 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
             var url = _this.attr("url");//请求url
             
             if(_.isEmpty(funcNO) && _.isEmpty(url)){
-              common.warnMsg("功能号或请求地址为空！");
+            	fsCommon.warnMsg("功能号或请求地址为空！");
               return;
             }
             
@@ -269,22 +272,22 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
             var inputs = _this.attr("inputs");
             var param = {};//参数
             if(!_.isEmpty(inputs)){
-              param = common.getParamByInputs(inputs,data);
+              param = fsCommon.getParamByInputs(inputs,data);
             }
             
             //请求数据
-            common.invoke(url,param,function(data)
+            fsCommon.invoke(url,param,function(data)
             {
               if(data[statusName] == "0")
               {
-                common.setRefreshTable("1");
+              	fsCommon.setRefreshTable("1");
                 getDatagrid(tableId).refresh();
-                common.successMsg('操作成功!');
+                fsCommon.successMsg('操作成功!');
               }
               else
               {
                 //提示错误消息
-                common.errorMsg(data[msgName]);
+              	fsCommon.errorMsg(data[msgName]);
               }
             });
           });
@@ -293,7 +296,7 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
         var _url = _this.attr("topUrl");
         if(_.isEmpty(_url))
         {
-          common.warnMsg("url地址为空！");
+        	fsCommon.warnMsg("url地址为空！");
           return false;
         }
         
@@ -301,7 +304,7 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
         
         if(!_.isEmpty(inputs))
         {
-          _url = common.getUrlByInputs(_url,inputs,data);
+          _url = fsCommon.getUrlByInputs(_url,inputs,data);
         }
         var _title = _this.attr("topTitle");
         var _width = _this.attr("topWidth");
@@ -325,7 +328,7 @@ layui.define(["common","table",'laypage','fsConfig'], function(exports){
           maxmin: true,
           content: _url,
           end: function(){
-            if(common.isRefreshTable())
+            if(fsCommon.isRefreshTable())
             {
               getDatagrid(tableId).refresh();
             }

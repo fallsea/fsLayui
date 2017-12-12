@@ -5,9 +5,9 @@
  * @version 1.0.4
  * @date: 2017年11月5日 上午11:30:37
  */
-layui.define(['layer',"common",'fsConfig'], function(exports){
+layui.define(['layer',"fsCommon",'fsConfig'], function(exports){
 	var layer = layui.layer,
-	common = layui.common,
+	fsCommon = layui.fsCommon,
 	fsConfig = layui.fsConfig,
 	statusName = _.result(fsConfig,"global.result.statusName","errorNo"),
 	msgName = _.result(fsConfig,"global.result.msgName","errorInfo"),
@@ -32,7 +32,7 @@ layui.define(['layer',"common",'fsConfig'], function(exports){
     $.extend(true, _this.config, options);
     
     if(_.isEmpty(_this.config.id)){
-			common.warnMsg("id不能为空!");
+    	fsCommon.warnMsg("id不能为空!");
 			return;
     }
     this.queryTree();
@@ -47,7 +47,7 @@ layui.define(['layer',"common",'fsConfig'], function(exports){
     var url = _this.config.url;//请求url
     
     if(_.isEmpty(funcNo) && _.isEmpty(url)){
-			common.warnMsg("功能号或请求地址为空!");
+    	fsCommon.warnMsg("功能号或请求地址为空!");
 			return;
 		}
 		if(_.isEmpty(url)){
@@ -97,14 +97,14 @@ layui.define(['layer',"common",'fsConfig'], function(exports){
 		var url = _this.config.url;//请求url
        
 		if(_.isEmpty(funcNo) && _.isEmpty(url)){
-			common.warnMsg("功能号或请求地址为空!");
+			fsCommon.warnMsg("功能号或请求地址为空!");
 			return;
 		}
 		if(_.isEmpty(url)){
 			url = "/fsbus/" + funcNo;
 		}
 		
-		common.invoke(url,{},function(data)
+		fsCommon.invoke(url,{},function(data)
 		{
 			if(data[statusName] == "0")
 			{
@@ -134,7 +134,7 @@ layui.define(['layer',"common",'fsConfig'], function(exports){
 		silent = false,
 		nodes = zTree.getSelectedNodes();
 		if (nodes.length == 0) {
-//			common.warnMsg("请选择节点刷新");
+//			fsCommon.warnMsg("请选择节点刷新");
 //			zTree.reAsyncChildNodes(null, type, silent);
 			return;
 		}

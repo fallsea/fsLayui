@@ -42,7 +42,7 @@ layui.define([], function (exports) {
 				"countName": "results.data.total", //数据总数的字段名称，默认：results.data.total
 				"dataName" : "results.data", //数据列表的字段名称，默认：results.data
 				"dataNamePage": "results.data.list" //分页数据列表的字段名称，默认：results.data.list
-			}
+			}//,
 //			"limit":10,//每页分页数量。默认20
 //			"limits":[10,20,30,50,100]//每页数据选择项，默认[10,20,30,50,100]
 		}

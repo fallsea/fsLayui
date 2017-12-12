@@ -20,9 +20,9 @@
 	<script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="/plugins/jquery/lodash.min.js"></script>
 	<script type="text/javascript" src="/plugins/jquery/jquery.formautofill.js"></script>
-	<script type="text/javascript" src="/plugins/frame/js/fsDict.js?v=1.3.1"></script>
-	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.2.0"></script>
-	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.2.0"></script>
+	<script type="text/javascript" src="/plugins/frame/js/fsDict.js?v=1.4.0"></script>
+	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.4.0"></script>
+	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.4.0"></script>
 </head>
 <body class="layui-layout-body">
 	<div class="layui-fluid">
@@ -56,7 +56,7 @@
 	  <div class="layui-form-item">
 	    <label class="layui-form-label">城市</label>
 	    <div class="layui-input-inline">
-	      <select name="city" lay-verify="required"  lay-verType="tips" class="fsSelect" formatType="local" dict="city" labelField="name" valueField="code" addNull="1">
+	      <select name="city" lay-verify="required"  lay-verType="tips" class="fsSelect" dict="city" addNull="1">
 	      </select>
 	    </div>
 	    <label class="layui-form-label">创建时间</label>
@@ -68,17 +68,17 @@
 	  <div class="layui-form-item">
 	    <label class="layui-form-label">省份</label>
 	    <div class="layui-input-inline" style="width: 100px;">
-	      <select name="area1" lay-filter="xxxxxx1" class="fsSelect" loadUrl="/fsbus/1005" inputs="parentid:0" labelField="name" valueField="id" addNull="1" childrenSelectId="xxxxxx2">
+	      <select name="area1" lay-filter="xxxxxx1" class="fsSelect" dict="area1" addNull="1" childrenSelectId="xxxxxx2">
 	      </select>
 	    </div>
 	    <label class="layui-form-label">城市</label>
 	    <div class="layui-input-inline" style="width: 100px;">
-	      <select id="xxxxxx2" name="area2" lay-filter="xxxxxx2" class="fsSelect" isLoad="0" loadUrl="/fsbus/1005" inputs="parentid:" labelField="name" valueField="id" addNull="1" childrenSelectId="xxxxxx3">
+	      <select id="xxxxxx2" name="area2" lay-filter="xxxxxx2" class="fsSelect" isLoad="0" dict="area2" addNull="1" childrenSelectId="xxxxxx3">
 	      </select>
 	    </div>
 	     <label class="layui-form-label">区</label>
 	    <div class="layui-input-inline" style="width: 100px;">
-	      <select id="xxxxxx3" name="area3" class="fsSelect" isLoad="0" loadUrl="/fsbus/1005" inputs="parentid:" labelField="name" valueField="id" addNull="1">
+	      <select id="xxxxxx3" name="area3" class="fsSelect" isLoad="0" dict="area3" addNull="1">
 	      </select>
 	    </div>
 	  </div>

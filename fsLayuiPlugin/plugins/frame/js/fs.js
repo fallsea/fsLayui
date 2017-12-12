@@ -2,7 +2,7 @@
  * @Description: 入口
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.3.0
+ * @version 1.4.0
  * @date: 2017年11月12日 上午12:09:00
  */
 layui.config({
@@ -10,35 +10,50 @@ layui.config({
 	version : '1.3.1'
 });
 
-var fsData = {};//全局变量
-
 layui.fsUtil={};
 /**
- * 转移字典工具
+ * 转义字典工具
  */
-layui.fsUtil.toDict = function(field,value){
-	var data = fsData[field];
+layui.fsUtil.toDict = function(dict,value){
+	var data = layui.fsDict[dict];
 	var _value = "";
-	
-	if(!_.isEmpty(data) && !_.isEmpty(field) && !_.isEmpty(value) && !_.isEmpty(data["labelField"]) && !_.isEmpty(data["valueField"])){
+	if(!_.isEmpty(data) && !_.isEmpty(dict) && !_.isEmpty(value) && !_.isEmpty(data["labelField"]) && !_.isEmpty(data["valueField"])){
+		
 		var labelField = data["labelField"];
 		var valueField = data["valueField"];
 		
-		var list;
+		var list=data["data"];
 		
-		if(_.isEmpty(data["dict"])){
-			list = data["list"];
-		}else{
-			//获取本地数据
-			list = _.result(fsDict,data["dict"]);
+//		alert(list);
+		
+		//分割方式，默认,
+		var spaceMode = data["spaceMode"];
+		if(_.isEmpty(spaceMode)){
+			spaceMode=",";
 		}
 		
+		//value 多个,分割，循环处理
 		
-		$.each(list,function(index,elem){
-			if(_.eq(elem[valueField],value)){
-				_value = elem[labelField];
-				return false;
-			}
+		$.each(_.split(value, ','),function(i,e){
+			
+			$.each(list,function(index,elem){
+				if(_.eq(elem[valueField],e)){
+					if(!_.isEmpty(_value)){
+						_value += spaceMode;
+					}
+					if(!_.isEmpty(elem[labelField])){
+						var css = elem["css"];//样式处理
+						var style = elem["style"];
+						if(!_.isEmpty(css) || !_.isEmpty(style)){
+							_value += "<span class=\""+css+"\" style=\""+style+"\">"+elem[labelField]+"</span>";
+						}else{
+							_value += elem[labelField];
+						}
+					}
+					return false;
+				}
+			});
+			
 		});
 		return _value;
 	}
@@ -185,40 +200,16 @@ layui.fsUtil.toDict = function(field,value){
   			if(!_.isEmpty(_this.attr("event"))){
   				col["event"] = _this.attr("event");
   			}
+  			var dict = _this.attr("dict");
   			
-  			
-  			if(!_.isEmpty(_this.attr("formatType"))){
+  			if(!_.isEmpty(dict)){
   				
-  				var format = {};
-  				format["formatType"] = _this.attr("formatType");
-  				if(!_.isEmpty(_this.attr("loadUrl"))){
-  					format["loadUrl"] = _this.attr("loadUrl");
-    			}
-  				if(!_.isEmpty(_this.attr("inputs"))){
-  					format["inputs"] = _this.attr("inputs");
-    			}
-  				if(!_.isEmpty(_this.attr("labelField"))){
-  					format["labelField"] = _this.attr("labelField");
-    			}
-  				if(!_.isEmpty(_this.attr("valueField"))){
-  					format["valueField"] = _this.attr("valueField");
-    			}
-  				var dict = _this.attr("dict");
-  				if(!_.isEmpty(dict)){
-  					format["dict"] = dict;
-    			}else{
-    				dict="";
-    			}
-  				
-  				format["field"] = field;
-  				
-  				formatArr.push(format);
+  				formatArr.push(dict);
   				
   				//自定义模板
   				col["templet"] = "<div>{{ layui.fsUtil.toDict('"+field+"',d."+field+",'"+dict+"') }}</div>";
   				
   			}
-  			
   			colsArr.push(col);
       			
 			}else {//工具条

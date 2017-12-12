@@ -15,7 +15,7 @@ layui.define(['layer','form','fsConfig'], function (exports) {
     dataName = _.result(fsConfig,"global.result.dataName","results.data"),
   	servletUrl = _.result(fsConfig,"global.servletUrl");
   
-  var common = {
+  var fsCommon = {
 
     /**错误msg提示 */
   	errorMsg:function (text) {
@@ -45,7 +45,7 @@ layui.define(['layer','form','fsConfig'], function (exports) {
     invokeServer : function (funcNo,param,callBackFunc,async)
     {
       var url = "/fsbus/" + funcNo;
-    	common.invoke(url, param, callBackFunc,async);
+      fsCommon.invoke(url, param, callBackFunc,async);
     },
     invoke : function (url,param,callBackFunc,async)
     {
@@ -79,13 +79,13 @@ layui.define(['layer','form','fsConfig'], function (exports) {
         error : function (XMLHttpRequest, textStatus, errorThrown)
         {
         	 if(textStatus=="404"){  
-                 common.errorMsg("请求地址出错!");
+        		 	fsCommon.errorMsg("请求地址出错!");
              }else if(textStatus=="302"){  
-            	 common.errorMsg('连接网页出错!');  
+            	 fsCommon.errorMsg('连接网页出错!');  
              }else if(textStatus=="timeout"){  
-            	 common.errorMsg("请求超时!");  
+            	 fsCommon.errorMsg("请求超时!");  
              }else{
-            	 common.errorMsg('请求异常!');  
+            	 fsCommon.errorMsg('请求异常!');  
              }
         },
         complete : function(XMLHttpRequest, textStatus)
@@ -193,12 +193,12 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 		    		var data = getCheckData(_tableId);
 		    		if(_.eq(data.length,0))
 		    		{
-		    			common.warnMsg("请选择需要操作的数据！");
+		    			fsCommon.warnMsg("请选择需要操作的数据！");
 		    			return;
 		    		}
 		    		if(_.eq("1",_this.attr("isSelect")) && _.gt(data.length,1))
 		    		{
-		    			common.warnMsg("请选择一行数据！");
+		    			fsCommon.warnMsg("请选择一行数据！");
 		    			return;
 		    		}
 	    		}
@@ -212,14 +212,14 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 	    				confirmMsg="是否确定操作选中的数据?";
 	    			}
 	    			
-	    			common.confirm("提示", confirmMsg, function(index)
+	    			fsCommon.confirm("提示", confirmMsg, function(index)
 	    			{
 	    				layer.close(index);
 	                      
               var url = _this.attr("url");//请求url
               
               if(_.isEmpty(_funcNo) && _.isEmpty(url)){
-                common.warnMsg("功能号或请求地址为空！");
+              	fsCommon.warnMsg("功能号或请求地址为空！");
                 return;
               }
               
@@ -235,25 +235,25 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 			    		{
 			    			//获取选中的数据
   			    		var data = getCheckData(_tableId);
-  			    		param = common.getParamByInputs(inputs,data);
+  			    		param = fsCommon.getParamByInputs(inputs,data);
 			    		}
 	    				
 	    				
 	    				//请求数据
-	    				common.invoke(url,param,function(data)
+			    		fsCommon.invoke(url,param,function(data)
   						{
 			        	if(data[statusName] == "0")
 			        	{
-			        		common.setRefreshTable("1");
+			        		fsCommon.setRefreshTable("1");
 			        		//刷新
 			        		getObj(_tableId).refresh();
 			        		
-			        		common.successMsg('操作成功!');
+			        		fsCommon.successMsg('操作成功!');
 			        	}
 			        	else
 			        	{
 			        		//提示错误消息
-			        		common.errorMsg(data[msgName]);
+			        		fsCommon.errorMsg(data[msgName]);
 			        	}
   						});
 	    			});
@@ -280,7 +280,7 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 	    		var _url = _this.attr("topUrl");
 	    		if(_.isEmpty(_url))
 	    		{
-	    			common.warnMsg("url地址为空！");
+	    			fsCommon.warnMsg("url地址为空！");
 	    			return false;
 	    		}
 	    		
@@ -290,12 +290,12 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 		    		var data = getCheckData(_tableId);
 		    		if(_.eq(data.length,0))
 		    		{
-		    			common.warnMsg("请选择需要操作的数据！");
+		    			fsCommon.warnMsg("请选择需要操作的数据！");
 		    			return;
 		    		}
 		    		if(_.gt(data.length,1))
 		    		{
-		    			common.warnMsg("请选择一行数据！");
+		    			fsCommon.warnMsg("请选择一行数据！");
 		    			return;
 		    		}
 	    		}
@@ -307,7 +307,7 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 	    		{
 	    			//获取选中的数据
 		    		var data = getCheckData(_tableId);
-		    		_url = common.getUrlByInputs(_url,inputs,data[0]);
+		    		_url = fsCommon.getUrlByInputs(_url,inputs,data[0]);
 	    		}
 	    		
 	    		
@@ -334,7 +334,7 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 					  maxmin: true,
 					  content: _url,
 					  end: function(){
-						  if(common.isRefreshTable())
+						  if(fsCommon.isRefreshTable())
 						  {
 							  getObj(_tableId).refresh();
 						  }
@@ -352,7 +352,7 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 	    		
 	    		if(!_.isEmpty(inputs))
 	    		{
-		    		 _url = common.getUrlByInputs(_url,inputs,null);
+		    		 _url = fsCommon.getUrlByInputs(_url,inputs,null);
 	    		}
 	    		
 	    		var fileParam = {};
@@ -408,7 +408,8 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 					if(!_.isEmpty(paramArr[0]))
 					{
 						//获取参数值，如果值为空，获取datagrid选中行数据
-						var _vaule = paramArr[1];
+						var _vaule = _.toString(paramArr[1]);
+						
 						if(_.isEmpty(_vaule))
 						{
 							//多结果集,分割
@@ -465,16 +466,16 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 						}
 						
 						//获取参数值，如果值为空，获取datagrid选中行数据
-						var _vaule = paramArr[1];
+						var _vaule = _.toString(paramArr[1]);
 						if(_.isEmpty(_vaule))//如果值为空或者值是#/$开头   $取参数，#取选择器
-	  					{
-				    		_vaule = data[paramArr[0]];
-	  					}else if(_.startsWith(_vaule,"$")){
-	  						_vaule = data[_vaule.substring(1)];
-	  					}else if(_.startsWith(_vaule,"#")){
-	  						_vaule = $(_vaule).val();
-	  					}
-						
+  					{
+			    		_vaule = data[paramArr[0]];
+  					}else if(_.startsWith(_vaule,"$")){
+  						_vaule = data[_vaule.substring(1)];
+  					}else if(_.startsWith(_vaule,"#")){
+  						_vaule = $(_vaule).val();
+  					}
+					
 						if(!_.isEmpty(_vaule)){
 							urlStr += paramArr[0] + "=" + _vaule;
 						}
@@ -503,7 +504,7 @@ layui.define(['layer','form','fsConfig'], function (exports) {
         })
     }
   };
-  exports('common', common);
+  exports('fsCommon', fsCommon);
 })
 
 

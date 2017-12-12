@@ -5,14 +5,12 @@
  * @version 1.1.1
  * @date: 2017年11月5日 下午12:45:13
  */
-layui.use(['fsForm','fsDatagrid','fsTree','common','element'], function(){
+layui.use(['fsForm','fsDatagrid','fsTree','fsCommon','element'], function(){
 	var fsForm = layui.fsForm,
 	fsDatagrid = layui.fsDatagrid,
 	fsTree = layui.fsTree,
 	element = layui.element;
-	common = layui.common;
-	
-	
+	fsCommon = layui.fsCommon;
 	
 	/********* form 表单处理   start *************/
 	var formDoms =$("form");
@@ -38,12 +36,12 @@ layui.use(['fsForm','fsDatagrid','fsTree','common','element'], function(){
         trees[treeId] = fsTree.render({id:treeId,funcNo:funcNo,url:url,clickCallback:clickCallback});
       });
     //绑定按钮事件
-    common.buttionEvent("tree",getTree,gettreeCheckData);
+    fsCommon.buttionEvent("tree",getTree,gettreeCheckData);
 	}
 	
 	function getTree(treeId){
     if(_.isEmpty(trees)){
-      common.warnMsg("未配置tree！");
+    	fsCommon.warnMsg("未配置tree！");
       return;
     }
     if(_.isEmpty(treeId)){
@@ -54,7 +52,7 @@ layui.use(['fsForm','fsDatagrid','fsTree','common','element'], function(){
 	
   function gettreeCheckData(treeId){
     if(_.isEmpty(trees)){
-      common.warnMsg("未配置tree！");
+    	fsCommon.warnMsg("未配置tree！");
       return;
     }
     if(_.isEmpty(treeId)){
@@ -89,7 +87,7 @@ layui.use(['fsForm','fsDatagrid','fsTree','common','element'], function(){
     if(!_.isEmpty(inputs))
     {
       //获取值存入form表单
-      var param = common.getParamByInputs(inputs,treeNode);
+      var param = fsCommon.getParamByInputs(inputs,treeNode);
       $("#"+defaultForm).setFormData(param);
     }
     if(!_.isEmpty(datagrids) && !_.isEmpty(datagrids[tableId])){
@@ -119,7 +117,7 @@ layui.use(['fsForm','fsDatagrid','fsTree','common','element'], function(){
   	  	
   	  	clickCallBack = function(data){
   	  		//获取参数
-  	  		var formData = common.getParamByInputs(clickRenderTableInputs,data);
+  	  		var formData = fsCommon.getParamByInputs(clickRenderTableInputs,data);
   	  		
   	  		//点击后，为查询form表单赋值
   	  		if(!_.isEmpty(defaultForm)){
@@ -135,10 +133,10 @@ layui.use(['fsForm','fsDatagrid','fsTree','common','element'], function(){
       _.set(datagrids,tableId,_.cloneDeep(datagrid));
       
     });
-    common.buttionEvent("datagrid",getDatagrid,getDatagridCheckData);
+    fsCommon.buttionEvent("datagrid",getDatagrid,getDatagridCheckData);
   }else{
     //按钮绑定
-    common.buttionEvent("datagrid");
+  	fsCommon.buttionEvent("datagrid");
   }
   
   
@@ -147,7 +145,7 @@ layui.use(['fsForm','fsDatagrid','fsTree','common','element'], function(){
       tableId = "fsDatagrid";
     }
     if(_.isEmpty(datagrids)){
-      common.warnMsg("未配置datagrid！");
+    	fsCommon.warnMsg("未配置datagrid！");
       return;
     }
     return datagrids[tableId];
@@ -157,7 +155,7 @@ layui.use(['fsForm','fsDatagrid','fsTree','common','element'], function(){
       tableId = "fsDatagrid";
     }
     if(_.isEmpty(datagrids)){
-      common.warnMsg("未配置datagrid！");
+    	fsCommon.warnMsg("未配置datagrid！");
       return;
     }
     return datagrids[tableId].getCheckData();

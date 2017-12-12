@@ -10,6 +10,8 @@ qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k
 
 `如果你觉得对你有说帮助，请Star关注一下，谢谢。`
 
+[我要点赞](http://fly.layui.com/case/u/1154664)
+
 
 ## 支持功能
 
@@ -20,7 +22,7 @@ qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k
 * 复杂表格增删改查
 * 联动表格增删改查
 * 联动下拉框(省市区级联等)
-* 数据表格异步转义(表格某个字段需要需要把代码填充中文名称)
+* 数据表格转义(例如：表格某个字段需要需要把代码填充中文名称)
 * 文件上传功能
 * layedit编辑器
 
@@ -57,6 +59,7 @@ qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k
 
 [13.fsLayuiPlugin数据表格动态转义](http://www.itcto.cn/layui/fsLayuiPlugin%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E5%8A%A8%E6%80%81%E8%BD%AC%E4%B9%89/)  
 
+[14.fsLayuiPlugin数据字典使用](http://www.itcto.cn/layui/fsLayuiPlugin%E6%95%B0%E6%8D%AE%E5%AD%97%E5%85%B8%E4%BD%BF%E7%94%A8/)  
 
 
 ## 版本号规范

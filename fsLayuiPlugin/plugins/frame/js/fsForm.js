@@ -2,12 +2,12 @@
  * @Description: form表单工具
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.3.1
+ * @version 1.4.0
  * @date: 2017年11月5日 上午11:30:20
  */
-layui.define(['layer',"common","form",'laydate',"fsConfig",'layedit'], function(exports){
+layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], function(exports){
   var layer = layui.layer,
-  common = layui.common,
+  fsCommon = layui.fsCommon,
   laydate = layui.laydate,
   fsConfig = layui.fsConfig,
   layedit = layui.layedit,
@@ -27,12 +27,12 @@ layui.define(['layer',"common","form",'laydate',"fsConfig",'layedit'], function(
 	
 	FsForm.prototype.render = function(options){
 		var thisForm = this;
-	    $.extend(true, thisForm.config, options);
-	    
-	    if(_.isEmpty(thisForm.config.id) && _.isEmpty(thisForm.config.elem)){
-			common.warnMsg("form选择器不能为空!");
-			return;
-		}
+    $.extend(true, thisForm.config, options);
+    
+    if(_.isEmpty(thisForm.config.id) && _.isEmpty(thisForm.config.elem)){
+    	fsCommon.warnMsg("form选择器不能为空!");
+    	return;
+    }
 	    
     if(!_.isEmpty(thisForm.config.id)){
       thisForm.config.elem = $("#"+thisForm.config.id);
@@ -181,12 +181,25 @@ layui.define(['layer',"common","form",'laydate',"fsConfig",'layedit'], function(
     if(addNull == "1"){
     	_this.append("<option></option>");
     }
+    var dict = _this.attr("dict");
+    if(_.isEmpty(dict)){
+    	return false;
+    }
     
-    var formatType = _this.attr("formatType");//格式化类型
+    var dictObj = layui.fsDict[dict];
+    
+    if(_.isEmpty(dictObj)){
+    	return false;
+    }
+    
+    var labelField = dictObj["labelField"];
+		var valueField = dictObj["valueField"];
+    
+    var formatType = dictObj["formatType"];//格式化类型
     if(_.isEmpty(formatType) || formatType == "server"){
-    	var funcNo = _this.attr("loadFuncNo");
-    	var url = _this.attr("loadUrl");//请求url
-    	var inputs = _this.attr("inputs");
+    	var funcNo = dictObj["loadFuncNo"];
+    	var url = dictObj["loadUrl"];//请求url
+    	var inputs = dictObj["inputs"];
     	var param = {};//参数
     	if(!_.isEmpty(inputs))
     	{
@@ -211,27 +224,23 @@ layui.define(['layer',"common","form",'laydate',"fsConfig",'layedit'], function(
     	}
     	
     	if(!_.isEmpty(url) && (isLoad !="0" || b)){
-    		common.invoke(url,param,function(data){
+    		fsCommon.invoke(url,param,function(data){
     			if(data[statusName] == "0")
     			{
     				var list = _.result(data,dataName);
-    				thisForm.selectDataRender(_this,list);
+    				thisForm.selectDataRender(_this,labelField,valueField,list);
     			}
     			else
     			{
     				//提示错误消息
-    				common.errorMsg(data[msgName]);
+    				fsCommon.errorMsg(data[msgName]);
     			}
     		});
     	}
     }else if(formatType == "local"){
     	
-    	var dict = _this.attr("dict");
-    	if(!_.isEmpty(dict)){
-    		var list = _.result(fsDict,dict);
-    		thisForm.selectDataRender(_this,list);
-    	}
-    	
+  		var list = dictObj["data"];
+  		thisForm.selectDataRender(_this,labelField,valueField,list);
     }
     
 	};
@@ -239,11 +248,8 @@ layui.define(['layer',"common","form",'laydate',"fsConfig",'layedit'], function(
 	/**
 	 * select数据渲染
 	 */
-	FsForm.prototype.selectDataRender = function(_this,list){
+	FsForm.prototype.selectDataRender = function(_this,labelField,valueField,list){
 		var thisForm = this;
-		
-		var labelField = _this.attr("labelField");//显示的列
-		var valueField = _this.attr("valueField");//value值
 		
 		$(list).each(function(i,v){
 			var option="<option value=\""+v[valueField]+"\">"+v[labelField]+"</option>";
@@ -270,7 +276,7 @@ layui.define(['layer',"common","form",'laydate',"fsConfig",'layedit'], function(
 	FsForm.prototype.loadFormData = function(){
     var thisForm = this;
 		//参数处理，如果有参数，自动填充form表单
-		var urlParam = common.getUrlParam();
+		var urlParam = fsCommon.getUrlParam();
 		if(!_.isEmpty(urlParam)){
 			$(thisForm.config.elem).setFormData(urlParam);
 		}
@@ -284,12 +290,12 @@ layui.define(['layer',"common","form",'laydate',"fsConfig",'layedit'], function(
       if(_.isEmpty(url)){
         url = "/fsbus/" + funcNo;
       }
-			common.invoke(url,urlParam,function(data){
+      fsCommon.invoke(url,urlParam,function(data){
 				if(data[statusName] == "0")
 		  	{
 					var formData = _.result(data,dataName);
 					if(_.isEmpty(formData)){
-						common.errorMsg("记录不存在!");
+						fsCommon.errorMsg("记录不存在!");
 						return;
 					}
 					formDom.setFormData(formData);
@@ -315,7 +321,7 @@ layui.define(['layer',"common","form",'laydate',"fsConfig",'layedit'], function(
 		  	else
 		  	{
 		  		//提示错误消息
-		  		common.errorMsg(data[msgName]);
+		  		fsCommon.errorMsg(data[msgName]);
 		  	}
 		  });
 			  
@@ -370,7 +376,7 @@ layui.define(['layer',"common","form",'laydate',"fsConfig",'layedit'], function(
     var url = _this.attr("url");//请求url
   	var funcNo = _this.attr("funcNo");
   	if(_.isEmpty(funcNo) && _.isEmpty(url)){
-  		common.warnMsg('功能号或请求地址为空!');
+  		fsCommon.warnMsg('功能号或请求地址为空!');
   		return;
   	}
   	if(_.isEmpty(url)){
@@ -383,12 +389,12 @@ layui.define(['layer',"common","form",'laydate',"fsConfig",'layedit'], function(
   	});
   	
   	
-  	common.invoke(url,param,function(data)
+  	fsCommon.invoke(url,param,function(data)
 		{
     	if(data[statusName] == "0")
     	{
-    		common.successMsg('操作成功!');
-    		common.setRefreshTable("1");
+    		fsCommon.successMsg('操作成功!');
+    		fsCommon.setRefreshTable("1");
     		
     		//是否自动关闭，默认是
     		if(!_.eq(_this.attr("isClose"), "0")){
@@ -398,7 +404,7 @@ layui.define(['layer',"common","form",'laydate',"fsConfig",'layedit'], function(
     	else
     	{
     		//提示错误消息
-    		common.errorMsg(data[msgName]);
+    		fsCommon.errorMsg(data[msgName]);
     	}
 		});
   };
