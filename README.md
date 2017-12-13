@@ -35,32 +35,36 @@ qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k
 
 [1.fsLayuiPlugin介绍](http://www.itcto.cn/layui/fsLayuiPlugin%E4%BB%8B%E7%BB%8D/)  
 
-[2.fsLayuiPlugin快速开始](http://www.itcto.cn/layui/fsLayuiPlugin%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B/)
+[2.fsLayuiPlugin入门使用](http://www.itcto.cn/layui/fsLayuiPlugin%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/)
 
-[3.fsLayuiPlugin配置说明](http://www.itcto.cn/layui/fsLayuiPlugin%E9%85%8D%E7%BD%AE%E8%AF%B4%E6%98%8E/)
+[3.fsLayuiPlugin快速开始](http://www.itcto.cn/layui/fsLayuiPlugin%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B/)
 
-[4.fsLayuiPlugin数据表格使用](http://www.itcto.cn/layui/fsLayuiPlugin%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E4%BD%BF%E7%94%A8/)  
+[4.fsLayuiPlugin配置说明](http://www.itcto.cn/layui/fsLayuiPlugin%E9%85%8D%E7%BD%AE%E8%AF%B4%E6%98%8E/)
 
-[5.fsLayuiPlugin数据表格弹出form表单使用说明](http://www.itcto.cn/layui/fsLayuiPlugin%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E5%BC%B9%E5%87%BAform%E8%A1%A8%E5%8D%95%E8%AF%B4%E6%98%8E/)  
+[5.fsLayuiPlugin数据表格使用](http://www.itcto.cn/layui/fsLayuiPlugin%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E4%BD%BF%E7%94%A8/)  
 
-[6.fsLayuiPlugin文件上传使用说明](http://www.itcto.cn/layui/fsLayuiPlugin%E9%99%84%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/)  
+[6.fsLayuiPlugin数据表格弹出form表单使用说明](http://www.itcto.cn/layui/fsLayuiPlugin%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E5%BC%B9%E5%87%BAform%E8%A1%A8%E5%8D%95%E8%AF%B4%E6%98%8E/)  
 
-[7.fsLayuiPlugin联动表格使用(一)](http://www.itcto.cn/layui/linkageDatagrid/)  
+[7.fsLayuiPlugin文件上传使用说明](http://www.itcto.cn/layui/fsLayuiPlugin%E9%99%84%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/)  
 
-[8.fsLayuiPlugin联动表格使用(二)](http://www.itcto.cn/layui/linkageDatagrid2/)  
+[8.fsLayuiPlugin联动表格使用(一)](http://www.itcto.cn/layui/linkageDatagrid/)  
 
-[9.fsLayuiPlugin树+数据表格使用](http://www.itcto.cn/layui/fsLayuiPlugin%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E6%A0%91%E4%BD%BF%E7%94%A8/)  
+[9.fsLayuiPlugin联动表格使用(二)](http://www.itcto.cn/layui/linkageDatagrid2/)  
 
-[10.fsLayuiPlugin多数据表格使用](http://www.itcto.cn/layui/%E5%A4%9A%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E4%BD%BF%E7%94%A8/)  
+[10.fsLayuiPlugin树+数据表格使用](http://www.itcto.cn/layui/fsLayuiPlugin%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E6%A0%91%E4%BD%BF%E7%94%A8/)  
 
-[11.fsLayuiPlugin联动下拉框使用(下拉框异步加载数据)](http://www.itcto.cn/layui/fsLayuiPluginSelect/)  
+[11.fsLayuiPlugin多数据表格使用](http://www.itcto.cn/layui/%E5%A4%9A%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E4%BD%BF%E7%94%A8/)  
 
-[12.fsLayuiPlugin富文本编辑器使用(layedit)](http://www.itcto.cn/layui/fsLayuiPluginLayedit/)  
+[12.fsLayuiPlugin联动下拉框使用(下拉框异步加载数据)](http://www.itcto.cn/layui/fsLayuiPluginSelect/)  
 
-[13.fsLayuiPlugin数据表格动态转义](http://www.itcto.cn/layui/fsLayuiPlugin%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E5%8A%A8%E6%80%81%E8%BD%AC%E4%B9%89/)  
+[13.fsLayuiPlugin富文本编辑器使用(layedit)](http://www.itcto.cn/layui/fsLayuiPluginLayedit/)  
 
-[14.fsLayuiPlugin数据字典使用](http://www.itcto.cn/layui/fsLayuiPlugin%E6%95%B0%E6%8D%AE%E5%AD%97%E5%85%B8%E4%BD%BF%E7%94%A8/)  
+[14.fsLayuiPlugin数据表格动态转义](http://www.itcto.cn/layui/fsLayuiPlugin%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E5%8A%A8%E6%80%81%E8%BD%AC%E4%B9%89/)  
 
+[15.fsLayuiPlugin数据字典使用](http://www.itcto.cn/layui/fsLayuiPlugin%E6%95%B0%E6%8D%AE%E5%AD%97%E5%85%B8%E4%BD%BF%E7%94%A8/)  
+
+
+[16.常见问题](http://www.itcto.cn/layui/fsLayuiPluginFaq/)  
 
 ## 版本号规范
 
