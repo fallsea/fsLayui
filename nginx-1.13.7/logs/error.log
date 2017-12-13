@@ -1,1 +1,0 @@
-2017/12/13 09:19:05 [error] 2000#13912: *2 CreateFile() "E:\git\github\fsLayuiPlugin\nginx-1.13.7/../fsLayuiPlugin/favicon.ico" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost", referrer: "http://localhost/"
