@@ -2,7 +2,7 @@
  * @Description: 字典配置
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.4.0
+ * @version 1.4.1
  * @date: 2017年12月10日 下午6:45:58
  */
 layui.fsDict = {
@@ -50,7 +50,7 @@ layui.fsDict = {
 		area3 : {
 			formatType : "server",
 			loadUrl : "/fsbus/1005",
-			inputs : "parentid:",
+			inputs : "parentid:,area1:#area2222222",
 			labelField : "name",
 			valueField : "id"
 		}

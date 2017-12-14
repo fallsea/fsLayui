@@ -13,16 +13,13 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 	<meta name="apple-mobile-web-app-capable" content="yes"/>
 	<meta name="format-detection" content="telephone=no"/>
-	<meta name="refreshTable" content="0"/>
 	<link rel="stylesheet" type="text/css" href="/plugins/layui/css/layui.css" media="all"/>
 	<link rel="stylesheet" type="text/css" href="/css/fs.css" media="all"/>
 	<script type="text/javascript" src="/plugins/layui/layui.js"></script>
 	<script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
-	<script type="text/javascript" src="/plugins/jquery/lodash.min.js"></script>
-	<script type="text/javascript" src="/plugins/jquery/jquery.formautofill.js"></script>
-	<script type="text/javascript" src="/plugins/frame/js/fsDict.js?v=1.4.0"></script>
-	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.4.0"></script>
-	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.4.0"></script>
+	<script type="text/javascript" src="/plugins/frame/js/fsDict.js?v=1.4.1"></script>
+	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.4.1"></script>
+	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.4.1"></script>
 </head>
 <body class="layui-layout-body">
 	<div class="layui-fluid">
@@ -68,7 +65,7 @@
 	  <div class="layui-form-item">
 	    <label class="layui-form-label">省份</label>
 	    <div class="layui-input-inline" style="width: 100px;">
-	      <select name="area1" lay-filter="xxxxxx1" class="fsSelect" dict="area1" addNull="1" childrenSelectId="xxxxxx2">
+	      <select id="area2222222" name="area1" lay-filter="xxxxxx1" class="fsSelect" dict="area1" addNull="1" childrenSelectId="xxxxxx2">
 	      </select>
 	    </div>
 	    <label class="layui-form-label">城市</label>
@@ -99,11 +96,9 @@
 	    </div>
 	  </div>
 	  <hr/>
-	  <div class="layui-form-item">
-	    <div class="layui-input-block">
+	  <div class="layui-form-item" style="text-align: center;">
 	      <button class="layui-btn" lay-submit="" lay-filter="save" url="/fsbus/1001">新增</button>
 	      <button type="button" class="layui-btn layui-btn-primary" function="close">关闭</button>
-	    </div>
 	  </div>
 	</form>
 

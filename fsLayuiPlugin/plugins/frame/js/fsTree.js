@@ -9,9 +9,9 @@ layui.define(['layer',"fsCommon",'fsConfig'], function(exports){
 	var layer = layui.layer,
 	fsCommon = layui.fsCommon,
 	fsConfig = layui.fsConfig,
-	statusName = _.result(fsConfig,"global.result.statusName","errorNo"),
-	msgName = _.result(fsConfig,"global.result.msgName","errorInfo"),
-	dataName = _.result(fsConfig,"global.result.dataName","results.data"),
+	statusName = $.result(fsConfig,"global.result.statusName","errorNo"),
+	msgName = $.result(fsConfig,"global.result.msgName","errorInfo"),
+	dataName = $.result(fsConfig,"global.result.dataName","results.data"),
 	FsTree = function (){
 		this.config = {
 			funcNo : undefined,//功能号  
@@ -31,7 +31,7 @@ layui.define(['layer',"fsCommon",'fsConfig'], function(exports){
 		var _this = this;
     $.extend(true, _this.config, options);
     
-    if(_.isEmpty(_this.config.id)){
+    if($.isEmpty(_this.config.id)){
     	fsCommon.warnMsg("id不能为空!");
 			return;
     }
@@ -46,15 +46,15 @@ layui.define(['layer',"fsCommon",'fsConfig'], function(exports){
 
     var url = _this.config.url;//请求url
     
-    if(_.isEmpty(funcNo) && _.isEmpty(url)){
+    if($.isEmpty(funcNo) && $.isEmpty(url)){
     	fsCommon.warnMsg("功能号或请求地址为空!");
 			return;
 		}
-		if(_.isEmpty(url)){
+		if($.isEmpty(url)){
       url = "/fsbus/" + funcNo;
     }
-		var servletUrl = _.result(fsConfig,"global.servletUrl");
-		if(!_.isEmpty(servletUrl)){
+		var servletUrl = $.result(fsConfig,"global.servletUrl");
+		if(!$.isEmpty(servletUrl)){
 			url = servletUrl + url;
 		}
 		var setting = {
@@ -68,7 +68,7 @@ layui.define(['layer',"fsCommon",'fsConfig'], function(exports){
 				dataFilter: function ajaxDataFilter(treeId, parentNode, responseData) {
 			    if(responseData[statusName] == "0")
 					{
-			    	return _.result(responseData,_this.config.dataName);
+			    	return $.result(responseData,_this.config.dataName);
 					}
 					else
 					{
@@ -96,11 +96,11 @@ layui.define(['layer',"fsCommon",'fsConfig'], function(exports){
 		var funcNo = _this.config.funcNo;
 		var url = _this.config.url;//请求url
        
-		if(_.isEmpty(funcNo) && _.isEmpty(url)){
+		if($.isEmpty(funcNo) && $.isEmpty(url)){
 			fsCommon.warnMsg("功能号或请求地址为空!");
 			return;
 		}
-		if(_.isEmpty(url)){
+		if($.isEmpty(url)){
 			url = "/fsbus/" + funcNo;
 		}
 		
@@ -108,8 +108,8 @@ layui.define(['layer',"fsCommon",'fsConfig'], function(exports){
 		{
 			if(data[statusName] == "0")
 			{
-				var array = _.result(data,_this.config.dataName);
-				if(!_.isArray(array)){
+				var array = $.result(data,_this.config.dataName);
+				if(!$.isArray(array)){
 					array = new Array();
 				}
 				array.push({ id:1, pId:0, name:"根目录", open:true});
@@ -152,7 +152,7 @@ layui.define(['layer',"fsCommon",'fsConfig'], function(exports){
 	/**
 	 * 获取选中的节点
 	 */
-	FsTree.prototype.getSelectedNodes = function() {
+	FsTree.prototype.getCheckData = function() {
 		var _this = this;
 		var zTree = $.fn.zTree.getZTreeObj(_this.config.id);
 		return zTree.getSelectedNodes();

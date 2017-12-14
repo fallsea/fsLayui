@@ -2,7 +2,7 @@
  * @Description: 通用组件
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.3.1
+ * @version 1.4.1
  * @date: 2017年11月12日 上午12:08:17
  */
 layui.define(['layer','form','fsConfig'], function (exports) {
@@ -10,10 +10,10 @@ layui.define(['layer','form','fsConfig'], function (exports) {
   var form = layui.form,
     layer = layui.layer,
     fsConfig = layui.fsConfig,
-    statusName = _.result(fsConfig,"global.result.statusName","errorNo"),
-    msgName = _.result(fsConfig,"global.result.msgName","errorInfo"),
-    dataName = _.result(fsConfig,"global.result.dataName","results.data"),
-  	servletUrl = _.result(fsConfig,"global.servletUrl");
+    statusName = $.result(fsConfig,"global.result.statusName","errorNo"),
+    msgName = $.result(fsConfig,"global.result.msgName","errorInfo"),
+    dataName = $.result(fsConfig,"global.result.dataName","results.data"),
+  	servletUrl = $.result(fsConfig,"global.servletUrl");
   
   var fsCommon = {
 
@@ -49,10 +49,10 @@ layui.define(['layer','form','fsConfig'], function (exports) {
     },
     invoke : function (url,param,callBackFunc,async)
     {
-      if(!_.isEmpty(servletUrl)){
+      if(!$.isEmpty(servletUrl)){
         url = servletUrl + url;
       }
-      if(_.isEmpty(async)){
+      if($.isEmpty(async)){
       	async = false;
       }
     	//打开加载层
@@ -66,9 +66,9 @@ layui.define(['layer','form','fsConfig'], function (exports) {
         success: function(result){
           if(result[statusName] != "0"){
             var filters = fsConfig["filters"];
-            if(!_.isEmpty(filters)){
+            if(!$.isEmpty(filters)){
               var otherFunction = filters[result[statusName]];
-              if(_.isFunction(otherFunction)){
+              if($.isFunction(otherFunction)){
                 otherFunction(result);
                 return;
               }
@@ -136,14 +136,20 @@ layui.define(['layer','form','fsConfig'], function (exports) {
      */
     setRefreshTable : function (state)
     {
-    	top.$('meta[name="refreshTable"]').attr("content",state);
+    	var refreshTable = top.$('meta[name="refreshTable"]');
+    	if(refreshTable.length==0)
+    	{
+    		top.$('head').append("<meta name=\"refreshTable\" content=\""+state+"\"/>");
+    	}else{
+    		refreshTable.attr("content",state);
+    	}
     },
     /**
      * 更新form表单数据
      */
     autofill : function (elem,data)
     {
-    	if(!_.isEmpty(elem) && !_.isEmpty(data))
+    	if(!$.isEmpty(elem) && !$.isEmpty(data))
     	{
     		$(elem)[0].reset();
     		$(elem).autofill(data);
@@ -164,7 +170,7 @@ layui.define(['layer','form','fsConfig'], function (exports) {
     /**
      * 按钮事件绑定
      */
-    buttionEvent : function (fsType,getObj,getCheckData)
+    buttionEvent : function (fsType,getDatagrid)
     {
     	var bottion = "";
     	if(fsType == "tree"){//操作树
@@ -179,24 +185,24 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 				var _tableId = _this.attr("tableId");
 				
 	    	if(_function == "refresh"){
-	    		var obj = getObj(_tableId);
-	    		if(!_.isEmpty(obj)){
+	    		var obj = getDatagrid(_tableId);
+	    		if(!$.isEmpty(obj)){
 	    			//刷新
     		    obj.refresh();
 	    		}
 	    	}else if(_function == "submit"){
 	    		//提交
 	    		//单选判断 //多选判断
-	    		if(_.eq("1",_this.attr("isSelect")) || _.eq("1",_this.attr("isMutiDml")))
+	    		if("1" == _this.attr("isSelect") || "1" == _this.attr("isMutiDml"))
 	    		{
 	    			//获取选中的数据
-		    		var data = getCheckData(_tableId);
-		    		if(_.eq(data.length,0))
+		    		var data = getDatagrid(_tableId).getCheckData();
+		    		if(data.length == 0)
 		    		{
 		    			fsCommon.warnMsg("请选择需要操作的数据！");
 		    			return;
 		    		}
-		    		if(_.eq("1",_this.attr("isSelect")) && _.gt(data.length,1))
+		    		if("1" == _this.attr("isSelect") && data.length == 1)
 		    		{
 		    			fsCommon.warnMsg("请选择一行数据！");
 		    			return;
@@ -204,10 +210,10 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 	    		}
 	    		
 	    		
-	    		if(_.eq("1",_this.attr("isConfirm")))
+	    		if("1" == _this.attr("isConfirm"))
 	    		{
 	    			var confirmMsg = _this.attr("confirmMsg");
-	    			if(_.isEmpty(confirmMsg))
+	    			if($.isEmpty(confirmMsg))
 	    			{
 	    				confirmMsg="是否确定操作选中的数据?";
 	    			}
@@ -218,12 +224,12 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 	                      
               var url = _this.attr("url");//请求url
               
-              if(_.isEmpty(_funcNo) && _.isEmpty(url)){
+              if($.isEmpty(_funcNo) && $.isEmpty(url)){
               	fsCommon.warnMsg("功能号或请求地址为空！");
                 return;
               }
               
-              if(_.isEmpty(url)){
+              if($.isEmpty(url)){
                 url = "/fsbus/" + _funcNo;
               }
 	                      
@@ -231,10 +237,10 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 	    				
 	    				var inputs = _this.attr("inputs");
 			    		var param = {};//参数
-			    		if(!_.isEmpty(inputs))
+			    		if(!$.isEmpty(inputs))
 			    		{
 			    			//获取选中的数据
-  			    		var data = getCheckData(_tableId);
+  			    		var data = getDatagrid(_tableId).getCheckData();
   			    		param = fsCommon.getParamByInputs(inputs,data);
 			    		}
 	    				
@@ -246,7 +252,7 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 			        	{
 			        		fsCommon.setRefreshTable("1");
 			        		//刷新
-			        		getObj(_tableId).refresh();
+			        		getDatagrid(_tableId).refresh();
 			        		
 			        		fsCommon.successMsg('操作成功!');
 			        	}
@@ -268,8 +274,8 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 	    	else if(_function == "query")
 	    	{
 	    		//查询
-	    		var obj = getObj(_tableId);
-	    		if(!_.isEmpty(obj)){
+	    		var obj = getDatagrid(_tableId);
+	    		if(!$.isEmpty(obj)){
 //		    			obj.query($(this).parentsUntil('form').getFormData(true));
 	    			var formData = $(this).parentsUntil('form').parent().getFormData();
 	    			obj.reload(formData);
@@ -278,22 +284,22 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 	    	else if(_function == "top")
 	    	{
 	    		var _url = _this.attr("topUrl");
-	    		if(_.isEmpty(_url))
+	    		if($.isEmpty(_url))
 	    		{
 	    			fsCommon.warnMsg("url地址为空！");
 	    			return false;
 	    		}
 	    		
-	    		if(_.eq("1",_this.attr("isSelect")))
+	    		if("1" == _this.attr("isSelect"))
 	    		{
 	    			//获取选中的数据
-		    		var data = getCheckData(_tableId);
-		    		if(_.eq(data.length,0))
+		    		var data = getDatagrid(_tableId).getCheckData();
+		    		if(data.length == 0)
 		    		{
 		    			fsCommon.warnMsg("请选择需要操作的数据！");
 		    			return;
 		    		}
-		    		if(_.gt(data.length,1))
+		    		if(data.length > 1)
 		    		{
 		    			fsCommon.warnMsg("请选择一行数据！");
 		    			return;
@@ -303,22 +309,33 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 	    		
 	    		var inputs = _this.attr("inputs");
 	    		
-	    		if(!_.isEmpty(inputs))
+	    		if(!$.isEmpty(inputs))
 	    		{
 	    			//获取选中的数据
-		    		var data = getCheckData(_tableId);
+		    		var data = getDatagrid(_tableId).getCheckData();
 		    		_url = fsCommon.getUrlByInputs(_url,inputs,data[0]);
 	    		}
 	    		
+	    		//弹出的方式
+	        var _mode = _this.attr("topMode");
+	        if(!$.isEmpty(_mode)){
+	        	if(_url.indexOf('?') == -1)
+	  				{
+	  					_url +="?";
+	  				}else{
+	  					_url +="&";
+	  				}
+	        	_url += "_mode="+_mode;
+	        }
 	    		
 	    		var _title = _this.attr("topTitle");
 	    		var _width = _this.attr("topWidth");
-	    		if(_.isEmpty(_width))
+	    		if($.isEmpty(_width))
 	    		{
 	    			_width = "700px";
 	    		}
 	    		var _height = _this.attr("topHeight");
-	    		if(_.isEmpty(_height))
+	    		if($.isEmpty(_height))
 	    		{
 	    			_height = "400px";
 	    		}
@@ -336,7 +353,7 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 					  end: function(){
 						  if(fsCommon.isRefreshTable())
 						  {
-							  getObj(_tableId).refresh();
+						  	getDatagrid(_tableId).refresh();
 						  }
 					  }
 	    		});
@@ -346,27 +363,27 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 	    		var _title = "上传附件";
 	    		var _width = "400px";
 	    		var _height = "280px";
-	    		var _url = _.result(fsConfig,"global.uploadHtmlUrl","/plugins/frame/views/upload.html");
+	    		var _url = $.result(fsConfig,"global.uploadHtmlUrl","/plugins/frame/views/upload.html");
 	    		
 	    		var inputs = _this.attr("inputs");
 	    		
-	    		if(!_.isEmpty(inputs))
+	    		if(!$.isEmpty(inputs))
 	    		{
 		    		 _url = fsCommon.getUrlByInputs(_url,inputs,null);
 	    		}
 	    		
 	    		var fileParam = {};
-	    		if(!_.isEmpty(_this.attr("fileAccept"))){
+	    		if(!$.isEmpty(_this.attr("fileAccept"))){
 	    			fileParam["fileAccept"] = _this.attr("fileAccept");
 	    		}
-	    		if(!_.isEmpty(_this.attr("fileExts"))){
+	    		if(!$.isEmpty(_this.attr("fileExts"))){
 	    			fileParam["fileExts"] = _this.attr("fileExts");
 	    		}
-	    		if(!_.isEmpty(_this.attr("fileSize"))){
+	    		if(!$.isEmpty(_this.attr("fileSize"))){
 	    			fileParam["fileSize"] = _this.attr("fileSize");
 	    		}
 	    		
-	    		if(!_.isEmpty(fileParam)){
+	    		if(!$.isEmpty(fileParam)){
 	    			if(_url.indexOf('?') == -1)
 	    			{
 	    				_url +="?";
@@ -388,8 +405,8 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 					  end: function(){
 					  	var uploadFilePath = top.$('meta[name="uploadFilePath"]').attr("content");
 					  	
-					  	if(!_.isEmpty(uploadFilePath)){
-					  		if(!_.isEmpty(_this.attr("fileElem"))){
+					  	if(!$.isEmpty(uploadFilePath)){
+					  		if(!$.isEmpty(_this.attr("fileElem"))){
 					  			$(_this.attr("fileElem")).val(uploadFilePath);
 					  		}
 					  	}
@@ -401,24 +418,24 @@ layui.define(['layer','form','fsConfig'], function (exports) {
     /**获取参数对象**/
     getParamByInputs : function(inputs,data){
     	var param = {};//参数
-    	if(!_.isEmpty(inputs)){
-				var inputArr = _.split(inputs, ',');
-				_(inputArr).forEach(function(value) {
-					var paramArr = _.split(value, ':',2);
-					if(!_.isEmpty(paramArr[0]))
+    	if(!$.isEmpty(inputs)){
+				var inputArr = inputs.split(',');
+				$.each(inputArr,function(i,value) {
+					var paramArr = value.split(':',2);
+					if(!$.isEmpty(paramArr[0]))
 					{
 						//获取参数值，如果值为空，获取datagrid选中行数据
-						var _vaule = _.toString(paramArr[1]);
+						var _vaule = paramArr[1];
 						
-						if(_.isEmpty(_vaule))
+						if($.isEmpty(_vaule))
 						{
 							//多结果集,分割
 							var newValue = "";
-							if(!_.isEmpty(data)){
+							if(!$.isEmpty(data)){
 								//如果多选，获取多选数据
 								$(data).each(function(index,dom)
 								{
-									if(!_.isEmpty(newValue))
+									if(!$.isEmpty(newValue))
 									{
 										newValue += ",";
 									}
@@ -427,21 +444,21 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 							}
 							
 				    		_vaule = newValue;
-						}else if(_.startsWith(_vaule,"$")){
+						}else if($.startsWith(_vaule,"$")){
 					    var xxxx = _vaule.substring(1);
 					    //多结果集,分割
 	            var newValue = "";
 	            //如果多选，获取多选数据
 	            $(data).each(function(index,dom)
 	            {
-	              if(!_.isEmpty(newValue))
+	              if(!$.isEmpty(newValue))
 	              {
 	                newValue += ",";
 	              }
 	              newValue += dom[xxxx];
 	            });
 	            _vaule = newValue;
-	          }else if(_.startsWith(_vaule,"#")){
+	          }else if($.startsWith(_vaule,"#")){
 	            _vaule = $(_vaule).val();
 	          }
 						param[paramArr[0]] = _vaule;
@@ -452,31 +469,31 @@ layui.define(['layer','form','fsConfig'], function (exports) {
     },
     /**返回url组装参数**/
     getUrlByInputs : function(_url,inputs,data){
-			if(!_.isEmpty(inputs))
+			if(!$.isEmpty(inputs))
 			{
 	      var urlStr = "";
-				var inputArr = _.split(inputs, ',');
-	      _(inputArr).forEach(function(value) {
-					var paramArr = _.split(value, ':',2);
-					if(!_.isEmpty(paramArr[0]))
+				var inputArr = inputs.split(',');
+	      $.each(inputArr,function(i,value) {
+					var paramArr = value.split(':',2);
+					if(!$.isEmpty(paramArr[0]))
 					{
-						if(!_.isEmpty(urlStr))
+						if(!$.isEmpty(urlStr))
 						{
 							urlStr += '&';
 						}
 						
 						//获取参数值，如果值为空，获取datagrid选中行数据
-						var _vaule = _.toString(paramArr[1]);
-						if(_.isEmpty(_vaule))//如果值为空或者值是#/$开头   $取参数，#取选择器
+						var _vaule = paramArr[1];
+						if($.isEmpty(_vaule))//如果值为空或者值是#/$开头   $取参数，#取选择器
   					{
 			    		_vaule = data[paramArr[0]];
-  					}else if(_.startsWith(_vaule,"$")){
+  					}else if($.startsWith(_vaule,"$")){
   						_vaule = data[_vaule.substring(1)];
-  					}else if(_.startsWith(_vaule,"#")){
+  					}else if($.startsWith(_vaule,"#")){
   						_vaule = $(_vaule).val();
   					}
 					
-						if(!_.isEmpty(_vaule)){
+						if(!$.isEmpty(_vaule)){
 							urlStr += paramArr[0] + "=" + _vaule;
 						}
 					}

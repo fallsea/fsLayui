@@ -36,32 +36,20 @@ layui.use(['fsForm','fsDatagrid','fsTree','fsCommon','element'], function(){
         trees[treeId] = fsTree.render({id:treeId,funcNo:funcNo,url:url,clickCallback:clickCallback});
       });
     //绑定按钮事件
-    fsCommon.buttionEvent("tree",getTree,gettreeCheckData);
+    fsCommon.buttionEvent("tree",getTree);
 	}
 	
 	function getTree(treeId){
-    if(_.isEmpty(trees)){
+    if($.isEmpty(trees)){
     	fsCommon.warnMsg("未配置tree！");
       return;
     }
-    if(_.isEmpty(treeId)){
+    if($.isEmpty(treeId)){
       treeId = "treeDemo";
     }
     return trees[treeId];
   }
 	
-  function gettreeCheckData(treeId){
-    if(_.isEmpty(trees)){
-    	fsCommon.warnMsg("未配置tree！");
-      return;
-    }
-    if(_.isEmpty(treeId)){
-      treeId = "treeDemo";
-    }
-    return trees[treeId].getSelectedNodes();
-  }
-   
-    
   /**
    * 树点击回调
    */
@@ -70,27 +58,27 @@ layui.use(['fsForm','fsDatagrid','fsTree','fsCommon','element'], function(){
   	var _this = $("#"+treeId);
     var tableId = _this.attr("tableId");
     
-    if(_.isEmpty(tableId)){
+    if($.isEmpty(tableId)){
     	tableId = _this.attr("datagridId");
     }
     
-    if(_.isEmpty(tableId)){
+    if($.isEmpty(tableId)){
     	return;
     }
       
     //获取表格对应的查询form
     var defaultForm = $("#"+tableId).attr("defaultForm");
-    if(_.isEmpty(defaultForm)){
+    if($.isEmpty(defaultForm)){
       defaultForm = "query_form";
     }
     var inputs = _this.attr("inputs");
-    if(!_.isEmpty(inputs))
+    if(!$.isEmpty(inputs))
     {
       //获取值存入form表单
       var param = fsCommon.getParamByInputs(inputs,treeNode);
       $("#"+defaultForm).setFormData(param);
     }
-    if(!_.isEmpty(datagrids) && !_.isEmpty(datagrids[tableId])){
+    if(!$.isEmpty(datagrids) && !$.isEmpty(datagrids[tableId])){
       datagrids[tableId].query($("#"+defaultForm).getFormData());
     }
       
@@ -104,12 +92,12 @@ layui.use(['fsForm','fsDatagrid','fsTree','fsCommon','element'], function(){
   if(tabs.length > 0){
     $(tabs).each(function(){
       var tableId=$(this).attr("id");
-      if(!_.isEmpty(datagrids[tableId])){
+      if(!$.isEmpty(datagrids[tableId])){
       	return;
       }
       var clickRenderTable = $(this).attr("clickRenderTable");//点击需要渲染的tableid
       var clickCallBack;//点击事件
-  	  if(!_.isEmpty(clickRenderTable)){
+  	  if(!$.isEmpty(clickRenderTable)){
   	  	
   	  	var defaultForm= $("#"+clickRenderTable).attr("defaultForm");//默认form表单id
   	  	
@@ -120,20 +108,21 @@ layui.use(['fsForm','fsDatagrid','fsTree','fsCommon','element'], function(){
   	  		var formData = fsCommon.getParamByInputs(clickRenderTableInputs,data);
   	  		
   	  		//点击后，为查询form表单赋值
-  	  		if(!_.isEmpty(defaultForm)){
+  	  		if(!$.isEmpty(defaultForm)){
   	  			$("#"+defaultForm).setFormData(formData);
   	  		}
-	  			_.get(datagrids,clickRenderTable).reload(formData);
+  	  		
+	  			datagrids[clickRenderTable].reload(formData);
   	  	}
   	  }
           
       var datagrid = fsDatagrid.render({id:tableId,clickCallBack:clickCallBack});
       datagrid.bindDatagridTool(getDatagrid);
       //cloneDeep 克隆对象
-      _.set(datagrids,tableId,_.cloneDeep(datagrid));
+      datagrids[tableId] = $.cloneDeep(datagrid);
       
     });
-    fsCommon.buttionEvent("datagrid",getDatagrid,getDatagridCheckData);
+    fsCommon.buttionEvent("datagrid",getDatagrid);
   }else{
     //按钮绑定
   	fsCommon.buttionEvent("datagrid");
@@ -141,24 +130,14 @@ layui.use(['fsForm','fsDatagrid','fsTree','fsCommon','element'], function(){
   
   
   function getDatagrid(tableId){
-    if(_.isEmpty(tableId)){
+    if($.isEmpty(tableId)){
       tableId = "fsDatagrid";
     }
-    if(_.isEmpty(datagrids)){
+    if($.isEmpty(datagrids)){
     	fsCommon.warnMsg("未配置datagrid！");
       return;
     }
     return datagrids[tableId];
-  }
-  function getDatagridCheckData(tableId){
-    if(_.isEmpty(tableId)){
-      tableId = "fsDatagrid";
-    }
-    if(_.isEmpty(datagrids)){
-    	fsCommon.warnMsg("未配置datagrid！");
-      return;
-    }
-    return datagrids[tableId].getCheckData();
   }
   /********* datagrid 处理   end *************/
 	

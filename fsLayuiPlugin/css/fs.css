@@ -22,3 +22,7 @@ fieldset { min-width: 100px; }
 .fsDatagridCols{display: none;}
 
 .fsLayedit{display: none;}
+
+.fsNew{display: none;}
+
+.fsEdit{display: none;}

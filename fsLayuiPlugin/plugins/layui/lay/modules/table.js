@@ -429,12 +429,12 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
         ,timeout : 30000 
         ,dataType: 'json'
         ,success: function(res){
-          if(_.result(res,response.statusName) != response.statusCode){
+          if($.result(res,response.statusName) != response.statusCode){
           	//未登录处理
           	var filters = fsConfig["filters"];
-            if(!_.isEmpty(filters)){
+            if(!$.isEmpty(filters)){
                 var otherFunction = filters[res[response.statusName]];
-                if(_.isFunction(otherFunction)){
+                if($.isFunction(otherFunction)){
                     otherFunction(res);
                     return;
                 }
@@ -442,10 +442,10 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
             that.renderForm();
             return that.layMain.html('<div class="'+ NONE +'">'+ (res[response.msgName] || '返回的数据状态异常') +'</div>');
           }
-          that.renderData(res, curr, _.result(res,response.countName)), sort();
+          that.renderData(res, curr, $.result(res,response.countName)), sort();
           options.time = (new Date().getTime() - that.startTime) + ' ms'; //耗时（接口请求+视图渲染）
           loadIndex && layer.close(loadIndex);
-          typeof options.done === 'function' && options.done(res, curr, _.result(res,response.countName));
+          typeof options.done === 'function' && options.done(res, curr, $.result(res,response.countName));
         }
         ,error: function(e, m){
           that.layMain.html('<div class="'+ NONE +'">数据接口请求异常</div>');
@@ -461,7 +461,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
       res[response.countName] = options.data.length;
 
       that.renderData(res, curr, options.data.length), sort();
-      typeof options.done === 'function' && options.done(res, curr, _.result(res,response.countName));
+      typeof options.done === 'function' && options.done(res, curr, $.result(res,response.countName));
     }
     
     //改变isLoad状态
@@ -510,7 +510,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
   Class.prototype.renderData = function(res, curr, count, sort){
     var that = this
     ,options = that.config
-    ,data = _.result(res,options.response.dataName) || []
+    ,data = $.result(res,options.response.dataName) || []
     ,trs = []
     ,trs_fixed = []
     ,trs_fixed_r = []

@@ -13,12 +13,10 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 	<meta name="apple-mobile-web-app-capable" content="yes"/>
 	<meta name="format-detection" content="telephone=no"/>
-	<meta name="refreshTable" content="0"/>
 	<link rel="stylesheet" type="text/css" href="/plugins/layui/css/layui.css" media="all"/>
 	<link rel="stylesheet" type="text/css" href="/css/fs.css" media="all"/>
 	<script type="text/javascript" src="/plugins/layui/layui.js"></script>
 	<script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
-	<script type="text/javascript" src="/plugins/jquery/lodash.min.js"></script>
 	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.0.4"></script>
 	
 </head>
@@ -49,12 +47,18 @@ layui.use(['upload','layer','fsConfig','fsCommon'], function(){
   layer = layui.layer,
   fsCommon = layui.fsCommon,
   isSelectFile = false,//是否选择文件，默认false
-  statusName = _.result(fsConfig,"global.result.statusName","errorNo"),
-  msgName = _.result(fsConfig,"global.result.msgName","errorInfo"),
-  uploadUrl = _.result(fsConfig,"global.uploadUrl",""),
-  dataName = _.result(fsConfig,"global.result.dataName","results.data");
+  statusName = $.result(fsConfig,"global.result.statusName","errorNo"),
+  msgName = $.result(fsConfig,"global.result.msgName","errorInfo"),
+  uploadUrl = $.result(fsConfig,"global.uploadUrl",""),
+  dataName = $.result(fsConfig,"global.result.dataName","results.data");
   
-  top.$('meta[name="uploadFilePath"]').attr("content","");
+  var uploadFilePath = top.$('meta[name="uploadFilePath"]');
+  if(uploadFilePath.length==0)
+  {
+	top.$('head').append("<meta name=\"uploadFilePath\" content=\"\"/>");
+  }else{
+ 	uploadFilePath.attr("content","");
+  }
   
   
   //获取参数
@@ -63,7 +67,7 @@ layui.use(['upload','layer','fsConfig','fsCommon'], function(){
   var fileAccept,fileExts,fileSize;
   
   //获取业务参数绑定
-  if(!_.isEmpty(paramUrl["fileParam"])){
+  if(!$.isEmpty(paramUrl["fileParam"])){
   	var fileParam = JSON.parse(unescape(paramUrl["fileParam"]));
   	fileAccept = fileParam["fileAccept"];
   	fileExts = fileParam["fileExts"];
@@ -106,9 +110,9 @@ layui.use(['upload','layer','fsConfig','fsCommon'], function(){
 		
 		if(result[statusName] != "0"){
 			var filters = fsConfig["filters"];
-		   	if(!_.isEmpty(filters)){
+		   	if(!$.isEmpty(filters)){
 	     	  var otherFunction = filters[result[statusName]];
-	      	  if(_.isFunction(otherFunction)){
+	      	  if($.isFunction(otherFunction)){
 	       	     otherFunction(result);
 	      	      return;
 	     	   }
@@ -118,7 +122,7 @@ layui.use(['upload','layer','fsConfig','fsCommon'], function(){
 		}
 		
 		//上传成功后，返回文件路径
-		var data = _.result(result,dataName);
+		var data = $.result(result,dataName);
 		
 		top.$('meta[name="uploadFilePath"]').attr("content",data["filePath"]);
 		
