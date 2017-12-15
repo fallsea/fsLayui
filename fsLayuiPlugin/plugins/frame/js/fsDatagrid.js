@@ -2,7 +2,7 @@
  * @Description: datagrid工具
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.4.1
+ * @version 1.4.2
  * @date: 2017年11月5日 上午11:26:44
  */
 layui.define(["fsCommon","table",'laypage','fsConfig'], function(exports){
@@ -15,6 +15,7 @@ layui.define(["fsCommon","table",'laypage','fsConfig'], function(exports){
   dataName = $.result(fsConfig,"global.result.dataName","results.data"),
   defaultLimit = $.result(fsConfig,"global.page.limit",20),//默认分页数量
   defaultLimits = $.result(fsConfig,"global.page.limits",[10,20,30,50,100]),//默认每页数据选择项
+  loadDataType = $.result(fsConfig,"global.loadDataType","0");
   FsDatagrid = function (){
   };
   
@@ -139,11 +140,6 @@ layui.define(["fsCommon","table",'laypage','fsConfig'], function(exports){
   	if(!$.isEmpty(formatArr)){
   		$.each(formatArr,function(index,dict){
   			
-  			/*var obj = {};
-  			obj["labelField"] = elem["labelField"];
-				obj["valueField"] = elem["valueField"];
-				obj["spaceMode"] = elem["spaceMode"];*/
-				
   			var elem = layui.fsDict[dict];
   			
   			if($.isEmpty(elem)){
@@ -267,7 +263,6 @@ layui.define(["fsCommon","table",'laypage','fsConfig'], function(exports){
               url = "/fsbus/" + funcNo;
             }
             
-            
             //获取参数
             var inputs = _this.attr("inputs");
             var param = {};//参数
@@ -305,6 +300,14 @@ layui.define(["fsCommon","table",'laypage','fsConfig'], function(exports){
         if(!$.isEmpty(inputs))
         {
           _url = fsCommon.getUrlByInputs(_url,inputs,data);
+          
+          //处理数据缓存
+          if(loadDataType == "1"){
+          	var uuid = $.uuid();
+          	_url += "&_fsUuid="+uuid;
+          	//缓存选中的数据
+          	$.setSessionStorage(uuid,JSON.stringify(data));
+          }
         }
         
         //弹出的方式

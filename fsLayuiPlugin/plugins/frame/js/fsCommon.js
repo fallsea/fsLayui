@@ -2,7 +2,7 @@
  * @Description: 通用组件
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.4.1
+ * @version 1.4.2
  * @date: 2017年11月12日 上午12:08:17
  */
 layui.define(['layer','form','fsConfig'], function (exports) {
@@ -13,6 +13,7 @@ layui.define(['layer','form','fsConfig'], function (exports) {
     statusName = $.result(fsConfig,"global.result.statusName","errorNo"),
     msgName = $.result(fsConfig,"global.result.msgName","errorInfo"),
     dataName = $.result(fsConfig,"global.result.dataName","results.data"),
+    loadDataType = $.result(fsConfig,"global.loadDataType","0");
   	servletUrl = $.result(fsConfig,"global.servletUrl");
   
   var fsCommon = {
@@ -314,6 +315,14 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 	    			//获取选中的数据
 		    		var data = getDatagrid(_tableId).getCheckData();
 		    		_url = fsCommon.getUrlByInputs(_url,inputs,data[0]);
+		    		
+		    		//处理数据缓存
+	          if(loadDataType == "1"){
+	          	var uuid = $.uuid();
+	          	_url += "&_fsUuid="+uuid;
+	          	//缓存选中的数据
+	          	$.setSessionStorage(uuid,JSON.stringify(data[0]));
+	          }
 	    		}
 	    		
 	    		//弹出的方式

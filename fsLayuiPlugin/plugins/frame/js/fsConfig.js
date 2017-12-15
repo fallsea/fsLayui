@@ -2,7 +2,7 @@
  * @Description: 基础配置
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.3.1
+ * @version 1.4.2
  * @date: 2017年11月11日 下午3:51:35
  */
 layui.define([], function (exports) {
@@ -28,6 +28,7 @@ layui.define([], function (exports) {
 		"loginUrl" : "/login", //登录url
 		"uploadUrl" : "https://fs.fallsea.com/upload", //上传附件url
 		"uploadHtmlUrl" : "/plugins/frame/views/upload.html", //上传附件html地址，默认/plugins/frame/views/upload.html
+		"loadDataType":"1",//加载数据类型，1：是，0：否，默认0  （编辑或查看是否取缓存数据）
 		"result" : { //响应结果配置
 	    "statusName": "errorNo", //数据状态的字段名称，默认：errorNo
 	    "msgName": "errorInfo", //状态信息的字段名称，默认：errorInfo

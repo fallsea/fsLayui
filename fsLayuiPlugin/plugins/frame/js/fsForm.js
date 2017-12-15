@@ -2,7 +2,7 @@
  * @Description: form表单工具
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.4.1
+ * @version 1.4.2
  * @date: 2017年11月5日 上午11:30:20
  */
 layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], function(exports){
@@ -15,6 +15,7 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
   statusName = $.result(fsConfig,"global.result.statusName","errorNo"),
   msgName = $.result(fsConfig,"global.result.msgName","errorInfo"),
   dataName = $.result(fsConfig,"global.result.dataName","results.data"),
+  loadDataType = $.result(fsConfig,"global.loadDataType","0");
   selectVals = {},//下拉框默认值
   FsForm = function (){
 		this.config = {
@@ -319,51 +320,78 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
 		}
 		
 		//如果isLoad =1 并且功能号不为空，查询
-		if(formDom.attr("isLoad") == "1" && (!$.isEmpty(formDom.attr("loadFuncNo")) || !$.isEmpty(formDom.attr("loadUrl"))))
+		var _fsUuid = urlParam["_fsUuid"];
+		
+		if(formDom.attr("isLoad") == "1")
 		{
-	    var funcNo = formDom.attr("loadFuncNo");
-	    var url = formDom.attr("loadUrl");//请求url
-      if($.isEmpty(url)){
-        url = "/fsbus/" + funcNo;
-      }
-      fsCommon.invoke(url,urlParam,function(data){
-				if(data[statusName] == "0")
-		  	{
-					var formData = $.result(data,dataName);
-					if($.isEmpty(formData)){
-						fsCommon.errorMsg("记录不存在!");
-						return;
+			
+			//从缓存中获取
+			if(loadDataType == "1" && $.isEmpty(formDom.attr("loadFuncNo")) && $.isEmpty(formDom.attr("loadUrl"))){
+				if(!$.isEmpty(_fsUuid)){
+					var formDataStr =$.getSessionStorage(_fsUuid);
+					if(!$.isEmpty(formDataStr)){
+						showData(JSON.parse(formDataStr));
 					}
-					formDom.setFormData(formData);
-					form.render(); //更新全部
-					
-					//联动下拉框处理，
-					//1.先把联动下拉框数据缓存
-					//2.异步加载完后，赋值
-					$(thisForm.config.elem).find("select.fsSelect").each(function(){
-						var _name = $(this).attr("name");
-						selectVals[_name] = formData[_name];
-					});
-					
-					$(thisForm.config.elem).find("select.fsSelect").each(function(){
-						var selectDom = $(this);
-						if(selectDom.attr("isLoad") != "0"){//一级下拉
-							thisForm.renderSelect(selectDom);
-						}
-					});
-					
-					
-		  	}
-		  	else
-		  	{
-		  		//提示错误消息
-		  		fsCommon.errorMsg(data[msgName]);
-		  	}
-		  });
+				}else{
+					fsCommon.errorMsg("唯一标识获取失败!");
+				}
+				
+			}else if(!$.isEmpty(formDom.attr("loadFuncNo")) || !$.isEmpty(formDom.attr("loadUrl"))){
+				//如果配置异步地址，默认加载异步地址
+				var funcNo = formDom.attr("loadFuncNo");
+		    var url = formDom.attr("loadUrl");//请求url
+	      if($.isEmpty(url)){
+	        url = "/fsbus/" + funcNo;
+	      }
+	      fsCommon.invoke(url,urlParam,function(data){
+					if(data[statusName] == "0")
+			  	{
+						var formData = $.result(data,dataName);
+						showData(formData);
+			  	}
+			  	else
+			  	{
+			  		//提示错误消息
+			  		fsCommon.errorMsg(data[msgName]);
+			  	}
+			  });
+				
+			}
 			  
 	  }else{
 	  	thisForm.renderSelectAll();
 	  }
+		
+		if(!$.isEmpty(_fsUuid)){
+			//删除
+			$.removeSessionStorage(_fsUuid);
+			
+		}
+		
+		//显示数据
+		function showData(formData){
+			if($.isEmpty(formData)){
+				fsCommon.errorMsg("记录不存在!");
+				return;
+			}
+			formDom.setFormData(formData);
+			form.render(); //更新全部
+			
+			//联动下拉框处理，
+			//1.先把联动下拉框数据缓存
+			//2.异步加载完后，赋值
+			$(thisForm.config.elem).find("select.fsSelect").each(function(){
+				var _name = $(this).attr("name");
+				selectVals[_name] = formData[_name];
+			});
+			
+			$(thisForm.config.elem).find("select.fsSelect").each(function(){
+				var selectDom = $(this);
+				if(selectDom.attr("isLoad") != "0"){//一级下拉
+					thisForm.renderSelect(selectDom);
+				}
+			});
+		}
 		  
 	};
   
