@@ -64,8 +64,11 @@ qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k
 
 [15.fsLayuiPlugin数据字典使用](http://www.itcto.cn/layui/fsLayuiPlugin%E6%95%B0%E6%8D%AE%E5%AD%97%E5%85%B8%E4%BD%BF%E7%94%A8/)  
 
+[16.fsLayuiPlugin单页面操作](http://www.itcto.cn/layui/fsLayuiPlugin%E5%8D%95%E9%A1%B5%E9%9D%A2%E6%93%8D%E4%BD%9C/)  
 
-[16.常见问题](http://www.itcto.cn/layui/fsLayuiPluginFaq/)  
+[17.fsLayuiPlugin缓存使用](http://www.itcto.cn/layui/fsLayuiPlugin%E7%BC%93%E5%AD%98%E4%BD%BF%E7%94%A8/)  
+
+[18.常见问题](http://www.itcto.cn/layui/fsLayuiPluginFaq/)  
 
 ## 版本号规范
 
@@ -83,3 +86,9 @@ qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k
 ![](fsLayuiPlugin/images/multiDatagrid.png)
 
 ![](fsLayuiPlugin/images/linkageDatagrid2.png)
+
+
+
+## 贡献者
+
+* 维雷克
