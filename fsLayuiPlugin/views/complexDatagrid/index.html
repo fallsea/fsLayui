@@ -17,10 +17,10 @@
 	<link rel="stylesheet" type="text/css" href="/css/fs.css" media="all"/>
 	<script type="text/javascript" src="/plugins/layui/layui.js"></script>
 	<script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
-	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.0.5"></script>
-	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.0.5"></script>
+	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.4.3"></script>
+	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.4.3"></script>
 </head>
-<body class="layui-layout-body">
+<body>
 <div class="layui-layout layui-layout-admin">
   <div class="layui-header">
     <a href="/index.html"><div class="layui-logo">fsLayuiPlugin</div></a>
@@ -104,15 +104,20 @@
 	         <table id="fsDatagrid" lay-filter="fsDatagrid" class="fsDatagrid" url="/fsbus/S1023" isPage="1" defaultForm="query_form" height="full-235"></table>
 
 			<div class="fsDatagridCols">
-				<p type="numbers" title="#"/>
-				<p checkbox="true"/>
+				<p type="numbers" title="#" rowspan="2"/>
+				<p checkbox="true" rowspan="2"/>
+			    <p field="funcType" title="类型" width="150" templet="#typeTpl" rowspan="2"/>
+			    <p align="center" title="功能号信息" colspan="3"/>
+			    <p field="state" title="状态" width="100" templet="#stateTpl" rowspan="2"/>
+			    <p field="createdTime" title="创建时间" width="180" rowspan="2"/>
+			    <p fixed="right" align="center" toolbar="#barDemo" title="操作" width="150" rowspan="2"/>
+			     
+			    <p type="br"/>
+			    
 			    <p field="funcNo" title="功能号" width="100" sort="true"/>
 			    <p field="funcName" title="名称" width="200"/>
-			    <p field="funcType" title="类型" width="150" templet="#typeTpl"/>
-			    <p field="state" title="状态" width="100" templet="#stateTpl"/>
 			    <p field="resource" title="资源信息" width="300"/>
-			    <p field="createdTime" title="创建时间" width="180"/>
-			    <p fixed="right" align="center" toolbar="#barDemo" title="操作" width="150"/>
+			    
 			</div>
 		
 		<script type="text/html" id="typeTpl">

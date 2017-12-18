@@ -440,9 +440,13 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
                 }
             }
             that.renderForm();
+            loadIndex && layer.close(loadIndex);
             return that.layMain.html('<div class="'+ NONE +'">'+ (res[response.msgName] || '返回的数据状态异常') +'</div>');
           }
-          that.renderData(res, curr, $.result(res,response.countName)), sort();
+          //解决排序失败
+          var newRes ={};
+          newRes[options.response.dataName] = $.result(res,options.response.dataName);
+          that.renderData(newRes, curr, $.result(res,response.countName)), sort();
           options.time = (new Date().getTime() - that.startTime) + ' ms'; //耗时（接口请求+视图渲染）
           loadIndex && layer.close(loadIndex);
           typeof options.done === 'function' && options.done(res, curr, $.result(res,response.countName));
@@ -461,6 +465,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
       res[response.countName] = options.data.length;
 
       that.renderData(res, curr, options.data.length), sort();
+      loadIndex && layer.close(loadIndex);
       typeof options.done === 'function' && options.done(res, curr, $.result(res,response.countName));
     }
     
@@ -510,7 +515,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
   Class.prototype.renderData = function(res, curr, count, sort){
     var that = this
     ,options = that.config
-    ,data = $.result(res,options.response.dataName) || []
+    ,data = res[options.response.dataName] || []
     ,trs = []
     ,trs_fixed = []
     ,trs_fixed_r = []

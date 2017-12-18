@@ -118,8 +118,15 @@ layui.use(['fsForm','fsDatagrid','fsTree','fsCommon','element'], function(){
           
       var datagrid = fsDatagrid.render({id:tableId,clickCallBack:clickCallBack});
       datagrid.bindDatagridTool(getDatagrid);
-      //cloneDeep 克隆对象
-      datagrids[tableId] = $.cloneDeep(datagrid);
+      
+      if(tabs.length==1){
+      	datagrids[tableId] = datagrid;
+      }else{
+      	//深度拷贝对象
+      	datagrids[tableId] = $.extend(true,{},datagrid);
+      }
+      
+      
       
     });
     fsCommon.buttionEvent("datagrid",getDatagrid);

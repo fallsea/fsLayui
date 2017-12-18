@@ -2,7 +2,7 @@
  * @Description: 通用组件
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.4.2
+ * @version 1.4.3
  * @date: 2017年11月12日 上午12:08:17
  */
 layui.define(['layer','form','fsConfig'], function (exports) {
@@ -157,6 +157,38 @@ layui.define(['layer','form','fsConfig'], function (exports) {
     		form.render(); //更新全部
     	}
     },
+    //弹出窗口
+    open : function(_title,_width,_height,_url,_end,isMaximize){
+    	if($.isEmpty(_width))
+  		{
+  			_width = "700px";
+  		}
+  		if($.isEmpty(_height))
+  		{
+  			_height = "400px";
+  		}
+  		
+  		if(parseInt(_width.replace(/[^0-9]/ig,"")) > $(window).width()){
+  			_width = $(window).width()+"px";
+  		}
+  		if(parseInt(_height.replace(/[^0-9]/ig,"")) > $(window).height()){
+  			_height = $(window).height()+"px";
+  		}
+  		
+    	var index = top.layer.open({
+			  type: 2,
+			  title:_title,
+			  area: [_width, _height],
+			  fixed: true, //不固定
+			  scrollbar: true,
+			  maxmin: true,
+			  content: _url,
+			  end: _end
+  		});
+    	if(isMaximize == "1"){
+    		layer.full(index);
+    	}
+    },
     /**
      * 获取token信息
      */
@@ -277,7 +309,6 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 	    		//查询
 	    		var obj = getDatagrid(_tableId);
 	    		if(!$.isEmpty(obj)){
-//		    			obj.query($(this).parentsUntil('form').getFormData(true));
 	    			var formData = $(this).parentsUntil('form').parent().getFormData();
 	    			obj.reload(formData);
 	    		}
@@ -339,33 +370,15 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 	    		
 	    		var _title = _this.attr("topTitle");
 	    		var _width = _this.attr("topWidth");
-	    		if($.isEmpty(_width))
-	    		{
-	    			_width = "700px";
-	    		}
 	    		var _height = _this.attr("topHeight");
-	    		if($.isEmpty(_height))
-	    		{
-	    			_height = "400px";
-	    		}
 	    		
+	    		var isMaximize = _this.attr("isMaximize");
 	    		
-	    		//打开窗口
-	    		top.layer.open({
-					  type: 2,
-					  title:_title,
-					  area: [_width, _height],
-					  fixed: false, //不固定
-					  scrollbar: false,
-					  maxmin: true,
-					  content: _url,
-					  end: function(){
-						  if(fsCommon.isRefreshTable())
-						  {
-						  	getDatagrid(_tableId).refresh();
-						  }
+  			  fsCommon.open(_title,_width,_height,_url,function(){
+	    			if(fsCommon.isRefreshTable()){
+					  	getDatagrid(_tableId).refresh();
 					  }
-	    		});
+    			},isMaximize);
 	    	}
 	    	else if(_function == "upload")
 	    	{
@@ -402,25 +415,16 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 	    			_url += "fileParam="+ escape(JSON.stringify(fileParam));
 	    		}
 	    		
-	    		//打开窗口
-	    		top.layer.open({
-					  type: 2,
-					  title:_title,
-					  area: [_width, _height],
-					  fixed: false, //不固定
-					  scrollbar: false,
-					  maxmin: true,
-					  content: _url,
-					  end: function(){
-					  	var uploadFilePath = top.$('meta[name="uploadFilePath"]').attr("content");
-					  	
-					  	if(!$.isEmpty(uploadFilePath)){
-					  		if(!$.isEmpty(_this.attr("fileElem"))){
-					  			$(_this.attr("fileElem")).val(uploadFilePath);
-					  		}
-					  	}
-					  }
-					});
+	    		fsCommon.open(_title,_width,_height,_url,function(){
+	    			var uploadFilePath = top.$('meta[name="uploadFilePath"]').attr("content");
+				  	
+				  	if(!$.isEmpty(uploadFilePath)){
+				  		if(!$.isEmpty(_this.attr("fileElem"))){
+				  			$(_this.attr("fileElem")).val(uploadFilePath);
+				  		}
+				  	}
+    			});
+	    		
 	    	} 
     	});
     },

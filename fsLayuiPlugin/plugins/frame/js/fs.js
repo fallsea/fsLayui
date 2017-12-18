@@ -2,12 +2,12 @@
  * @Description: 入口
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.4.1
+ * @version 1.4.3
  * @date: 2017年11月12日 上午12:09:00
  */
 layui.config({
   base : "/plugins/frame/js/",
-	version : '1.4.2'
+	version : '1.4.3'
 });
 
 layui.fsUtil={};
@@ -127,59 +127,36 @@ layui.fsUtil.toDict = function(dict,value){
    * 获取datagrid 列集合
    */
   $.fn.getDatagridCols = function () {
-  	var data = {};
   	
+  	var colArr = new Array();
   	var colsArr = new Array();
   	var formatArr = new Array();//需要格式化的集合
   	var datagrid_cols = $(this).next(".fsDatagridCols");
   	if(!$.isEmpty(datagrid_cols))
   	{
+  		var data = {};
   		$.each(datagrid_cols.children(),function(i, n){
-  			
-			var _this = $(this);
-  			
-			var toolbar = _this.attr("toolbar");
-			var col = {};
-			
-			if(!$.isEmpty(_this.attr("align"))){
-				col["align"] = _this.attr("align");
-			}
-			if(!$.isEmpty(_this.attr("fixed"))){
-				col["fixed"] = _this.attr("fixed");
-			}
-			if($.isEmpty(toolbar)){//普通列
+				var _this = $(this);
+				
 				var type = _this.attr("type");
-				var field = _this.attr("field");
-  			var title = _this.attr("title");
-  			var width = _this.attr("width");
-  			var sort = _this.attr("sort");
-  			var templet = _this.attr("templet");
-  			var checkbox = _this.attr("checkbox");
-    			
-  			if(!$.isEmpty(type)){
-  				col["type"] = type;
-  			}
-  			
-  			if(!$.isEmpty(field)){
-  				col["field"] = field;
-  			}
-  			if(!$.isEmpty(title)){
-  				col["title"] = title;
-  			}
-  			if(!$.isEmpty(width)){
-  				col["width"] = width;
-  			}
-  			if(!$.isEmpty(sort)){
-  				col["sort"] = sort;
-  			}
-  			if(!$.isEmpty(templet)){
-  				col["templet"] = templet;
-  			}
-  			if(!$.isEmpty(checkbox)){
-  				col["checkbox"] = checkbox;
-  			}
-  			
-  			if(!$.isEmpty(_this.attr("style"))){
+				
+				if(!$.isEmpty(type) && type == "br"){//换行
+					colArr.push(colsArr);
+					colsArr = new Array();
+					data = {};
+					return true;
+				}
+	  			
+				var toolbar = _this.attr("toolbar");
+				var col = {};
+				
+				if(!$.isEmpty(_this.attr("align"))){
+					col["align"] = _this.attr("align");
+				}
+				if(!$.isEmpty(_this.attr("fixed"))){
+					col["fixed"] = _this.attr("fixed");
+				}
+				if(!$.isEmpty(_this.attr("style"))){
   				col["style"] = _this.attr("style");
   			}
     			
@@ -190,42 +167,76 @@ layui.fsUtil.toDict = function(dict,value){
   				col["rowspan"] = _this.attr("rowspan");
   			}
   			
-  			if(!$.isEmpty(_this.attr("LAY_CHECKED"))){
-  				col["LAY_CHECKED"] = _this.attr("LAY_CHECKED");
-  			}
-  			if(!$.isEmpty(_this.attr("edit"))){
-  				col["edit"] = _this.attr("edit");
-  			}
-  			if(!$.isEmpty(_this.attr("event"))){
-  				col["event"] = _this.attr("event");
-  			}
-  			var dict = _this.attr("dict");
-  			
-  			if(!$.isEmpty(dict)){
-  				
-  				formatArr.push(dict);
-  				
-  				//自定义模板
-  				col["templet"] = "<div>{{ layui.fsUtil.toDict('"+field+"',d."+field+",'"+dict+"') }}</div>";
-  				
-  			}
-  			colsArr.push(col);
-      			
-			}else {//工具条
-				col["toolbar"] = toolbar;
-				var width = _this.attr("width");
-				if(!$.isEmpty(width)){
-  				col["width"] = width;
-  			}
-				var title = _this.attr("title");
-				if(!$.isEmpty(title)){
-  				col["title"] = title;
-  			}
-				colsArr.push(col);
-			}
+				if($.isEmpty(toolbar)){//普通列
+					var field = _this.attr("field");
+	  			var title = _this.attr("title");
+	  			var width = _this.attr("width");
+	  			var sort = _this.attr("sort");
+	  			var templet = _this.attr("templet");
+	  			var checkbox = _this.attr("checkbox");
+	    			
+	  			if(!$.isEmpty(type)){
+	  				col["type"] = type;
+	  			}
+	  			
+	  			if(!$.isEmpty(field)){
+	  				col["field"] = field;
+	  			}
+	  			if(!$.isEmpty(title)){
+	  				col["title"] = title;
+	  			}
+	  			if(!$.isEmpty(width)){
+	  				col["width"] = width;
+	  			}
+	  			if(!$.isEmpty(sort)){
+	  				col["sort"] = sort;
+	  			}
+	  			if(!$.isEmpty(templet)){
+	  				col["templet"] = templet;
+	  			}
+	  			if(!$.isEmpty(checkbox)){
+	  				col["checkbox"] = checkbox;
+	  			}
+	  			
+	  			
+	  			if(!$.isEmpty(_this.attr("LAY_CHECKED"))){
+	  				col["LAY_CHECKED"] = _this.attr("LAY_CHECKED");
+	  			}
+	  			if(!$.isEmpty(_this.attr("edit"))){
+	  				col["edit"] = _this.attr("edit");
+	  			}
+	  			if(!$.isEmpty(_this.attr("event"))){
+	  				col["event"] = _this.attr("event");
+	  			}
+	  			
+	  			var dict = _this.attr("dict");
+	  			
+	  			if(!$.isEmpty(dict)){
+	  				
+	  				formatArr.push(dict);
+	  				
+	  				//自定义模板
+	  				col["templet"] = "<div>{{ layui.fsUtil.toDict('"+field+"',d."+field+",'"+dict+"') }}</div>";
+	  				
+	  			}
+	  			colsArr.push(col);
+	      			
+				}else {//工具条
+					col["toolbar"] = toolbar;
+					var width = _this.attr("width");
+					if(!$.isEmpty(width)){
+	  				col["width"] = width;
+	  			}
+					var title = _this.attr("title");
+					if(!$.isEmpty(title)){
+	  				col["title"] = title;
+	  			}
+					colsArr.push(col);
+				}
   		});
+  		colArr.push(colsArr);
   	}
-  	data["colsArr"] = colsArr;
+  	data["colsArr"] = colArr;
   	data["formatArr"] = formatArr;
   	return data;
   };
@@ -334,35 +345,6 @@ layui.fsUtil.toDict = function(dict,value){
     //是否以某个字符开头
     startsWith : function(value,target){
     	return value.indexOf(target) == 0;
-    },
-    //深度克隆
-    cloneDeep: function (obj) {
-      //返回传递给他的任意对象的类
-      var isClass = function (o) {
-        if (o === null) return "Null";
-        if (o === undefined) return "Undefined";
-        return Object.prototype.toString.call(o).slice(8, -1);
-      }
-      var result, oClass = isClass(obj);
-      //确定result的类型
-      if (oClass === "Object") {
-        result = {};
-      } else if (oClass === "Array") {
-        result = [];
-      } else {
-        return obj;
-      }
-      for (key in obj) {
-        var copy = obj[key];
-        if (isClass(copy) == "Object") {
-          result[key] = arguments.callee(copy);//递归调用
-        } else if (isClass(copy) == "Array") {
-          result[key] = arguments.callee(copy);
-        } else {
-          result[key] = obj[key];
-        }
-      }
-      return result;
     },
     //设置sessionStorage
     setSessionStorage:function(key, data){

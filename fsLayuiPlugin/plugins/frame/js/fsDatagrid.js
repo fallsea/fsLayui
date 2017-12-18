@@ -2,7 +2,7 @@
  * @Description: datagrid工具
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.4.2
+ * @version 1.4.3
  * @date: 2017年11月5日 上午11:26:44
  */
 layui.define(["fsCommon","table",'laypage','fsConfig'], function(exports){
@@ -98,7 +98,7 @@ layui.define(["fsCommon","table",'laypage','fsConfig'], function(exports){
 	  }
 	  var datagridCols = _table.getDatagridCols();
 	  
-	  var cols = datagridCols["colsArr"];
+	  var _cols = datagridCols["colsArr"];
 	  
 	  thisDatagrid.formatDataQuery(datagridCols["formatArr"]);
 	  
@@ -114,7 +114,7 @@ layui.define(["fsCommon","table",'laypage','fsConfig'], function(exports){
 	    height: height, //容器高度
 	    limits: defaultLimits,//每页数据选择项
 	    limit: defaultLimit ,//默认采用50
-	    cols:  [cols],
+	    cols:  _cols,
 	    clickCallBack: thisDatagrid.config.clickCallBack,
 	    data: [],
 	    isLoad : isLoad,
@@ -323,32 +323,16 @@ layui.define(["fsCommon","table",'laypage','fsConfig'], function(exports){
         }
         var _title = _this.attr("topTitle");
         var _width = _this.attr("topWidth");
-        if($.isEmpty(_width))
-        {
-          _width = "700px";
-        }
         var _height = _this.attr("topHeight");
-        if($.isEmpty(_height))
-        {
-          _height = "400px";
-        }
+        var isMaximize = _this.attr("isMaximize");
         
-        //打开窗口
-        top.layer.open({
-          type: 2,
-          title:_title,
-          area: [_width, _height],
-          fixed: false, //不固定
-          scrollbar: false,
-          maxmin: true,
-          content: _url,
-          end: function(){
-            if(fsCommon.isRefreshTable())
-            {
-              getDatagrid(tableId).refresh();
-            }
+        fsCommon.open(_title,_width,_height,_url,function(){
+        	if(fsCommon.isRefreshTable())
+          {
+            getDatagrid(tableId).refresh();
           }
-        });
+  			},isMaximize);
+        
       }
     });
   };
