@@ -58,12 +58,51 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
       },
       query : function(params)//查询操作
       {
-    	  var options = {where : params};
+    	  var options = {where : params,page:{
+    	  	curr:1
+    	  }};
     	  //业务参数合并
     	  that.config = $.extend({}, that.config, table.config, options);
-    	  
     	  //显示第一页数据
     	  that.pullData(1, that.loading());
+      },
+      addRow : function(){
+      	
+      	var data = table.cache[that.key];
+      	if($.isEmpty(data)){
+      		data = new Array();
+      	}
+      	var row = {};
+      	if($.result(fsConfig,"global.datagridSubmitType") == "2"){
+      		row["fsType"] = "add";
+      	}
+      	data.push(row);
+      	var res = {};
+      	res[options.response.dataName] = data;
+        that.renderData(res);
+      },
+      refreshStatic : function(){
+      	var data = table.cache[that.key];
+      	if($.isEmpty(data)){
+      		data = new Array();
+      	}
+      	var res = {};
+      	res[options.response.dataName] = data;
+        that.renderData(res);
+      },
+      getData : function(){
+      	/*var arr = table.cache[that.key];
+      	if($.result(fsConfig,"global.datagridSubmitType") == "2"){
+      		if(!$.isEmpty(arr)){
+        		$.each(arr,function(i,row){
+        			if($.isEmpty(row["fsType"])){
+        				row["fsType"] = "edit";
+        			}
+        		})
+        	}
+      	}
+      	*/
+      	return table.cache[that.key];
       }
     }
   }
@@ -620,8 +659,6 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
     if(sort){
       return render();
     }
-    
-    
     //同步分页状态
     if(options.page){
       options.page = $.extend({
@@ -649,7 +686,15 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
     }
     
     if(data.length === 0){
-      that.renderForm();
+    	
+    	//解决全部删除后，页数没有改变bug
+    	if(that.page > options.page.curr){
+    		that.page = options.page.curr;
+    		//重新刷新
+    		that.pullData(that.page, that.loading());
+    	}
+    	
+    	that.renderForm();
       that.layFixed.remove();
       that.layMain.find('tbody').html('');
       that.layMain.find('.'+ NONE).remove();
@@ -1163,7 +1208,8 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
         ,event: othis.attr('lay-event')
         ,tr: tr
         ,del: function(){
-          table.cache[that.key][index] = [];
+//          table.cache[that.key][index] = [];
+        	table.cache[that.key].splice(index, 1);
           tr.remove();
           that.scrollPatch();
         }

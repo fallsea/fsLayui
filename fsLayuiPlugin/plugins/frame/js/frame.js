@@ -2,8 +2,8 @@
  * @Description: 通用框架
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.1.1
- * @date: 2017年11月5日 下午12:45:13
+ * @version 1.5.0
+ * @License：MIT
  */
 layui.use(['fsForm','fsDatagrid','fsTree','fsCommon','element'], function(){
 	var fsForm = layui.fsForm,
@@ -117,6 +117,7 @@ layui.use(['fsForm','fsDatagrid','fsTree','fsCommon','element'], function(){
   	  }
           
       var datagrid = fsDatagrid.render({id:tableId,clickCallBack:clickCallBack});
+      
       datagrid.bindDatagridTool(getDatagrid);
       
       if(tabs.length==1){
@@ -125,8 +126,6 @@ layui.use(['fsForm','fsDatagrid','fsTree','fsCommon','element'], function(){
       	//深度拷贝对象
       	datagrids[tableId] = $.extend(true,{},datagrid);
       }
-      
-      
       
     });
     fsCommon.buttionEvent("datagrid",getDatagrid);

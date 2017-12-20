@@ -2,12 +2,12 @@
  * @Description: 入口
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.4.3
- * @date: 2017年11月12日 上午12:09:00
+ * @version 1.5.0
+ * @License：MIT
  */
 layui.config({
   base : "/plugins/frame/js/",
-	version : '1.4.3'
+	version : '1.5.0'
 });
 
 layui.fsUtil={};
@@ -92,8 +92,8 @@ layui.fsUtil.toDict = function(dict,value){
       if(/^checkbox|radio$/.test(item.type) && !item.checked) return;
       var value = item.value;
       if(item.type == "checkbox"){//如果多选
-      	if(field[item.name]){
-      		value = field[item.name] + "," + value;
+      	if(data[item.name]){
+      		value = data[item.name] + "," + value;
       	}
       }
       if(isValid)

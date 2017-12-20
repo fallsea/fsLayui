@@ -2,8 +2,8 @@
  * @Description: 字典配置
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.4.1
- * @date: 2017年12月10日 下午6:45:58
+ * @version 1.5.0
+ * @License：MIT
  */
 layui.fsDict = {
 		//城市

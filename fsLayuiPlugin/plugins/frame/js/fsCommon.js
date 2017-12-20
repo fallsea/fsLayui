@@ -2,8 +2,8 @@
  * @Description: 通用组件
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.4.3
- * @date: 2017年11月12日 上午12:08:17
+ * @version 1.5.0
+ * @License：MIT
  */
 layui.define(['layer','form','fsConfig'], function (exports) {
 	
@@ -217,54 +217,45 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 				var _funcNo = _this.attr("funcNo");
 				var _tableId = _this.attr("tableId");
 				
-	    	if(_function == "refresh"){
-	    		var obj = getDatagrid(_tableId);
-	    		if(!$.isEmpty(obj)){
-	    			//刷新
-    		    obj.refresh();
-	    		}
-	    	}else if(_function == "submit"){
-	    		//提交
-	    		//单选判断 //多选判断
-	    		if("1" == _this.attr("isSelect") || "1" == _this.attr("isMutiDml"))
-	    		{
-	    			//获取选中的数据
-		    		var data = getDatagrid(_tableId).getCheckData();
-		    		if(data.length == 0)
-		    		{
-		    			fsCommon.warnMsg("请选择需要操作的数据！");
-		    			return;
+				
+				switch(_function){
+					case "refresh" :
+						var obj = getDatagrid(_tableId);
+		    		if(!$.isEmpty(obj)){
+		    			//刷新
+	    		    obj.refresh();
 		    		}
-		    		if("1" == _this.attr("isSelect") && data.length == 1)
+					  break;
+					case "submit" :
+						//提交
+		    		//单选判断 //多选判断
+		    		if("1" == _this.attr("isSelect") || "1" == _this.attr("isMutiDml"))
 		    		{
-		    			fsCommon.warnMsg("请选择一行数据！");
-		    			return;
+		    			//获取选中的数据
+			    		var data = getDatagrid(_tableId).getCheckData();
+			    		if(data.length == 0)
+			    		{
+			    			fsCommon.warnMsg("请选择需要操作的数据！");
+			    			return;
+			    		}
+			    		if("1" == _this.attr("isSelect") && data.length == 1)
+			    		{
+			    			fsCommon.warnMsg("请选择一行数据！");
+			    			return;
+			    		}
 		    		}
-	    		}
-	    		
-	    		
-	    		if("1" == _this.attr("isConfirm"))
-	    		{
-	    			var confirmMsg = _this.attr("confirmMsg");
-	    			if($.isEmpty(confirmMsg))
-	    			{
-	    				confirmMsg="是否确定操作选中的数据?";
-	    			}
-	    			
-	    			fsCommon.confirm("提示", confirmMsg, function(index)
-	    			{
-	    				layer.close(index);
-	                      
-              var url = _this.attr("url");//请求url
-              
-              if($.isEmpty(_funcNo) && $.isEmpty(url)){
-              	fsCommon.warnMsg("功能号或请求地址为空！");
-                return;
-              }
-              
-              if($.isEmpty(url)){
-                url = "/fsbus/" + _funcNo;
-              }
+		    		
+		    		function submitForm(){
+		    			var url = _this.attr("url");//请求url
+	            
+	            if($.isEmpty(_funcNo) && $.isEmpty(url)){
+	            	fsCommon.warnMsg("功能号或请求地址为空！");
+	              return;
+	            }
+	            
+	            if($.isEmpty(url)){
+	              url = "/fsbus/" + _funcNo;
+	            }
 	                      
 	    				//获取参数
 	    				
@@ -273,19 +264,21 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 			    		if(!$.isEmpty(inputs))
 			    		{
 			    			//获取选中的数据
-  			    		var data = getDatagrid(_tableId).getCheckData();
-  			    		param = fsCommon.getParamByInputs(inputs,data);
+				    		var data = getDatagrid(_tableId).getCheckData();
+				    		param = fsCommon.getParamByInputs(inputs,data);
 			    		}
 	    				
 	    				
 	    				//请求数据
 			    		fsCommon.invoke(url,param,function(data)
-  						{
+							{
 			        	if(data[statusName] == "0")
 			        	{
 			        		fsCommon.setRefreshTable("1");
-			        		//刷新
-			        		getDatagrid(_tableId).refresh();
+			        		if(!$.isEmpty(getDatagrid(_tableId))){
+			        			//刷新
+			        			getDatagrid(_tableId).refresh();
+			        		}
 			        		
 			        		fsCommon.successMsg('操作成功!');
 			        	}
@@ -294,138 +287,264 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 			        		//提示错误消息
 			        		fsCommon.errorMsg(data[msgName]);
 			        	}
-  						});
-	    			});
-	    		}
-	    	} 
-	    	else if(_function == "close")
-	    	{
-	    		//关闭
-	    		var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
-	    		parent.layer.close(index);
-	    	} 
-	    	else if(_function == "query")
-	    	{
-	    		//查询
-	    		var obj = getDatagrid(_tableId);
-	    		if(!$.isEmpty(obj)){
-	    			var formData = $(this).parentsUntil('form').parent().getFormData();
-	    			obj.reload(formData);
-	    		}
-	    	}
-	    	else if(_function == "top")
-	    	{
-	    		var _url = _this.attr("topUrl");
-	    		if($.isEmpty(_url))
-	    		{
-	    			fsCommon.warnMsg("url地址为空！");
-	    			return false;
-	    		}
-	    		
-	    		if("1" == _this.attr("isSelect"))
-	    		{
-	    			//获取选中的数据
-		    		var data = getDatagrid(_tableId).getCheckData();
-		    		if(data.length == 0)
-		    		{
-		    			fsCommon.warnMsg("请选择需要操作的数据！");
-		    			return;
+							});
 		    		}
-		    		if(data.length > 1)
-		    		{
-		    			fsCommon.warnMsg("请选择一行数据！");
-		    			return;
-		    		}
-	    		}
-	    		
-	    		
-	    		var inputs = _this.attr("inputs");
-	    		
-	    		if(!$.isEmpty(inputs))
-	    		{
-	    			//获取选中的数据
-		    		var data = getDatagrid(_tableId).getCheckData();
-		    		_url = fsCommon.getUrlByInputs(_url,inputs,data[0]);
 		    		
-		    		//处理数据缓存
-	          if(loadDataType == "1"){
-	          	var uuid = $.uuid();
-	          	_url += "&_fsUuid="+uuid;
-	          	//缓存选中的数据
-	          	$.setSessionStorage(uuid,JSON.stringify(data[0]));
-	          }
-	    		}
-	    		
-	    		//弹出的方式
-	        var _mode = _this.attr("topMode");
-	        if(!$.isEmpty(_mode)){
-	        	if(_url.indexOf('?') == -1)
-	  				{
-	  					_url +="?";
-	  				}else{
-	  					_url +="&";
-	  				}
-	        	_url += "_mode="+_mode;
-	        }
-	    		
-	    		var _title = _this.attr("topTitle");
-	    		var _width = _this.attr("topWidth");
-	    		var _height = _this.attr("topHeight");
-	    		
-	    		var isMaximize = _this.attr("isMaximize");
-	    		
-  			  fsCommon.open(_title,_width,_height,_url,function(){
-	    			if(fsCommon.isRefreshTable()){
-					  	getDatagrid(_tableId).refresh();
-					  }
-    			},isMaximize);
-	    	}
-	    	else if(_function == "upload")
-	    	{
-	    		var _title = "上传附件";
-	    		var _width = "400px";
-	    		var _height = "280px";
-	    		var _url = $.result(fsConfig,"global.uploadHtmlUrl","/plugins/frame/views/upload.html");
-	    		
-	    		var inputs = _this.attr("inputs");
-	    		
-	    		if(!$.isEmpty(inputs))
-	    		{
-		    		 _url = fsCommon.getUrlByInputs(_url,inputs,null);
-	    		}
-	    		
-	    		var fileParam = {};
-	    		if(!$.isEmpty(_this.attr("fileAccept"))){
-	    			fileParam["fileAccept"] = _this.attr("fileAccept");
-	    		}
-	    		if(!$.isEmpty(_this.attr("fileExts"))){
-	    			fileParam["fileExts"] = _this.attr("fileExts");
-	    		}
-	    		if(!$.isEmpty(_this.attr("fileSize"))){
-	    			fileParam["fileSize"] = _this.attr("fileSize");
-	    		}
-	    		
-	    		if(!$.isEmpty(fileParam)){
-	    			if(_url.indexOf('?') == -1)
-	    			{
-	    				_url +="?";
-	    			}else {
-	    				_url +="&";
-	    			}
-	    			_url += "fileParam="+ escape(JSON.stringify(fileParam));
-	    		}
-	    		
-	    		fsCommon.open(_title,_width,_height,_url,function(){
-	    			var uploadFilePath = top.$('meta[name="uploadFilePath"]').attr("content");
-				  	
-				  	if(!$.isEmpty(uploadFilePath)){
-				  		if(!$.isEmpty(_this.attr("fileElem"))){
-				  			$(_this.attr("fileElem")).val(uploadFilePath);
-				  		}
-				  	}
-    			});
-	    		
-	    	} 
+		    		
+		    		if("1" == _this.attr("isConfirm"))
+		    		{
+		    			var confirmMsg = _this.attr("confirmMsg");
+		    			if($.isEmpty(confirmMsg))
+		    			{
+		    				confirmMsg="是否确定操作选中的数据?";
+		    			}
+		    			
+		    			fsCommon.confirm("提示", confirmMsg, function(index)
+		    			{
+		    				layer.close(index);
+		                      
+		    				submitForm();
+		    			});
+		    		}else{
+		    			submitForm();
+		    		}
+					  break;
+					case "close" :
+						//关闭
+		    		var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+		    		parent.layer.close(index);
+					  break;
+					case "query" :
+						//查询
+		    		var obj = getDatagrid(_tableId);
+		    		if(!$.isEmpty(obj)){
+		    			var formData = $(this).parentsUntil('form').parent().getFormData();
+		    			obj.query(formData);
+		    		}
+					  break;
+					case "top" :
+
+		    		var _url = _this.attr("topUrl");
+		    		if($.isEmpty(_url))
+		    		{
+		    			fsCommon.warnMsg("url地址为空！");
+		    			return false;
+		    		}
+		    		
+		    		if("1" == _this.attr("isSelect"))
+		    		{
+		    			//获取选中的数据
+			    		var data = getDatagrid(_tableId).getCheckData();
+			    		if(data.length == 0)
+			    		{
+			    			fsCommon.warnMsg("请选择需要操作的数据！");
+			    			return;
+			    		}
+			    		if(data.length > 1)
+			    		{
+			    			fsCommon.warnMsg("请选择一行数据！");
+			    			return;
+			    		}
+		    		}
+		    		
+		    		
+		    		var inputs = _this.attr("inputs");
+		    		
+		    		if(!$.isEmpty(inputs))
+		    		{
+		    			//获取选中的数据
+			    		var data = getDatagrid(_tableId).getCheckData();
+			    		_url = fsCommon.getUrlByInputs(_url,inputs,data[0]);
+			    		
+			    		//处理数据缓存
+		          if(loadDataType == "1"){
+		          	var uuid = $.uuid();
+		          	_url += "&_fsUuid="+uuid;
+		          	//缓存选中的数据
+		          	$.setSessionStorage(uuid,JSON.stringify(data[0]));
+		          }
+		    		}
+		    		
+		    		//弹出的方式
+		        var _mode = _this.attr("topMode");
+		        if(!$.isEmpty(_mode)){
+		        	if(_url.indexOf('?') == -1)
+		  				{
+		  					_url +="?";
+		  				}else{
+		  					_url +="&";
+		  				}
+		        	_url += "_mode="+_mode;
+		        }
+		    		
+		    		var _title = _this.attr("topTitle");
+		    		var _width = _this.attr("topWidth");
+		    		var _height = _this.attr("topHeight");
+		    		
+		    		var isMaximize = _this.attr("isMaximize");
+		    		
+	  			  fsCommon.open(_title,_width,_height,_url,function(){
+		    			if(fsCommon.isRefreshTable()){
+						  	getDatagrid(_tableId).refresh();
+						  }
+	    			},isMaximize);
+						break;
+					case "upload" :
+
+		    		var _title = "上传附件";
+		    		var _width = "400px";
+		    		var _height = "280px";
+		    		var _url = $.result(fsConfig,"global.uploadHtmlUrl","/plugins/frame/views/upload.html");
+		    		
+		    		var inputs = _this.attr("inputs");
+		    		
+		    		if(!$.isEmpty(inputs))
+		    		{
+			    		 _url = fsCommon.getUrlByInputs(_url,inputs,null);
+		    		}
+		    		
+		    		var fileParam = {};
+		    		if(!$.isEmpty(_this.attr("fileAccept"))){
+		    			fileParam["fileAccept"] = _this.attr("fileAccept");
+		    		}
+		    		if(!$.isEmpty(_this.attr("fileExts"))){
+		    			fileParam["fileExts"] = _this.attr("fileExts");
+		    		}
+		    		if(!$.isEmpty(_this.attr("fileSize"))){
+		    			fileParam["fileSize"] = _this.attr("fileSize");
+		    		}
+		    		
+		    		if(!$.isEmpty(fileParam)){
+		    			if(_url.indexOf('?') == -1)
+		    			{
+		    				_url +="?";
+		    			}else {
+		    				_url +="&";
+		    			}
+		    			_url += "fileParam="+ escape(JSON.stringify(fileParam));
+		    		}
+		    		
+		    		fsCommon.open(_title,_width,_height,_url,function(){
+		    			var uploadFilePath = top.$('meta[name="uploadFilePath"]').attr("content");
+					  	
+					  	if(!$.isEmpty(uploadFilePath)){
+					  		if(!$.isEmpty(_this.attr("fileElem"))){
+					  			$(_this.attr("fileElem")).val(uploadFilePath);
+					  		}
+					  	}
+	    			});
+		    		
+					  break;
+					case "addRow" :
+						getDatagrid(_tableId).addRow();
+					  break;
+					case "save" :
+						
+						var groupId = _this.attr("groupId");//分组id
+						
+						if($.isEmpty(groupId)){
+							fsCommon.warnMsg("未配置分组id!");
+							return;
+						}
+						var fsFormData = {};//form表单数据
+						var isFsForm = false;//是否有form表单
+						var fsTableData = [];//数据表格数据
+						var isFsTable = false;//是否有table表格
+						
+						var isFsVerifyForm = true;
+						
+						$("table.fsDatagrid,form").each(function(index,elem){
+							var _groupId = $(this).attr("groupId");
+							if(!$.isEmpty(_groupId) && groupId == _groupId){
+								if("FORM" == elem.tagName.toUpperCase()){
+									var isVerify=form.verifyForm($(this));
+									if(isVerify != false){//验证通过
+										//获取form表单数据
+										var formData = $(this).getFormData();
+										$.extend(fsFormData,formData);
+										isFsForm = true;
+									}else{
+										isFsVerifyForm = false;
+										return false;
+									}
+								}else if("TABLE" == elem.tagName.toUpperCase()){
+									var data = getDatagrid(elem.id).getData();
+									$.extend(fsTableData,data);
+									isFsTable = true;
+								}
+							}
+						});
+						
+						if(!isFsVerifyForm){
+							return;
+						}
+						
+						function submitForm(){
+		    			var url = _this.attr("url");//请求url
+	            
+	            if($.isEmpty(_funcNo) && $.isEmpty(url)){
+	            	fsCommon.warnMsg("功能号或请求地址为空！");
+	              return;
+	            }
+	            
+	            if($.isEmpty(url)){
+	              url = "/fsbus/" + _funcNo;
+	            }
+	    				//获取参数
+	    				var inputs = _this.attr("inputs");
+			    		var param = {};//参数
+							
+			    		if(!$.isEmpty(inputs))
+			    		{
+				    		param = fsCommon.getParamByInputs(inputs);
+			    		}
+			    		if(isFsForm){
+								param["fsFormData"] = encodeURIComponent(JSON.stringify(fsFormData));
+							}
+							if(isFsTable){
+								param["fsTableData"] = encodeURIComponent(JSON.stringify(fsTableData));
+							}
+	    				
+	    				//请求数据
+			    		fsCommon.invoke(url,param,function(data)
+							{
+			        	if(data[statusName] == "0")
+			        	{
+			        		fsCommon.setRefreshTable("1");
+			        		fsCommon.successMsg('操作成功!');
+			        		
+			        		//是否自动关闭，默认是
+			        		if(_this.attr("isClose") != "0"){
+			        			parent.layer.close(parent.layer.getFrameIndex(window.name));
+			        		}
+			        	}
+			        	else
+			        	{
+			        		//提示错误消息
+			        		fsCommon.errorMsg(data[msgName]);
+			        	}
+							});
+		    		}
+		    		
+		    		if("1" == _this.attr("isConfirm"))
+		    		{
+		    			var confirmMsg = _this.attr("confirmMsg");
+		    			if($.isEmpty(confirmMsg))
+		    			{
+		    				confirmMsg="是否确定操作选中的数据?";
+		    			}
+		    			
+		    			fsCommon.confirm("提示", confirmMsg, function(index)
+		    			{
+		    				layer.close(index);
+		    				submitForm();
+		    			});
+		    		}else{
+		    			submitForm();
+		    		}
+					  break;
+					default:;
+				}
     	});
     },
     /**获取参数对象**/
@@ -452,7 +571,11 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 									{
 										newValue += ",";
 									}
-									newValue += dom[paramArr[0]];
+									var __value = dom[paramArr[0]];
+									if($.isEmpty(__value)){
+										__value="";
+									}
+									newValue += __value;
 								});
 							}
 							
@@ -461,19 +584,28 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 					    var xxxx = _vaule.substring(1);
 					    //多结果集,分割
 	            var newValue = "";
-	            //如果多选，获取多选数据
-	            $(data).each(function(index,dom)
-	            {
-	              if(!$.isEmpty(newValue))
-	              {
-	                newValue += ",";
-	              }
-	              newValue += dom[xxxx];
-	            });
+	            if(!$.isEmpty(data)){
+	            	//如果多选，获取多选数据
+		            $(data).each(function(index,dom)
+		            {
+		              if(!$.isEmpty(newValue))
+		              {
+		                newValue += ",";
+		              }
+		              var __value = dom[xxxx];
+									if($.isEmpty(__value)){
+										__value="";
+									}
+		              newValue += __value;
+		            });
+	            }
 	            _vaule = newValue;
 	          }else if($.startsWith(_vaule,"#")){
 	            _vaule = $(_vaule).val();
 	          }
+						if($.isEmpty(_vaule)){
+							_vaule="";
+						}
 						param[paramArr[0]] = _vaule;
 					}
 				});

@@ -18,9 +18,9 @@
 	<link rel="stylesheet" type="text/css" href="/css/fs.css" media="all"/>
 	<script type="text/javascript" src="/plugins/layui/layui.js"></script>
 	<script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
-	<script type="text/javascript" src="/plugins/frame/js/fsDict.js?v=1.4.1"></script>
-	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.4.1"></script>
-	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.4.1"></script>
+	<script type="text/javascript" src="/plugins/frame/js/fsDict.js?v=1.5.0"></script>
+	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.5.0"></script>
+	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.5.0"></script>
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
@@ -44,6 +44,7 @@
              <dd><a href="/views/complexDatagrid/index.html">复杂数据表格</a></dd>
              <dd><a href="/views/linkageDatagrid/index.html">联动数据表格</a></dd>
              <dd><a href="/views/linkageDatagrid2/index.html">联动数据表格(复杂)</a></dd>
+             <dd><a href="/views/staticDatagrid/index.html">表格数据提交</a></dd>
           </dl>
         </li>
       </ul>
@@ -93,7 +94,7 @@
 			  <i class="layui-icon">&#xe654;</i>新增
 			</button>
 			<button class="layui-btn layui-btn-danger" function="submit" url="/fsbus/1002" isMutiDml="1" isConfirm="1" confirmMsg="是否确定删除选中的数据？" inputs="id:">
-			  <i class="layui-icon">&#xe640;</i>删除
+			  <i class="layui-icon">&#xe640;</i>批量删除
 			</button>
 			<button class="layui-btn" function="refresh">
 			  <i class="layui-icon">&#x1002;</i>刷新

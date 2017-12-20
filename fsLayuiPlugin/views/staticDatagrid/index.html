@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta content="text/html;charset=UTF-8"/>
+	<title>fsLayuiPlugin</title>
+	<meta name="keywords" content="fsLayuiPlugin,layui,layuiPlugin,layui插件" />
+    <meta name="description" content="fsLayuiPlugin,layui,layuiPlugin,layui插件" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+	<meta http-equiv ="Pragma" content = "no-cache"/>
+	<meta http-equiv="Cache-Control" content="no cache" />
+	<meta http-equiv="Expires" content="0" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="format-detection" content="telephone=no"/>
+	<link rel="stylesheet" type="text/css" href="/plugins/layui/css/layui.css" media="all"/>
+	<link rel="stylesheet" type="text/css" href="/css/fs.css" media="all"/>
+	<script type="text/javascript" src="/plugins/layui/layui.js"></script>
+	<script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.5.0"></script>
+	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.5.0"></script>
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header">
+    <a href="/index.html"><div class="layui-logo">fsLayuiPlugin</div></a>
+  </div>
+
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+        <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="javascript:;">案例</a>
+          <dl class="layui-nav-child">
+          	<dd><a href="/index.html">首页</a></dd>
+            <dd><a href="/views/datagrid/index.html">数据表格</a></dd>
+            <dd><a href="/views/datagrid2/index.html">数据表格2</a></dd>
+             <dd><a href="/views/treeDatagrid/index.html">树+表格</a></dd>
+             <dd><a href="/views/multiDatagrid/index.html">多数据表格</a></dd>
+              <dd><a href="/views/tabDatagrid/index.html">tab数据表格</a></dd>
+              <dd><a href="/views/complexDatagrid/index.html">复杂数据表格</a></dd>
+             <dd><a href="/views/linkageDatagrid/index.html">联动数据表格</a></dd>
+             <dd><a href="/views/linkageDatagrid2/index.html">联动数据表格(复杂)</a></dd>
+             <dd class="layui-this"><a href="/views/staticDatagrid/index.html">表格数据提交</a></dd>
+          </dl>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="layui-body">
+   <div class="layui-fluid">
+  <div class="layui-row layui-col-space1">
+  	 <div class="layui-col-md12">
+<div class="layui-form-query">
+<form class="layui-form" id="query_form">
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<label class="layui-form-mid">功能号：</label>
+			<div class="layui-input-inline" style="width: 100px;">
+				<input type="text" name="funcNo" autocomplete="off" class="layui-input"/>
+			</div>
+		</div>
+		<div class="layui-inline">
+			<label class="layui-form-mid">名称：</label>
+			<div class="layui-input-inline" style="width: 150px;">
+				<input type="text" name="funcName" autocomplete="off" class="layui-input"/>
+			</div>
+		</div>
+		<div class="layui-inline">
+			<label class="layui-form-mid">类型：</label>
+			<div class="layui-input-inline" style="width: 150px;">
+				<select name="funcType" lay-verify="required">
+			        <option value="">--请选择--</option>
+			        <option value="c">功能号实现类</option>
+			        <option value="s">service实现类</option>
+			        <option value="m">mapper实现类</option>
+			      </select>
+			</div>
+		</div>
+		<div class="layui-inline">
+			<div class="layui-input-inline">
+				<button class="layui-btn" type="button" function="query"><i class="layui-icon">&#xe615;</i>查询</button>
+			</div>
+		</div>
+	</div>
+</form>
+</div>
+  	 </div>
+  	 <div class="layui-col-md12">
+  	 	<div class="layui-row grid-demo">
+	      <div class="layui-col-md3">
+        	<button class="layui-btn" function="top" topUrl="add.html" topMode="add" topWidth="800px" topHeight="580px" topTitle="新增功能号信息">
+			  <i class="layui-icon">&#xe654;</i>新增
+			</button>
+			<button class="layui-btn" function="top" topUrl="add.html" topMode="edit" topWidth="800px" topHeight="580px" isSelect="1" topTitle="编辑功能号信息" inputs="id:">
+			  <i class="layui-icon">&#xe642;</i>编辑
+			</button>
+			<button class="layui-btn" function="refresh">
+			  <i class="layui-icon">&#x1002;</i>刷新
+			</button>
+	      </div>
+	      <div class="layui-col-md12">
+	         <table id="fsDatagrid" lay-filter="fsDatagrid" class="fsDatagrid" url="/fsbus/S1023" isPage="1" defaultForm="query_form" height="full-235"></table>
+
+			<div class="fsDatagridCols">
+				<p type="numbers" title="#" rowspan="2"/>
+				<p checkbox="true" rowspan="2"/>
+			    <p field="funcType" title="类型" width="150" templet="#typeTpl" rowspan="2"/>
+			    <p align="center" title="功能号信息" colspan="3"/>
+			    <p field="state" title="状态" width="100" templet="#stateTpl" rowspan="2"/>
+			    <p field="createdTime" title="创建时间" width="180" rowspan="2"/>
+			    <p fixed="right" align="center" toolbar="#barDemo" title="操作" width="150" rowspan="2"/>
+			     
+			    <p type="br"/>
+			    
+			    <p field="funcNo" title="功能号" width="100" sort="true"/>
+			    <p field="funcName" title="名称" width="200"/>
+			    <p field="resource" title="资源信息" width="300"/>
+			    
+			</div>
+		
+		<script type="text/html" id="typeTpl">
+  			{{#  if(d.funcType == 'c'){ }}
+  			      功能号实现类
+			{{# } else if(d.funcType == 's'){ }}
+				service实现类
+			{{# } else if(d.funcType == 'm'){ }}
+				mapper实现类
+ 			{{#  } }}
+		</script>
+		<script type="text/html" id="stateTpl">
+  			{{#  if(d.state == 0){ }}
+  			    <span style="color: #c2c2c2">关闭</span>
+			{{# } else if(d.state == 1){ }}
+				<span style="color: #5FB878">启用</span>
+			{{# } else if(d.state == 2){ }}
+				<span style="color: #FF5722;">作废</span>
+ 			{{#  } }}
+		</script>
+		
+		<script type="text/html" id="barDemo">
+ 		 <a class="layui-btn layui-btn-xs" lay-event="top" topUrl="add.html" topMode="edit" topWidth="800px" topHeight="580px" isMaxWindow="" topTitle="编辑" inputs="id:">编辑</a>
+		</script>
+	      </div>
+	    </div>
+
+  	 </div>
+
+  </div>
+</div>
+  </div>
+
+  <div class="layui-footer">
+    <!-- 底部固定区域 -->
+    ©2017 www.fallsea.com
+  </div>
+</div>
+</body>
+</html>

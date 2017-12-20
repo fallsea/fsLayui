@@ -2,8 +2,8 @@
  * @Description: tree工具
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.0.4
- * @date: 2017年11月5日 上午11:30:37
+ * @version 1.5.0
+ * @License：MIT
  */
 layui.define(['layer',"fsCommon",'fsConfig'], function(exports){
 	var layer = layui.layer,

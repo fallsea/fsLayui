@@ -2,12 +2,13 @@
  * @Description: datagrid工具
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.4.3
- * @date: 2017年11月5日 上午11:26:44
+ * @version 1.5.0
+ * @License：MIT
  */
-layui.define(["fsCommon","table",'laypage','fsConfig'], function(exports){
+layui.define(["fsCommon","table",'laypage','fsConfig','form'], function(exports){
   var fsCommon = layui.fsCommon,
   table = layui.table,
+  form = layui.form,
   laypage = layui.laypage,
   fsConfig = layui.fsConfig,
   statusName = $.result(fsConfig,"global.result.statusName","errorNo"),
@@ -16,6 +17,7 @@ layui.define(["fsCommon","table",'laypage','fsConfig'], function(exports){
   defaultLimit = $.result(fsConfig,"global.page.limit",20),//默认分页数量
   defaultLimits = $.result(fsConfig,"global.page.limits",[10,20,30,50,100]),//默认每页数据选择项
   loadDataType = $.result(fsConfig,"global.loadDataType","0");
+  datagridSubmitType = $.result(fsConfig,"global.datagridSubmitType","1");
   FsDatagrid = function (){
   };
   
@@ -56,6 +58,25 @@ layui.define(["fsCommon","table",'laypage','fsConfig'], function(exports){
       return ;
 	  }
 	  
+	  //判断模式
+	  var urlParam = fsCommon.getUrlParam();
+		var _mode = urlParam["_mode"];
+		if(!$.isEmpty(_mode)){
+			if("readonly" == _mode){//只读
+				//设置只读
+				_table.attr("isLoad","1");
+				$("button.fsNew,button.fsEdit").hide();
+			}else if("add" == _mode){//新增
+				_table.attr("isLoad","0");
+				$("button.fsEdit").hide();
+				$("button:not(.fsEdit)").show();
+			}else if("edit" == _mode){//编辑
+				_table.attr("isLoad","1");
+				$("button.fsAdd").hide();
+				$("button:not(.fsAdd)").show();
+			}
+		}
+	  
 	  //获取table属性
 	  var defaultForm = _table.attr("defaultForm");//查询条件formid
 	  
@@ -66,7 +87,13 @@ layui.define(["fsCommon","table",'laypage','fsConfig'], function(exports){
 	  //获取查询表单的参数
 	  var formData = $("#"+defaultForm).getFormData(true);
 	  if(!$.isEmpty(params)){
-	  	$.extend(true, formData, params);
+	  	$.extend(formData, params);
+	  }
+	  
+	  var inputs = _table.attr("inputs");//参数
+	  if(!$.isEmpty(inputs)){
+	  	var param = fsCommon.getParamByInputs(inputs,urlParam);
+	  	$.extend(formData, param);
 	  }
 	  
 	  var funcNo = _table.attr("funcNo");//功能号
@@ -110,7 +137,7 @@ layui.define(["fsCommon","table",'laypage','fsConfig'], function(exports){
 	    where : formData, //增加条件
 	    page: isPage == "1",
 	    method : "post",
-	    skin : 'row',
+//	    skin : 'row',
 	    height: height, //容器高度
 	    limits: defaultLimits,//每页数据选择项
 	    limit: defaultLimit ,//默认采用50
@@ -214,7 +241,17 @@ layui.define(["fsCommon","table",'laypage','fsConfig'], function(exports){
   };
       
   /**
-   * 查询
+   * 新增行
+   */
+  FsDatagrid.prototype.addRow = function(param){
+    if(!$.isEmpty(this.datagrid)){
+      this.datagrid.addRow(param);
+    }
+  };
+  
+  
+  /**
+   * 重新load
    */
   FsDatagrid.prototype.reload = function(param){
     if(!$.isEmpty(this.datagrid)){
@@ -222,7 +259,45 @@ layui.define(["fsCommon","table",'laypage','fsConfig'], function(exports){
       this.datagrid.reload(options);
     }
   };
-      
+  
+  /**
+   * 刷新静态表格数据
+   */
+  FsDatagrid.prototype.refreshStatic = function(){
+    if(!$.isEmpty(this.datagrid)){
+      this.datagrid.refreshStatic();
+    }
+  };
+  
+  /**
+   * 获取数据
+   */
+  FsDatagrid.prototype.getData = function(){
+    if(!$.isEmpty(this.datagrid)){
+    	if(datagridSubmitType == "2"){
+    		var arr = new Array(); 
+    		var data = this.datagrid.getData();
+    		if(!$.isEmpty(data)){
+    			$.each(data,function(i,row){
+    				if($.isEmpty(row["fsType"])){
+      				row["fsType"] = "edit";
+      			}
+    				arr.push(row);
+    			}); 
+    		}
+    		if(!$.isEmpty(this.data)){
+    			$.each(this.data,function(i,row){
+    				arr.push(row);
+    			});
+    		}
+    		return arr;
+    	}
+    	else{
+    		return this.datagrid.getData();
+    	}
+    	
+    }
+  };
       
   /**
    * 绑定工具条
@@ -238,19 +313,12 @@ layui.define(["fsCommon","table",'laypage','fsConfig'], function(exports){
       var tr = obj.tr; //获得当前行 tr 的DOM对象
       
       var _this = $(this);
-      if(layEvent === 'submit'){ //提交
-        if("1" == _this.attr("isConfirm"))
-        {
-          var confirmMsg = _this.attr("confirmMsg");
-          if($.isEmpty(confirmMsg))
-          {
-            confirmMsg="是否确定操作选中的数据?";
-          }
-          
-          fsCommon.confirm("提示", confirmMsg, function(index)
-          {
-            layer.close(index);
-            var funcNO = _this.attr("funcNo");
+      
+      switch(layEvent){
+      	case "submit" :
+      		 //提交
+        	function submitForm(){
+        		var funcNO = _this.attr("funcNo");
             
             var url = _this.attr("url");//请求url
             
@@ -276,7 +344,9 @@ layui.define(["fsCommon","table",'laypage','fsConfig'], function(exports){
               if(data[statusName] == "0")
               {
               	fsCommon.setRefreshTable("1");
-                getDatagrid(tableId).refresh();
+              	if(!$.isEmpty(getDatagrid(tableId))){
+              		 getDatagrid(tableId).refresh();
+              	}
                 fsCommon.successMsg('操作成功!');
               }
               else
@@ -285,56 +355,116 @@ layui.define(["fsCommon","table",'laypage','fsConfig'], function(exports){
               	fsCommon.errorMsg(data[msgName]);
               }
             });
-          });
-        }
-      }else if(layEvent === 'top'){ //打开新窗口
-        var _url = _this.attr("topUrl");
-        if($.isEmpty(_url))
-        {
-        	fsCommon.warnMsg("url地址为空！");
-          return false;
-        }
-        
-        var inputs = _this.attr("inputs");
-        
-        if(!$.isEmpty(inputs))
-        {
-          _url = fsCommon.getUrlByInputs(_url,inputs,data);
-          
-          //处理数据缓存
-          if(loadDataType == "1"){
-          	var uuid = $.uuid();
-          	_url += "&_fsUuid="+uuid;
-          	//缓存选中的数据
-          	$.setSessionStorage(uuid,JSON.stringify(data));
-          }
-        }
-        
-        //弹出的方式
-        var _mode = _this.attr("topMode");
-        if(!$.isEmpty(_mode)){
-        	if(_url.indexOf('?') == -1)
-  				{
-  					_url +="?";
-  				}else{
-  					_url +="&";
-  				}
-        	_url += "_mode="+_mode;
-        }
-        var _title = _this.attr("topTitle");
-        var _width = _this.attr("topWidth");
-        var _height = _this.attr("topHeight");
-        var isMaximize = _this.attr("isMaximize");
-        
-        fsCommon.open(_title,_width,_height,_url,function(){
-        	if(fsCommon.isRefreshTable())
+        	}
+        	
+        	
+          if("1" == _this.attr("isConfirm"))
           {
-            getDatagrid(tableId).refresh();
+            var confirmMsg = _this.attr("confirmMsg");
+            if($.isEmpty(confirmMsg))
+            {
+              confirmMsg="是否确定操作选中的数据?";
+            }
+            
+            fsCommon.confirm("提示", confirmMsg, function(index)
+            {
+              layer.close(index);
+              submitForm();
+            });
+          }else{
+          	submitForm();
           }
-  			},isMaximize);
+				  break;
+      	case "top" :
+      		 //打开新窗口
+          var _url = _this.attr("topUrl");
+          if($.isEmpty(_url))
+          {
+          	fsCommon.warnMsg("url地址为空！");
+            return false;
+          }
+          
+          var inputs = _this.attr("inputs");
+          
+          if(!$.isEmpty(inputs))
+          {
+            _url = fsCommon.getUrlByInputs(_url,inputs,data);
+            
+            //处理数据缓存
+            if(loadDataType == "1"){
+            	var uuid = $.uuid();
+            	_url += "&_fsUuid="+uuid;
+            	//缓存选中的数据
+            	$.setSessionStorage(uuid,JSON.stringify(data));
+            }
+          }
+          
+          //弹出的方式
+          var _mode = _this.attr("topMode");
+          if(!$.isEmpty(_mode)){
+          	if(_url.indexOf('?') == -1)
+    				{
+    					_url +="?";
+    				}else{
+    					_url +="&";
+    				}
+          	_url += "_mode="+_mode;
+          }
+          var _title = _this.attr("topTitle");
+          var _width = _this.attr("topWidth");
+          var _height = _this.attr("topHeight");
+          var isMaximize = _this.attr("isMaximize");
+          
+          fsCommon.open(_title,_width,_height,_url,function(){
+          	if(fsCommon.isRefreshTable())
+            {
+          		if(!$.isEmpty(getDatagrid(tableId))){
+          			getDatagrid(tableId).refresh();
+          		}
+            }
+    			},isMaximize);
         
+				  break;
+      	case "delRow" :
+      		
+      		function submit(){
+      			var fsType = obj.data["fsType"];
+      		
+	      		//删除前，记录删除的数据
+	      		if(datagridSubmitType == "2" && ($.isEmpty(fsType) || fsType == "edit")){
+	      			if($.isEmpty(thisDatagrid["data"])){
+	      				thisDatagrid["data"] = new Array();
+	      			}
+	      			obj.data["fsType"] = "del";
+	      			thisDatagrid["data"].push(obj.data);
+	      		}
+	      		//删除行
+	      		obj.del();
+	        	thisDatagrid.refreshStatic();
+	      	}
+      		
+	    		 if("1" == _this.attr("isConfirm"))
+	         {
+	           var confirmMsg = _this.attr("confirmMsg");
+	           if($.isEmpty(confirmMsg))
+	           {
+	             confirmMsg="是否确定操作选中的数据?";
+	           }
+	           
+	           fsCommon.confirm("提示", confirmMsg, function(index)
+	           {
+	             layer.close(index);
+	             submit();
+	           });
+	         }else{
+	         	submit();
+	         }
+      		
+				  break;
+      	default:;
       }
     });
+    
   };
       
   var fsDatagrid = new FsDatagrid();

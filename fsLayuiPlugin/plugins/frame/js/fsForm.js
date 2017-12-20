@@ -2,8 +2,8 @@
  * @Description: form表单工具
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.4.2
- * @date: 2017年11月5日 上午11:30:20
+ * @version 1.5.0
+ * @License：MIT
  */
 layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], function(exports){
   var layer = layui.layer,
@@ -303,14 +303,14 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
 				//设置只读
 				formDom.find("input").addClass("layui-disabled").attr("disabled","disabled");
 				formDom.find("select,textarea").attr("disabled","disabled");
-			}else if("new" == _mode){//新增
+			}else if("add" == _mode){//新增
 				formDom.attr("isLoad","0");
 				formDom.find("button.fsEdit").hide();
 				formDom.find("button:not(.fsEdit)").show();
 			}else if("edit" == _mode){//编辑
 				formDom.attr("isLoad","1");
-				formDom.find("button.fsNew").hide();
-				formDom.find("button:not(.fsNew)").show();
+				formDom.find("button.fsAdd").hide();
+				formDom.find("button:not(.fsAdd)").show();
 			}
 			
 		}
@@ -413,7 +413,6 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
           layer.prompt({title: '输入验证密码，并确认', formType: 1}, function(pass, index){
             layer.close(index);
             data.field["loginPassword"] = pass;
-            
             thisForm.submitForm(data.field,$(this));
           });
         }
@@ -430,7 +429,7 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
 	 * form表单格式验证
 	 */
 	if(!$.isEmpty(fsConfig["verify"])){
-    form.verify(fsConfig["verify"]);
+    form.verify(fsConfig["verify"]); 
 	}
     
   /**

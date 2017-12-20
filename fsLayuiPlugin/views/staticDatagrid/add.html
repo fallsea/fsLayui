@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta content="text/html;charset=UTF-8" />
+<title>fsLayuiPlugin</title>
+<meta name="keywords" content="fsLayuiPlugin,layui,layuiPlugin,layui插件" />
+<meta name="description"
+	content="fsLayuiPlugin,layui,layuiPlugin,layui插件" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Cache-Control" content="no cache" />
+<meta http-equiv="Expires" content="0" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="format-detection" content="telephone=no" />
+<link rel="stylesheet" type="text/css"
+	href="/plugins/layui/css/layui.css" media="all" />
+<link rel="stylesheet" type="text/css" href="/css/fs.css" media="all" />
+<script type="text/javascript" src="/plugins/layui/layui.js"></script>
+<script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/plugins/frame/js/fsDict.js?v=1.5.0"></script>
+<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.5.0"></script>
+<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.5.0"></script>
+</head>
+<body>
+	<div class="">
+		<div class="layui-fluid">
+			<div class="layui-row layui-col-space1">
+				<div class="layui-col-md12">
+					<div class="layui-form-query">
+						<form class="layui-form" groupId="test">
+							<input type="hidden" name="id">
+						  <div class="layui-form-item">
+						    <label class="layui-form-label">功能号：</label>
+						    <div class="layui-input-inline">
+						      <input type="text" name="funcNo" required=""  lay-verify="required" placeholder="请输入功能号" autocomplete="off" class="layui-input"/>
+						    </div>
+						    <label class="layui-form-label">名称：</label>
+						    <div class="layui-input-inline">
+						      <input type="text" name="funcName" required=""  lay-verify="required" placeholder="请输入功能号名称" autocomplete="off" class="layui-input"/>
+						    </div>
+						  </div>
+						  <div class="layui-form-item">
+						    <label class="layui-form-label">类型</label>
+						    <div class="layui-input-inline">
+						      <select name="funcType" lay-verify="required">
+						        <option value="">--请选择--</option>
+						        <option value="c">功能号实现类</option>
+						        <option value="s">service实现类</option>
+						        <option value="m">mapper实现类</option>
+						      </select>
+						    </div>
+						    <label class="layui-form-label">分类</label>
+						    <div class="layui-input-inline">
+						      <select name="type" lay-verify="required">
+						        <option value="">--请选择--</option>
+						        <option value="plat">后台系统</option>
+						      </select>
+						    </div>
+						  </div>
+						  <div class="layui-form-item">
+						    <label class="layui-form-label">资源内容：</label>
+						    <div class="layui-input-block">
+						      <input type="text" name="resource" required="" lay-verify="required" placeholder="请输入资源内容" autocomplete="off" class="layui-input"/>
+						    </div>
+						  </div>
+						  <div class="layui-form-item">
+						  	<label class="layui-form-label">版本号：</label>
+						    <div class="layui-input-inline">
+						      <input type="text" name="version" placeholder="默认1.0" autocomplete="off" class="layui-input"/>
+						    </div>
+						    <label class="layui-form-label">状态</label>
+						    <div class="layui-input-inline">
+						      <input type="checkbox" name="state" lay-skin="switch" lay-text="启用|关闭" checked="" value="1"/>
+						    </div>
+						  </div>
+						  <hr/>
+					</form>
+				</div>
+			</div>
+			<div class="layui-col-md12">
+				<div class="layui-row grid-demo">
+					<div class="layui-col-md3">
+						<button class="layui-btn layui-btn layui-btn-sm" function="addRow" tableId="addFsDatagrid">
+							<i class="layui-icon">&#xe654;</i>新增
+						</button>
+					</div>
+					<div class="layui-col-md12">
+						<table id="addFsDatagrid" lay-filter="addFsDatagrid" class="fsDatagrid" groupId="test" url="/fsbus/S1030"
+							isLoad="0" isPage="0" height="200" inputs="funcId:$id"></table>
+
+						<div class="fsDatagridCols">
+							<p type="numbers" title="#" />
+							<p field="attribute" edit="text" title="参数" width="150"/>
+						    <p field="name" edit="text" title="名称" width="200"/>
+						    <p field="value" edit="text" title="值" width="130"/>
+						    <p field="defaultValue" edit="text" title="默认值" width="130"/>
+							<p fixed="right" align="center" toolbar="#barDemo" title="操作" width="100" />
+						</div>
+						<script type="text/html" id="barDemo">
+  							<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delRow" isConfirm="1" confirmMsg="是否确定删除当前记录？">删除</a>
+						</script>
+					</div>
+				</div>
+
+			</div>
+			
+			<div class="layui-col-md12">
+				 <div style="text-align: center;">
+			     	 <button class="layui-btn fsAdd" function="save" groupId="test" url="/fsbus/1007"><i class="layui-icon">&#xe609;</i>新增</button>
+			     	 <button class="layui-btn fsEdit" function="save" groupId="test" url="/fsbus/1008"><i class="layui-icon">&#xe609;</i>修改</button>
+			     	 <button type="button" class="layui-btn layui-btn-primary" function="close">关闭</button>
+			   	  </div>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>
