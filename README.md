@@ -69,6 +69,9 @@ qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k
 
 * [fsLayuiPlugin缓存使用](http://www.itcto.cn/layui/fsLayuiPlugin%E7%BC%93%E5%AD%98%E4%BD%BF%E7%94%A8/)  
 
+* [fsLayuiPlugin数据表格编辑使用说明](http://www.itcto.cn/layui/fsLayuiPlugin%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E7%BC%96%E8%BE%91%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/)  
+
+
 * [常见问题](http://www.itcto.cn/layui/fsLayuiPluginFaq/)  
 
 ## 版本号规范
