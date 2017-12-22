@@ -8,7 +8,7 @@ qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k
 > [版本更新说明](https://github.com/fallsea/fsLayuiPlugin/releases)  
 
 
-`如果你觉得对你有说帮助，请Star关注一下，谢谢。`
+`如果你觉得对你有所帮助，请Star关注一下，在使用过程中，先看下使用说明文档，谢谢。`
 
 [我要点赞](http://fly.layui.com/case/u/1154664)
 
@@ -71,6 +71,7 @@ qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k
 
 * [fsLayuiPlugin数据表格编辑使用说明](http://www.itcto.cn/layui/fsLayuiPlugin%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E7%BC%96%E8%BE%91%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/)  
 
+* [fsLayuiPlugin表单和数据表格同时提交](http://www.itcto.cn/layui/fsLayuiPlugin%E8%A1%A8%E5%8D%95%E5%92%8C%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E5%90%8C%E6%97%B6%E6%8F%90%E4%BA%A4/)  
 
 * [常见问题](http://www.itcto.cn/layui/fsLayuiPluginFaq/)  
 

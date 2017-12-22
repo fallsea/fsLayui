@@ -2,7 +2,7 @@
  * @Description: datagrid工具
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.5.0
+ * @version 1.5.1
  * @License：MIT
  */
 layui.define(["fsCommon","table",'laypage','fsConfig','form'], function(exports){
@@ -55,6 +55,12 @@ layui.define(["fsCommon","table",'laypage','fsConfig','form'], function(exports)
 	  var _table = $(thisDatagrid.config.elem);
 	  var tableId = _table.attr("id");
 	  if($.isEmpty(tableId)){
+	  	fsCommon.errorMsg("表格id未配置!");
+      return ;
+	  }
+	  
+	  if(tableId != _table.attr("lay-filter")){
+	  	fsCommon.errorMsg("表格id和lay-filter不一致!");
       return ;
 	  }
 	  

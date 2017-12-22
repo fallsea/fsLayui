@@ -448,7 +448,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
     ,options = that.config
     ,request = options.request
     ,response = options.response
-    ,isLoad = options.isLoad
+    ,isLoad = options.isLoad || "1"
     ,sort = function(){
       if(typeof options.initSort === 'object'){
         that.sort(options.initSort.field, options.initSort.type);

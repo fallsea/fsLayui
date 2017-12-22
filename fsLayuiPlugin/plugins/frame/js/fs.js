@@ -2,12 +2,12 @@
  * @Description: 入口
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.5.0
+ * @version 1.5.1
  * @License：MIT
  */
 layui.config({
   base : "/plugins/frame/js/",
-	version : '1.5.0'
+	version : '1.5.1'
 });
 
 layui.fsUtil={};
@@ -30,12 +30,18 @@ layui.fsUtil.toDict = function(dict,value){
 			spaceMode=",";
 		}
 		
+		if($.isNumeric(value)){
+			analysis(value);
+		}else if($.type(value) == "string"){
 		//value 多个,分割，循环处理
+			$.each(value.split(','),function(i,e){
+				analysis(e);
+			});
+		}
 		
-		$.each(value.split(','),function(i,e){
-			
+		function analysis(value){
 			$.each(list,function(index,elem){
-				if(elem[valueField] == e){
+				if(elem[valueField] == value){
 					if(!$.isEmpty(_value)){
 						_value += spaceMode;
 					}
@@ -51,8 +57,8 @@ layui.fsUtil.toDict = function(dict,value){
 					return false;
 				}
 			});
-			
-		});
+		}
+		
 		return _value;
 	}
 	return _value;
