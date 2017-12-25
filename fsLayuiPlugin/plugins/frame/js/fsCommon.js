@@ -2,7 +2,7 @@
  * @Description: 通用组件
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.5.1
+ * @version 1.6.0
  * @License：MIT
  */
 layui.define(['layer','form','fsConfig'], function (exports) {
@@ -167,12 +167,11 @@ layui.define(['layer','form','fsConfig'], function (exports) {
   		{
   			_height = "400px";
   		}
-  		
-  		if(parseInt(_width.replace(/[^0-9]/ig,"")) > $(window).width()){
-  			_width = $(window).width()+"px";
+  		if(parseInt(_width.replace(/[^0-9]/ig,"")) > $(window.top.document).width()){
+  			_width = $(window.top.document).width()+"px";
   		}
-  		if(parseInt(_height.replace(/[^0-9]/ig,"")) > $(window).height()){
-  			_height = $(window).height()+"px";
+  		if(parseInt(_height.replace(/[^0-9]/ig,"")) > $(window.top.document).height()){
+  			_height = $(window.top.document).height()+"px";
   		}
   		
     	var index = top.layer.open({
@@ -216,8 +215,6 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 				var _function = _this.attr("function");
 				var _funcNo = _this.attr("funcNo");
 				var _tableId = _this.attr("tableId");
-				
-				
 				switch(_function){
 					case "refresh" :
 						var obj = getDatagrid(_tableId);
@@ -238,7 +235,7 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 			    			fsCommon.warnMsg("请选择需要操作的数据！");
 			    			return;
 			    		}
-			    		if("1" == _this.attr("isSelect") && data.length == 1)
+			    		if("1" == _this.attr("isSelect") && data.length > 1)
 			    		{
 			    			fsCommon.warnMsg("请选择一行数据！");
 			    			return;
@@ -247,18 +244,14 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 		    		
 		    		function submitForm(){
 		    			var url = _this.attr("url");//请求url
-	            
 	            if($.isEmpty(_funcNo) && $.isEmpty(url)){
 	            	fsCommon.warnMsg("功能号或请求地址为空！");
 	              return;
 	            }
-	            
 	            if($.isEmpty(url)){
 	              url = "/fsbus/" + _funcNo;
 	            }
-	                      
 	    				//获取参数
-	    				
 	    				var inputs = _this.attr("inputs");
 			    		var param = {};//参数
 			    		if(!$.isEmpty(inputs))
@@ -267,8 +260,6 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 				    		var data = getDatagrid(_tableId).getCheckData();
 				    		param = fsCommon.getParamByInputs(inputs,data);
 			    		}
-	    				
-	    				
 	    				//请求数据
 			    		fsCommon.invoke(url,param,function(data)
 							{
@@ -302,7 +293,6 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 		    			fsCommon.confirm("提示", confirmMsg, function(index)
 		    			{
 		    				layer.close(index);
-		                      
 		    				submitForm();
 		    			});
 		    		}else{
@@ -479,14 +469,13 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 							return;
 						}
 						
-						function submitForm(){
+						function submitFormSave(){
 		    			var url = _this.attr("url");//请求url
 	            
 	            if($.isEmpty(_funcNo) && $.isEmpty(url)){
 	            	fsCommon.warnMsg("功能号或请求地址为空！");
 	              return;
 	            }
-	            
 	            if($.isEmpty(url)){
 	              url = "/fsbus/" + _funcNo;
 	            }
@@ -537,10 +526,10 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 		    			fsCommon.confirm("提示", confirmMsg, function(index)
 		    			{
 		    				layer.close(index);
-		    				submitForm();
+		    				submitFormSave();
 		    			});
 		    		}else{
-		    			submitForm();
+		    			submitFormSave();
 		    		}
 					  break;
 					default:;

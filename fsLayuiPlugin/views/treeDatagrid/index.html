@@ -2,9 +2,6 @@
 <html>
 <head>
 	<meta content="text/html;charset=UTF-8"/>
-	<title>fsLayuiPlugin</title>
-	<meta name="keywords" content="fsLayuiPlugin,layui,layuiPlugin,layui插件" />
-    <meta name="description" content="fsLayuiPlugin,layui,layuiPlugin,layui插件" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 	<meta http-equiv ="Pragma" content = "no-cache"/>
 	<meta http-equiv="Cache-Control" content="no cache" />
@@ -13,6 +10,8 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 	<meta name="apple-mobile-web-app-capable" content="yes"/>
 	<meta name="format-detection" content="telephone=no"/>
+	<script src="https://cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+	<link href="https://cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="/plugins/layui/css/layui.css" media="all"/>
 	<link rel="stylesheet" type="text/css" href="/css/fs.css" media="all"/>
 	<script type="text/javascript" src="/plugins/layui/layui.js"></script>
@@ -23,37 +22,6 @@
 	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.5.0"></script>
 </head>
 <body>
-<div class="layui-layout layui-layout-admin">
-  <div class="layui-header">
-    <a href="/index.html"><div class="layui-logo">fsLayuiPlugin</div></a>
-  </div>
-
-  <div class="layui-side layui-bg-black">
-    <div class="layui-side-scroll">
-      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-      <ul class="layui-nav layui-nav-tree"  lay-filter="test">
-        <li class="layui-nav-item layui-nav-itemed">
-          <a class="" href="javascript:;">案例</a>
-          <dl class="layui-nav-child">
-          	<dd><a href="/index.html">首页</a></dd>
-            <dd><a href="/views/datagrid/index.html">数据表格</a></dd>
-            <dd><a href="/views/datagrid2/index.html">数据表格2</a></dd>
-            <dd class="layui-this"><a href="/views/treeDatagrid/index.html">树+表格</a></dd>
-             <dd><a href="/views/multiDatagrid/index.html">多数据表格</a></dd>
-              <dd><a href="/views/tabDatagrid/index.html">tab数据表格</a></dd>
-             <dd><a href="/views/complexDatagrid/index.html">复杂数据表格</a></dd>
-             <dd><a href="/views/linkageDatagrid/index.html">联动数据表格</a></dd>
-             <dd><a href="/views/linkageDatagrid2/index.html">联动数据表格(复杂)</a></dd>
-             <dd><a href="/views/staticDatagrid/index.html">表格数据提交</a></dd>
-          </dl>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="layui-body">
-  
-  
   <div class="layui-fluid">  
   <div class="layui-row layui-col-space10">
     <div class="layui-col-md3">
@@ -63,13 +31,13 @@
          	<div class="layui-row layui-col-space10">
          		<div class="layui-col-md12">
          			<div class="layui-btn-group">
-				    	<button class="layui-btn layui-btn-primary layui-btn-sm fsTree" function="top" topUrl="add.html" topWidth="700px" topHeight="450px" isSelect="1" topTitle="新增菜单信息" inputs="parentId:$id">
+				    	<button class="layui-btn layui-btn-primary layui-btn-sm fsTree" function="top" topUrl="/views/treeDatagrid/add.html" topWidth="700px" topHeight="450px" isSelect="1" topTitle="新增菜单信息" inputs="parentId:$id">
 						  <i class="layui-icon">&#xe654;</i>
 						</button>
-						<button class="layui-btn layui-btn-primary layui-btn-sm fsTree" function="top" topUrl="edit.html" topWidth="700px" topHeight="450px" isSelect="1" topTitle="编辑菜单信息" inputs="menuId:$id">
+						<button class="layui-btn layui-btn-primary layui-btn-sm fsTree" function="top" topUrl="/views/treeDatagrid/edit.html" topWidth="700px" topHeight="450px" isSelect="1" topTitle="编辑菜单信息" inputs="menuId:$id">
 						  <i class="layui-icon">&#xe642;</i>
 						</button>
-						<button class="layui-btn layui-btn-sm layui-btn-danger fsTree" function="submit" url="/fsbus/S1007" url="" isSelect="1" isConfirm="1" confirmMsg="是否确定删除选中的数据？" inputs="menuId:$id">
+						<button class="layui-btn layui-btn-sm layui-btn-danger fsTree" function="submit" url="/fsbus/S1007" isSelect="1" isConfirm="1" confirmMsg="是否确定删除选中的数据？" inputs="menuId:$id">
 						  <i class="layui-icon">&#xe640;</i>
 						</button>
 						<button class="layui-btn layui-btn-primary layui-btn-sm fsTree" function="refresh">
@@ -95,7 +63,7 @@
 			    		<form id="query_form" style="display: none;">
 			    			<input type="text" id="menuId" name="menuId" value="0"/>
 			    		</form>
-				    	<button class="layui-btn layui-btn-sm" function="top" topUrl="addFunc.html" topWidth="700px" topHeight="350px" topTitle="新增功能号信息" inputs="menuId:#menuId">
+				    	<button class="layui-btn layui-btn-sm" function="top" topUrl="/views/treeDatagrid/addFunc.html" topWidth="700px" topHeight="350px" topTitle="新增功能号信息" inputs="menuId:#menuId">
 						  <i class="layui-icon">&#xe654;</i>新增
 						</button>
 						<button class="layui-btn layui-btn-sm" function="refresh">
@@ -104,7 +72,7 @@
 			    	</div>
 			    </div>
 			    <div class="layui-col-md12 layui-col-space1">
-					<table id="fsDatagrid" class="fsDatagrid" lay-filter="fsDatagrid" url="/fsbus/S1009" isPage="0" defaultForm="query_form">
+					<table id="fsDatagrid" class="fsDatagrid" lay-filter="fsDatagrid" url="/fsbus/S1009" isPage="0" defaultForm="query_form" height="full-130">
 					</table>
 					
 					<div class="fsDatagridCols">
@@ -117,7 +85,7 @@
 					</div>
 					
 					<script type="text/html" id="barDemo">
-						 <a id="edit" class="layui-btn layui-btn-xs" lay-event="top" topUrl="editFunc.html" topWidth="700px" topHeight="350px" isSelect="1" topTitle="编辑功能号信息" inputs="id:">编辑</a>
+						 <a id="edit" class="layui-btn layui-btn-xs" lay-event="top" topUrl="/views/treeDatagrid/editFunc.html" topWidth="700px" topHeight="350px" isSelect="1" topTitle="编辑功能号信息" inputs="id:">编辑</a>
   						 <a id="del" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="submit" isConfirm="1" url="/fsbus/S1013" inputs="id:">删除</a>
 					</script>
 			    </div>
@@ -129,11 +97,5 @@
   
   
   </div>
-
-  <div class="layui-footer">
-    <!-- 底部固定区域 -->
-    ©2017 www.fallsea.com
-  </div>
-</div>
 </body>
 </html>

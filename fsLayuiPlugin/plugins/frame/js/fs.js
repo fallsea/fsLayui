@@ -2,12 +2,12 @@
  * @Description: 入口
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.5.1
+ * @version 1.6.0
  * @License：MIT
  */
 layui.config({
-  base : "/plugins/frame/js/",
-	version : '1.5.1'
+  base : "/plugins/frame/js/",//设定扩展的Layui模块的所在目录，一般用于外部模块扩展
+	version : '1.6.0'
 });
 
 layui.fsUtil={};
@@ -33,7 +33,7 @@ layui.fsUtil.toDict = function(dict,value){
 		if($.isNumeric(value)){
 			analysis(value);
 		}else if($.type(value) == "string"){
-		//value 多个,分割，循环处理
+			//value 多个,分割，循环处理
 			$.each(value.split(','),function(i,e){
 				analysis(e);
 			});
@@ -106,9 +106,9 @@ layui.fsUtil.toDict = function(dict,value){
       {
     	 //如果为true,只需要处理有数据的值
     	 if(!$.isEmpty(value))
-         {
+       {
     		 data[item.name] = value;
-         }
+       }
       }
       else
       {
@@ -222,7 +222,7 @@ layui.fsUtil.toDict = function(dict,value){
 	  				formatArr.push(dict);
 	  				
 	  				//自定义模板
-	  				col["templet"] = "<div>{{ layui.fsUtil.toDict('"+field+"',d."+field+",'"+dict+"') }}</div>";
+	  				col["templet"] = "<div>{{ layui.fsUtil.toDict('"+dict+"',d."+field+") }}</div>";
 	  				
 	  			}
 	  			colsArr.push(col);
@@ -315,7 +315,7 @@ layui.fsUtil.toDict = function(dict,value){
   $.extend({
   	//非空判断
   	isEmpty: function(value) {
-  		if (value === null || value == undefined || value == '') { 
+  		if (value === null || value == undefined || value === '') { 
   			return true;
   		}
   		return false;

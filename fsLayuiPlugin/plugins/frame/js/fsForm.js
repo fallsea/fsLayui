@@ -2,7 +2,7 @@
  * @Description: form表单工具
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.5.1
+ * @version 1.6.0
  * @License：MIT
  */
 layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], function(exports){
@@ -286,7 +286,7 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
 		//判断模式
 		var _mode = urlParam["_mode"];
 		if(!$.isEmpty(_mode)){
-			
+			delete urlParam["_mode"];
 			formDom.append("<input type=\"hidden\" name=\"_mode\" value=\""+_mode+"\"/>");
 			
 			if("readonly" == _mode){//只读
@@ -321,7 +321,9 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
 		
 		//如果isLoad =1 并且功能号不为空，查询
 		var _fsUuid = urlParam["_fsUuid"];
-		
+		if(!$.isEmpty(_fsUuid)){
+			delete urlParam["_fsUuid"];
+		}
 		if(formDom.attr("isLoad") == "1")
 		{
 			

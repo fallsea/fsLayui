@@ -2,315 +2,112 @@
 <html>
 <head>
 	<meta content="text/html;charset=UTF-8"/>
-	<title>fsLayuiPlugin</title>
-	<meta name="keywords" content="fsLayuiPlugin,layui,layuiPlugin,layui插件" />
-    <meta name="description" content="fsLayuiPlugin,layui,layuiPlugin,layui插件" />
+	<title>layui快速开发插件</title>
+	<meta name="keywords" content="fsLayuiPlugin,layui,layuiPlugin,layui插件,layui快速开发插件" />
+    <meta name="description" content="fsLayuiPlugin,layui,layuiPlugin,layui插件,layui快速开发插件" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 	<meta http-equiv ="Pragma" content = "no-cache"/>
 	<meta http-equiv="Cache-Control" content="no cache" />
 	<meta http-equiv="Expires" content="0" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="format-detection" content="telephone=no"/>
+	<script src="https://cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+	<link href="https://cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="/plugins/layui/css/layui.css" media="all"/>
+	<link rel="stylesheet" type="text/css" href="/css/fs.css" media="all"/>
 	<script type="text/javascript" src="/plugins/layui/layui.js"></script>
+	<script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/plugins/frame/js/fsDict.js?v=1.6.0"></script>
+	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.6.0"></script>
+	<script type="text/javascript" src="/scripts/main.js?v=1.6.0"></script>
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
   <div class="layui-header">
     <a href="/index.html"><div class="layui-logo">fsLayuiPlugin</div></a>
+    <!-- 头部区域（可配合layui已有的水平导航） -->
+    <ul class="layui-nav layui-layout-left" id="fsTopMenu">
+      <li class="layui-nav-item layui-this" dataPid="fs1"><a href="javascript:;"><i class="layui-icon">&#xe68e;</i> <cite>控制台</cite></a></li>
+      <li class="layui-nav-item" dataPid="fs2"><a href="javascript:;">测试</a></li>
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item layui-hide-xs">
+        <a href="javascript:;">
+         	FallSea
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a href="javascript:;">基本资料</a></dd>
+          <dd><a href="javascript:;">安全设置</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item layui-hide-xs"><a href="javascript:;">退了</a></li>
+    </ul>
   </div>
 
   <div class="layui-side layui-bg-black">
     <div class="layui-side-scroll">
       <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-      <ul class="layui-nav layui-nav-tree"  lay-filter="test">
-        <li class="layui-nav-item layui-nav-itemed">
-          <a class="" href="javascript:;">案例</a>
+      <ul class="layui-nav layui-nav-tree fsMenu"  lay-filter="fsMenu" id="fsLeftMenu">
+        <li class="layui-nav-item layui-nav-itemed" dataPid="fs1" style="display: none;">
+          <a href="javascript:;">案例</a>
           <dl class="layui-nav-child">
-          	<dd class="layui-this"><a href="/index.html">首页</a></dd>
-            <dd><a href="/views/datagrid/index.html">数据表格</a></dd>
-            <dd><a href="/views/datagrid2/index.html">数据表格2</a></dd>
-            <dd><a href="/views/treeDatagrid/index.html">树+表格</a></dd>
-            <dd><a href="/views/multiDatagrid/index.html">多数据表格</a></dd>
-            <dd><a href="/views/tabDatagrid/index.html">tab数据表格</a></dd>
-            <dd><a href="/views/complexDatagrid/index.html">复杂数据表格</a></dd>
-            <dd><a href="/views/linkageDatagrid/index.html">联动数据表格</a></dd>
-            <dd><a href="/views/linkageDatagrid2/index.html">联动数据表格(复杂)</a></dd>
-            <dd><a href="/views/staticDatagrid/index.html">表格数据提交</a></dd>
+          	<dd class="layui-this" lay-id="1"><a href="javascript:;" menuId="home" dataUrl="/views/home/index.html"><i class="layui-icon">&#xe68e;</i> <cite>首页</cite></a></dd>
+            <dd><a href="javascript:;" menuId="datagrid" dataUrl="/views/datagrid/index.html"><i class="layui-icon">&#xe705;</i> <cite>数据表格</cite></a></dd>
+            <dd><a href="javascript:;" menuId="datagrid2" dataUrl="/views/datagrid2/index.html"><i class="layui-icon">&#xe60a;</i> <cite>数据表格2</cite></a></dd>
+            <dd><a href="javascript:;" menuId="treeDatagrid" dataUrl="/views/treeDatagrid/index.html"><i class="layui-icon">&#xe62c;</i> <cite>树+表格</cite></a></dd>
+            <dd><a href="javascript:;" menuId="multiDatagrid" dataUrl="/views/multiDatagrid/index.html"><i class="layui-icon">&#xe60a;</i> <cite>多数据表格</cite></a></dd>
+            <dd><a href="javascript:;" menuId="tabDatagrid" dataUrl="/views/tabDatagrid/index.html"><i class="layui-icon">&#xe609;</i> <cite>tab数据表格</cite></a></dd>
+            <dd><a href="javascript:;" menuId="complexDatagrid" dataUrl="/views/complexDatagrid/index.html"><i class="layui-icon">&#xe615;</i> <cite>复杂数据表格</cite></a></dd>
+            <dd><a href="javascript:;" menuId="linkageDatagrid" dataUrl="/views/linkageDatagrid/index.html"><i class="layui-icon">&#xe614;</i> <cite>联动数据表格</cite></a></dd>
+            <dd><a href="javascript:;" menuId="linkageDatagrid2" dataUrl="/views/linkageDatagrid2/index.html"><i class="layui-icon">&#xe658;</i> <cite>联动数据表格(复杂)</cite></a></dd>
+            <dd><a href="javascript:;" menuId="staticDatagrid" dataUrl="/views/staticDatagrid/index.html"><i class="layui-icon">&#xe6b2;</i> <cite>表格数据提交</cite></a></dd>
           </dl>
         </li>
+        <li class="layui-nav-item " dataPid="fs1" style="display: none;">
+          <a href="javascript:;">其他页面</a>
+          <dl class="layui-nav-child">
+            <dd><a href="javascript:;" menuId="demo_404" dataUrl="/404.html">404</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item " dataPid="fs2" style="display: none;">
+          <a href="javascript:;">基本元素</a>
+          <dl class="layui-nav-child">
+            <dd><a href="javascript:;" menuId="demo_button" dataUrl="http://www.layui.com/demo/button.html">按钮</a></dd>
+            <dd><a href="javascript:;" menuId="demo_form"  dataUrl="http://www.layui.com/demo/form.html">表单</a></dd>
+            <dd><a href="javascript:;" menuId="demo_tab" dataUrl="http://www.layui.com/demo/tab.html">选项卡</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item" dataPid="fs2" style="display: none;"><a href="javascript:;" menuId="demo_badge" dataUrl="http://www.layui.com/demo/badge.html">徽章</a></li>
+        <li class="layui-nav-item" dataPid="fs2" style="display: none;"><a href="javascript:;" menuId="demo_table" dataUrl="http://www.layui.com/demo/table.html">数据表格</a></li>
       </ul>
     </div>
   </div>
 
-  <div class="layui-body">
-    <!-- 内容主体区域 -->
-    
-<div class="layui-fluid">  
-	<div class="layui-row layui-col-space10">
-		<div class="layui-col-md12">
-			<blockquote class="layui-elem-quote">
-				<span style="color: #FF5722;">fsLayuiPlugin</span>是一个基于layui的快速开发插件，支持数据表格增删改查操作，提供通用的组件，通过配置html实现数据请求，减少前端js重复开发的工作。目前支持单数据表格、多数据表格、tab数据表格、树+数据表格、联动数据表格、layeidt编辑器、下拉框联动等。
-			</blockquote>
-			<blockquote class="layui-elem-quote layui-quote-nm">
-				<p>感兴趣的可以关注一下，最好先清理缓存在访问。<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=ec423b1a69e63af26c66e3756dbeaefd0f7d1ef793d4d8321ec9ef7cf74008f8"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="fsLayuiPlugin交流" title="fsLayuiPlugin交流"></a></p>
-				<a href="https://github.com/fallsea/fsLayuiPlugin" target="-bark"><span class="layui-badge layui-bg-black">GitHub下载</span></a>
-				<a href="https://gitee.com/fallsea/fsLayuiPlugin" target="-bark"><span class="layui-badge">码云下载</span></a>
-				<a href="http://fly.layui.com/case/u/1154664" target="-bark"><span class="layui-badge layui-bg-green">我要点赞</span></a>
-			</blockquote>
-		</div>
-		
-		<div class="layui-col-md6 layui-col-space5">
-			<blockquote class="layui-elem-quote">
-				版本更新记录
-			</blockquote>
-			<ul class="layui-timeline">
-			  <li class="layui-timeline-item">
-		        <i class="layui-icon layui-timeline-axis"></i>
-		        <div class="layui-timeline-content layui-text">
-		          <div class="layui-timeline-title">
-		            <h2>1.5.1</h2>
-		            <span class="layui-badge-rim">2017-12-22</span>
-		          </div>
-		          <ul>
-		            <li>优化数据字典解析int类型失败bug</a></li>
-		            <li>优化table.js使用官方调用不加载数据bug</li>
-		            <li>优化表格默认样式</li>
-		          </ul>
-		        </div>
-		      </li>
-			  <li class="layui-timeline-item">
-		        <i class="layui-icon layui-timeline-axis"></i>
-		        <div class="layui-timeline-content layui-text">
-		          <div class="layui-timeline-title">
-		            <h2>1.5.0</h2>
-		            <span class="layui-badge-rim">2017-12-20</span>
-		          </div>
-		          <ul>
-		            <li>新增静态表格操作，表单和表格数据提交<a href="/views/staticDatagrid/index.html">表格数据提交</a></li>
-		            <li>单页面操作，topMode 新增new统一改为add</li>
-		            <li>优化表格默认样式</li>
-		          </ul>
-		        </div>
-		      </li>
-			  <li class="layui-timeline-item">
-		        <i class="layui-icon layui-timeline-axis"></i>
-		        <div class="layui-timeline-content layui-text">
-		          <div class="layui-timeline-title">
-		            <h2>1.4.3</h2>
-		            <span class="layui-badge-rim">2017-12-18</span>
-		          </div>
-		          <ul>
-		            <li>优化弹出窗口，新增最大化配置</li>
-		            <li>优化数据表格排序bug</li>
-		            <li>新增数据表格复杂表头支持<a href="/views/complexDatagrid/index.html">复杂数据表格</a></li>
-		          </ul>
-		        </div>
-		      </li>
-			  <li class="layui-timeline-item">
-		        <i class="layui-icon layui-timeline-axis"></i>
-		        <div class="layui-timeline-content layui-text">
-		          <div class="layui-timeline-title">
-		            <h2>1.4.2</h2>
-		            <span class="layui-badge-rim">2017-12-15</span>
-		          </div>
-		          <ul>
-		            <li>优化默认配置bug</li>
-		            <li>优化编辑、查看获取数据方式，新增前端缓存读取</li>
-		          </ul>
-		        </div>
-		      </li>
-			  <li class="layui-timeline-item">
-		        <i class="layui-icon layui-timeline-axis"></i>
-		        <div class="layui-timeline-content layui-text">
-		          <div class="layui-timeline-title">
-		            <h2>1.4.1</h2>
-		            <span class="layui-badge-rim">2017-12-14</span>
-		          </div>
-		          <ul>
-		            <li>优化动态数据字典入参配置(支持配置传入指定选择器内容)</li>
-		            <li>优化新增、修改、查看页面可以共用一个，demo地址：<a href="/views/datagrid2/index.html">数据表格2</a>，<a target="_brank" href="http://www.itcto.cn/layui/fsLayuiPlugin%E5%8D%95%E9%A1%B5%E9%9D%A2%E6%93%8D%E4%BD%9C/">文档参考</a></li>
-		            <li>优化表格自动刷新和文件上传功能，不再强制要求配置<span style="color: red;">mate</span>标签</li>
-		            <li>取消<span style="color: red;">lodash.js 和 jquery.formautofill.js</span>的依赖，不需要再引入</li>
-		          </ul>
-		        </div>
-		      </li>
-			  <li class="layui-timeline-item">
-		        <i class="layui-icon layui-timeline-axis"></i>
-		        <div class="layui-timeline-content layui-text">
-		          <div class="layui-timeline-title">
-		            <h2>1.4.0</h2>
-		            <span class="layui-badge-rim">2017-12-12</span>
-		          </div>
-		          <ul>
-		            <li>优化数据字典使用方式(数据字典可以直接配置表格数据转义和下拉框数据填充使用)</li>
-		            <li>新增数据表格转义样式和多个值转义</li>
-		            <li>避免基础插件和其他的冲突，common.js改为fsCommon.js</li>
-		          </ul>
-		        </div>
-		      </li>
-			  <li class="layui-timeline-item">
-		        <i class="layui-icon layui-timeline-axis"></i>
-		        <div class="layui-timeline-content layui-text">
-		          <div class="layui-timeline-title">
-		            <h2>1.3.1</h2>
-		            <span class="layui-badge-rim">2017-12-10</span>
-		          </div>
-		          <ul>
-		            <li>优化数据表格批量删除提交bug</li>
-		            <li>优化数据表格转义功能(新增本地数据字典配置)</li>
-		            <li>优化下拉框数据方式(新增本地数据字典配置)</li>
-		            <li>新增默认的分页数量和分页下拉选择项配置(fsConfig.js中配置)</li>
-		          </ul>
-		        </div>
-		      </li>
-			  <li class="layui-timeline-item">
-		        <i class="layui-icon layui-timeline-axis"></i>
-		        <div class="layui-timeline-content layui-text">
-		          <div class="layui-timeline-title">
-		            <h2>1.3.0</h2>
-		            <span class="layui-badge-rim">2017-12-8</span>
-		          </div>
-		          <ul>
-		            <li>升级layui2.2.45版本</li>
-		            <li>优化联动下拉框编辑页bug</li>
-		            <li>新增数据表格内容异步转义</li>
-		          </ul>
-		        </div>
-		      </li>
-			  <li class="layui-timeline-item">
-		        <i class="layui-icon layui-timeline-axis"></i>
-		        <div class="layui-timeline-content layui-text">
-		          <div class="layui-timeline-title">
-		            <h2>1.2.0</h2>
-		            <span class="layui-badge-rim">2017-12-7</span>
-		          </div>
-		          <ul>
-		            <li>新增form表单联动表格操作</li>
-		            <li>新增layedit编辑器</li>
-		          </ul>
-		        </div>
-		      </li>
-			  <li class="layui-timeline-item">
-		        <i class="layui-icon layui-timeline-axis"></i>
-		        <div class="layui-timeline-content layui-text">
-		          <div class="layui-timeline-title">
-		            <h2>1.1.1</h2>
-		            <span class="layui-badge-rim">2017-12-4</span>
-		          </div>
-		          <ul>
-		            <li>优化表格首次渲染加载提示</li>
-		            <li>树+表格优化</li>
-		          </ul>
-		        </div>
-		      </li>
-			  <li class="layui-timeline-item">
-		        <i class="layui-icon layui-timeline-axis"></i>
-		        <div class="layui-timeline-content layui-text">
-		          <div class="layui-timeline-title">
-		            <h2>1.1.0</h2>
-		            <span class="layui-badge-rim">2017-11-28</span>
-		          </div>
-		          <ul>
-		            <li>新增联动表格支持(简单或复杂的操作)</li>
-		            <li>表格新增isLoad是否自动渲染配置</li>
-		            <li>升级layui到2.2.3版本</li>
-		          </ul>
-		        </div>
-		      </li>
-			  <li class="layui-timeline-item">
-		        <i class="layui-icon layui-timeline-axis"></i>
-		        <div class="layui-timeline-content layui-text">
-		          <div class="layui-timeline-title">
-		            <h2>1.0.5</h2>
-		            <span class="layui-badge-rim">2017-11-21</span>
-		          </div>
-		          <ul>
-		            <li>优化datagird获取查询条件问题</li>
-		            <li>新增tab数据表格案例</li>
-		            <li>新增复杂数据表格案例</li>
-		          </ul>
-		        </div>
-		      </li>
-			  <li class="layui-timeline-item">
-		        <i class="layui-icon layui-timeline-axis"></i>
-		        <div class="layui-timeline-content layui-text">
-		          <div class="layui-timeline-title">
-		            <h2>1.0.4</h2>
-		            <span class="layui-badge-rim">2017-11-17</span>
-		          </div>
-		          <ul>
-		            <li>升级layui到2.2.2版本</li>
-		          </ul>
-		        </div>
-		      </li>
-		      <li class="layui-timeline-item">
-		        <i class="layui-icon layui-timeline-axis"></i>
-		        <div class="layui-timeline-content layui-text">
-		          <div class="layui-timeline-title">
-		            <h2>1.0.3</h2>
-		            <span class="layui-badge-rim">2017-11-17</span>
-		          </div>
-		          <ul>
-		            <li>升级layui到2.2.1版本</li>
-		            <li>新增附件上传功能</li>
-		          </ul>
-		        </div>
-		      </li>
-			  <li class="layui-timeline-item">
-		        <i class="layui-icon layui-timeline-axis"></i>
-		        <div class="layui-timeline-content layui-text">
-		          <div class="layui-timeline-title">
-		            <h2>1.0.2</h2>
-		            <span class="layui-badge-rim">2017-11-15</span>
-		          </div>
-		          <ul>
-		            <li>升级layui到2.2.0版本</li>
-		            <li>优化数据表格分页查询无数据分页显示问题</li>
-		            <li>优化form表单日期控件必须输入id问题</li>
-		          </ul>
-		        </div>
-		      </li>
-			  <li class="layui-timeline-item">
-		        <i class="layui-icon layui-timeline-axis"></i>
-		        <div class="layui-timeline-content layui-text">
-		          <div class="layui-timeline-title">
-		            <h2>1.0.1</h2>
-		            <span class="layui-badge-rim">2017-11-14</span>
-		          </div>
-		          <ul>
-		            <li>优化form表单demo</li>
-		            <li>完善datagrid demo</li>
-		            <li>优化form.js复选框获取数据问题(layui官网默认提交不同的属性，改成提交统一字段，逗号分隔数据)</li>
-		          </ul>
-		        </div>
-		      </li>
-			  <li class="layui-timeline-item">
-		        <i class="layui-icon layui-timeline-axis"></i>
-		        <div class="layui-timeline-content layui-text">
-		          <div class="layui-timeline-title">
-		            <h2>1.0.0</h2>
-		            <span class="layui-badge-rim">2017-11-12</span>
-		          </div>
-		          <ul>
-		            <li>支持数据表格刷新，查询，修改，删除功能</li>
-		            <li>支持树+数据表格操作</li>
-		            <li>支持表单操作</li>
-		            <li>支持多个数据表格</li>
-		          </ul>
-		        </div>
-		      </li>
-			</ul>
+  <div class="layui-body layui-form">
+  	<div class="layui-tab layui-tab-card fsTab" lay-filter="fsTab" lay-allowClose="true">
+		<ul class="layui-tab-title">
+			<li class="layui-this" lay-id="1"><i class="layui-icon">&#xe68e;</i><cite>首页</cite><p class="layui-tab-close" style="display: none;"></p></li>
+		</ul>
+		<div class="layui-tab-content">
+			<div class="layui-tab-item layui-show" lay-id="1">
+				<iframe src="/views/home/index.html"></iframe>
+			</div>
 		</div>
 	</div>
-</div>
+  </div>
 
   <div class="layui-footer">
     <!-- 底部固定区域 -->
-    ©2017 www.fallsea.com
+    ©2017 <a href="http://www.fallsea.com" target="_black">www.fallsea.com</a>
   </div>
 </div>
+
+<!-- 移动导航 -->
+<div class="site-tree-mobile layui-hide">
+  <i class="layui-icon">&#xe602;</i>
+</div>
+<div class="site-mobile-shade"></div>
 </body>
 </html>
