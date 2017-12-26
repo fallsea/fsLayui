@@ -2,7 +2,7 @@
  * @Description: datagrid工具
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.6.0
+ * @version 1.6.1
  * @License：MIT
  */
 layui.define(["fsCommon","table",'laypage','fsConfig','form'], function(exports){

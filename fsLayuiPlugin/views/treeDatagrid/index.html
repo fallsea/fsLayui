@@ -12,14 +12,14 @@
 	<meta name="format-detection" content="telephone=no"/>
 	<script src="https://cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
 	<link href="https://cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="/plugins/layui/css/layui.css" media="all"/>
-	<link rel="stylesheet" type="text/css" href="/css/fs.css" media="all"/>
-	<script type="text/javascript" src="/plugins/layui/layui.js"></script>
-	<script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
-	<link rel="stylesheet" href="/plugins/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css"/>
-	<script type="text/javascript" src="/plugins/ztree/js/jquery.ztree.all.min.js"></script>
-	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.5.0"></script>
-	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.5.0"></script>
+	<link rel="stylesheet" type="text/css" href="../../plugins/layui/css/layui.css" media="all"/>
+	<link rel="stylesheet" type="text/css" href="../../css/fs.css" media="all"/>
+	<script type="text/javascript" src="../../plugins/layui/layui.js"></script>
+	<script type="text/javascript" src="../../plugins/jquery/jquery.min.js"></script>
+	<link rel="stylesheet" href="../../plugins/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css"/>
+	<script type="text/javascript" src="../../plugins/ztree/js/jquery.ztree.all.min.js"></script>
+	<script type="text/javascript" src="../../plugins/frame/js/fs.js?v=1.5.0"></script>
+	<script type="text/javascript" src="../../plugins/frame/js/frame.js?v=1.5.0"></script>
 </head>
 <body>
   <div class="layui-fluid">  
@@ -31,10 +31,10 @@
          	<div class="layui-row layui-col-space10">
          		<div class="layui-col-md12">
          			<div class="layui-btn-group">
-				    	<button class="layui-btn layui-btn-primary layui-btn-sm fsTree" function="top" topUrl="/views/treeDatagrid/add.html" topWidth="700px" topHeight="450px" isSelect="1" topTitle="新增菜单信息" inputs="parentId:$id">
+				    	<button class="layui-btn layui-btn-primary layui-btn-sm fsTree" function="top" topUrl="views/treeDatagrid/add.html" topWidth="700px" topHeight="450px" isSelect="1" topTitle="新增菜单信息" inputs="parentId:$id">
 						  <i class="layui-icon">&#xe654;</i>
 						</button>
-						<button class="layui-btn layui-btn-primary layui-btn-sm fsTree" function="top" topUrl="/views/treeDatagrid/edit.html" topWidth="700px" topHeight="450px" isSelect="1" topTitle="编辑菜单信息" inputs="menuId:$id">
+						<button class="layui-btn layui-btn-primary layui-btn-sm fsTree" function="top" topUrl="views/treeDatagrid/edit.html" topWidth="700px" topHeight="450px" isSelect="1" topTitle="编辑菜单信息" inputs="menuId:$id">
 						  <i class="layui-icon">&#xe642;</i>
 						</button>
 						<button class="layui-btn layui-btn-sm layui-btn-danger fsTree" function="submit" url="/fsbus/S1007" isSelect="1" isConfirm="1" confirmMsg="是否确定删除选中的数据？" inputs="menuId:$id">
@@ -63,7 +63,7 @@
 			    		<form id="query_form" style="display: none;">
 			    			<input type="text" id="menuId" name="menuId" value="0"/>
 			    		</form>
-				    	<button class="layui-btn layui-btn-sm" function="top" topUrl="/views/treeDatagrid/addFunc.html" topWidth="700px" topHeight="350px" topTitle="新增功能号信息" inputs="menuId:#menuId">
+				    	<button class="layui-btn layui-btn-sm" function="top" topUrl="views/treeDatagrid/addFunc.html" topWidth="700px" topHeight="350px" topTitle="新增功能号信息" inputs="menuId:#menuId">
 						  <i class="layui-icon">&#xe654;</i>新增
 						</button>
 						<button class="layui-btn layui-btn-sm" function="refresh">
@@ -85,7 +85,7 @@
 					</div>
 					
 					<script type="text/html" id="barDemo">
-						 <a id="edit" class="layui-btn layui-btn-xs" lay-event="top" topUrl="/views/treeDatagrid/editFunc.html" topWidth="700px" topHeight="350px" isSelect="1" topTitle="编辑功能号信息" inputs="id:">编辑</a>
+						 <a id="edit" class="layui-btn layui-btn-xs" lay-event="top" topUrl="views/treeDatagrid/editFunc.html" topWidth="700px" topHeight="350px" isSelect="1" topTitle="编辑功能号信息" inputs="id:">编辑</a>
   						 <a id="del" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="submit" isConfirm="1" url="/fsbus/S1013" inputs="id:">删除</a>
 					</script>
 			    </div>

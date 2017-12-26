@@ -2,15 +2,16 @@
  * @Description: 菜单管理
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.6.0
+ * @version 1.6.1
  * @License：MIT
  */
 layui.define(['element'], function(exports){
   var element = layui.element,
   FsTab = function (){
   	this.config = {
-			menuFilter:"fsMenu",//form表单id
-			tabFilter:"fsTab"//form对象
+  		topMenuFilter:"fsTopMenu",//头部菜单
+			leftMenuFilter:"fsLeftMenu",//左边菜单
+			tabFilter:"fsTab"//导航栏
 		}
 	};
 	
@@ -18,8 +19,12 @@ layui.define(['element'], function(exports){
 		var thisTab = this;
     $.extend(true, thisTab.config, options);
     
-    //绑定菜单点击。
-    element.on('nav('+thisTab.config.menuFilter+')', function(elem){
+    thisTab.bindDeleteFilter();
+    
+    thisTab.bindTabFilter();
+    
+    //绑定左边菜单点击。
+    element.on('nav('+thisTab.config.leftMenuFilter+')', function(elem){
 	  	var layId = $(elem).attr("lay-id");
 	  	if($.isEmpty(layId)){
 	  		layId = $.uuid();
@@ -34,7 +39,8 @@ layui.define(['element'], function(exports){
 	  	thisTab.tabChange(layId);
 	  	$('body').removeClass('site-mobile');
     });
-    thisTab.bindDeleteFilter();
+    
+    
 	};
 	
 	/**
@@ -61,12 +67,49 @@ layui.define(['element'], function(exports){
    * 删除监听
    */
 	FsTab.prototype.bindDeleteFilter = function(){
-		var thisTab = this;
-		element.on('tabDelete('+thisTab.config.tabFilter+')', function(data){
+		element.on('tabDelete('+this.config.tabFilter+')', function(data){
 	  	var layId = $(this).parentsUntil().attr("lay-id");
-	  	$('.fsMenu .layui-nav-child>dd[lay-id="'+ layId +'"]').removeAttr("lay-id");
-	  	$('.fsMenu>li[lay-id="'+ layId +'"]').removeAttr("lay-id");
+	  	$('.fsMenu .layui-nav-child>dd[lay-id="'+ layId +'"],.fsMenu>li[lay-id="'+ layId +'"]').removeAttr("lay-id");
 		});
+	}
+	
+	/**
+	 * 监听tab切换，处理菜单选中
+	 */
+	FsTab.prototype.bindTabFilter = function(){
+		var thisTab = this;
+		element.on('tab('+this.config.tabFilter+')', function(data){
+			var layId = $(this).attr("lay-id");
+			
+			thisTab.menuSelectCss(layId);
+			
+		});
+	}
+	
+	/**
+	 * 菜单选中样式
+	 */
+	FsTab.prototype.menuSelectCss = function(layId){
+		if(!$.isEmpty(layId)){
+			$('.fsMenu .layui-this').removeClass("layui-this");//清除样式
+			
+			var dom =$('.fsMenu .layui-nav-child>dd[lay-id="'+ layId +'"],.fsMenu>li[lay-id="'+ layId +'"]');
+			dom.addClass("layui-this");//追加样式
+			
+			//处理头部菜单
+			if(dom.length==1){
+				var dataPid = null;
+				var tagName = dom.get(0).tagName;
+				if(tagName == "LI"){
+					dataPid = dom.attr("dataPid");
+				}else if(tagName == "DD"){
+					dataPid = dom.parentsUntil('li').parent().attr("dataPid");
+				}
+				if(!$.isEmpty(dataPid)){
+					$('#fsTopMenu li[dataPid="'+ dataPid +'"]').click();
+				}
+			}
+		}
 	}
 	
   

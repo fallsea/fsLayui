@@ -15,23 +15,29 @@
 	<meta name="format-detection" content="telephone=no"/>
 	<script src="https://cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
 	<link href="https://cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="/plugins/layui/css/layui.css" media="all"/>
-	<link rel="stylesheet" type="text/css" href="/css/fs.css" media="all"/>
-	<script type="text/javascript" src="/plugins/layui/layui.js"></script>
-	<script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
-	<script type="text/javascript" src="/plugins/frame/js/fsDict.js?v=1.6.0"></script>
-	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.6.0"></script>
-	<script type="text/javascript" src="/scripts/main.js?v=1.6.0"></script>
+	<link rel="stylesheet" type="text/css" href="./plugins/layui/css/layui.css" media="all"/>
+	<link rel="stylesheet" type="text/css" href="https://at.alicdn.com/t/font_520106_q8xykrwf86ywrk9.css" media="all"/>
+	<link rel="stylesheet" type="text/css" href="./css/fs.css" media="all"/>
+	<script type="text/javascript" src="./plugins/layui/layui.js"></script>
+	<script type="text/javascript" src="./plugins/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="./plugins/frame/js/fsDict.js?v=1.6.1"></script>
+	<script type="text/javascript" src="./plugins/frame/js/fs.js?v=1.6.1"></script>
+	<script type="text/javascript" src="./plugins/frame/js/main.js?v=1.6.1"></script>
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
+
+  <!-- 顶部 -->
   <div class="layui-header">
-    <a href="/index.html"><div class="layui-logo">fsLayuiPlugin</div></a>
-    <!-- 头部区域（可配合layui已有的水平导航） -->
-    <ul class="layui-nav layui-layout-left" id="fsTopMenu">
+    <a href="./index.html" class="layui-hide-xs"><div class="layui-logo">fsLayuiPlugin</div></a>
+    <a href="javascript:;" class="layui-hide-xs"><div class="fsSwitchMenu"><i class="iconfont icon-category"></i></div></a>
+    
+    <!-- 顶部菜单 -->
+    <ul class="layui-nav layui-layout-left fsTopMenu" id="fsTopMenu" lay-filter="fsTopMenu">
       <li class="layui-nav-item layui-this" dataPid="fs1"><a href="javascript:;"><i class="layui-icon">&#xe68e;</i> <cite>控制台</cite></a></li>
       <li class="layui-nav-item" dataPid="fs2"><a href="javascript:;">测试</a></li>
     </ul>
+    
     <ul class="layui-nav layui-layout-right">
       <li class="layui-nav-item layui-hide-xs">
         <a href="javascript:;">
@@ -42,33 +48,35 @@
           <dd><a href="javascript:;">安全设置</a></dd>
         </dl>
       </li>
-      <li class="layui-nav-item layui-hide-xs"><a href="javascript:;">退了</a></li>
+      <li class="layui-nav-item layui-hide-xs"><a href="javascript:;"><i class="iconfont icon-tuichu"></i> 退出</a></li>
     </ul>
   </div>
 
+
+  <!-- 左边菜单 -->
   <div class="layui-side layui-bg-black">
     <div class="layui-side-scroll">
       <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-      <ul class="layui-nav layui-nav-tree fsMenu"  lay-filter="fsMenu" id="fsLeftMenu">
+      <ul class="layui-nav layui-nav-tree fsMenu"  lay-filter="fsLeftMenu" id="fsLeftMenu">
         <li class="layui-nav-item layui-nav-itemed" dataPid="fs1" style="display: none;">
           <a href="javascript:;">案例</a>
           <dl class="layui-nav-child">
-          	<dd class="layui-this" lay-id="1"><a href="javascript:;" menuId="home" dataUrl="/views/home/index.html"><i class="layui-icon">&#xe68e;</i> <cite>首页</cite></a></dd>
-            <dd><a href="javascript:;" menuId="datagrid" dataUrl="/views/datagrid/index.html"><i class="layui-icon">&#xe705;</i> <cite>数据表格</cite></a></dd>
-            <dd><a href="javascript:;" menuId="datagrid2" dataUrl="/views/datagrid2/index.html"><i class="layui-icon">&#xe60a;</i> <cite>数据表格2</cite></a></dd>
-            <dd><a href="javascript:;" menuId="treeDatagrid" dataUrl="/views/treeDatagrid/index.html"><i class="layui-icon">&#xe62c;</i> <cite>树+表格</cite></a></dd>
-            <dd><a href="javascript:;" menuId="multiDatagrid" dataUrl="/views/multiDatagrid/index.html"><i class="layui-icon">&#xe60a;</i> <cite>多数据表格</cite></a></dd>
-            <dd><a href="javascript:;" menuId="tabDatagrid" dataUrl="/views/tabDatagrid/index.html"><i class="layui-icon">&#xe609;</i> <cite>tab数据表格</cite></a></dd>
-            <dd><a href="javascript:;" menuId="complexDatagrid" dataUrl="/views/complexDatagrid/index.html"><i class="layui-icon">&#xe615;</i> <cite>复杂数据表格</cite></a></dd>
-            <dd><a href="javascript:;" menuId="linkageDatagrid" dataUrl="/views/linkageDatagrid/index.html"><i class="layui-icon">&#xe614;</i> <cite>联动数据表格</cite></a></dd>
-            <dd><a href="javascript:;" menuId="linkageDatagrid2" dataUrl="/views/linkageDatagrid2/index.html"><i class="layui-icon">&#xe658;</i> <cite>联动数据表格(复杂)</cite></a></dd>
-            <dd><a href="javascript:;" menuId="staticDatagrid" dataUrl="/views/staticDatagrid/index.html"><i class="layui-icon">&#xe6b2;</i> <cite>表格数据提交</cite></a></dd>
+          	<dd class="layui-this" lay-id="1"><a href="javascript:;" menuId="home" dataUrl="views/home/index.html"><i class="layui-icon">&#xe68e;</i> <cite>首页</cite></a></dd>
+            <dd><a href="javascript:;" menuId="datagrid" dataUrl="views/datagrid/index.html"><i class="layui-icon">&#xe705;</i> <cite>数据表格</cite></a></dd>
+            <dd><a href="javascript:;" menuId="datagrid2" dataUrl="views/datagrid2/index.html"><i class="layui-icon">&#xe60a;</i> <cite>数据表格2</cite></a></dd>
+            <dd><a href="javascript:;" menuId="treeDatagrid" dataUrl="views/treeDatagrid/index.html"><i class="layui-icon">&#xe62c;</i> <cite>树+表格</cite></a></dd>
+            <dd><a href="javascript:;" menuId="multiDatagrid" dataUrl="views/multiDatagrid/index.html"><i class="layui-icon">&#xe60a;</i> <cite>多数据表格</cite></a></dd>
+            <dd><a href="javascript:;" menuId="tabDatagrid" dataUrl="views/tabDatagrid/index.html"><i class="layui-icon">&#xe609;</i> <cite>tab数据表格</cite></a></dd>
+            <dd><a href="javascript:;" menuId="complexDatagrid" dataUrl="views/complexDatagrid/index.html"><i class="layui-icon">&#xe615;</i> <cite>复杂数据表格</cite></a></dd>
+            <dd><a href="javascript:;" menuId="linkageDatagrid" dataUrl="views/linkageDatagrid/index.html"><i class="layui-icon">&#xe614;</i> <cite>联动数据表格</cite></a></dd>
+            <dd><a href="javascript:;" menuId="linkageDatagrid2" dataUrl="views/linkageDatagrid2/index.html"><i class="layui-icon">&#xe658;</i> <cite>联动数据表格(复杂)</cite></a></dd>
+            <dd><a href="javascript:;" menuId="staticDatagrid" dataUrl="views/staticDatagrid/index.html"><i class="layui-icon">&#xe6b2;</i> <cite>表格数据提交</cite></a></dd>
           </dl>
         </li>
         <li class="layui-nav-item " dataPid="fs1" style="display: none;">
           <a href="javascript:;">其他页面</a>
           <dl class="layui-nav-child">
-            <dd><a href="javascript:;" menuId="demo_404" dataUrl="/404.html">404</a></dd>
+            <dd><a href="javascript:;" menuId="demo_404" dataUrl="404.html">404</a></dd>
           </dl>
         </li>
         <li class="layui-nav-item " dataPid="fs2" style="display: none;">
@@ -85,14 +93,19 @@
     </div>
   </div>
 
+  <!-- 右边内容区域 -->
   <div class="layui-body layui-form">
   	<div class="layui-tab layui-tab-card fsTab" lay-filter="fsTab" lay-allowClose="true">
+  		
+  		<!-- 菜单导航 -->
 		<ul class="layui-tab-title">
 			<li class="layui-this" lay-id="1"><i class="layui-icon">&#xe68e;</i><cite>首页</cite><p class="layui-tab-close" style="display: none;"></p></li>
-		</ul>
+		</ul
+		
+		<!-- 内容 -->
 		<div class="layui-tab-content">
 			<div class="layui-tab-item layui-show" lay-id="1">
-				<iframe src="/views/home/index.html"></iframe>
+				<iframe src="views/home/index.html"></iframe>
 			</div>
 		</div>
 	</div>

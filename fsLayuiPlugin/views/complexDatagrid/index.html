@@ -12,12 +12,12 @@
 	<meta name="format-detection" content="telephone=no"/>
 	<script src="https://cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
 	<link href="https://cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="/plugins/layui/css/layui.css" media="all"/>
-	<link rel="stylesheet" type="text/css" href="/css/fs.css" media="all"/>
-	<script type="text/javascript" src="/plugins/layui/layui.js"></script>
-	<script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
-	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.5.0"></script>
-	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.5.0"></script>
+	<link rel="stylesheet" type="text/css" href="../../plugins/layui/css/layui.css" media="all"/>
+	<link rel="stylesheet" type="text/css" href="../../css/fs.css" media="all"/>
+	<script type="text/javascript" src="../../plugins/layui/layui.js"></script>
+	<script type="text/javascript" src="../../plugins/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="../../plugins/frame/js/fs.js?v=1.5.0"></script>
+	<script type="text/javascript" src="../../plugins/frame/js/frame.js?v=1.5.0"></script>
 </head>
 <body>
 <div class="layui-fluid">
@@ -61,10 +61,10 @@
   	 <div class="layui-col-md12">
   	 	<div class="layui-row grid-demo">
 	      <div class="layui-col-md3">
-        	<button class="layui-btn" function="top" topUrl="/views/complexDatagrid/add.html" topWidth="700px" topHeight="450px" topTitle="新增功能号信息">
+        	<button class="layui-btn" function="top" topUrl="views/complexDatagrid/add.html" topWidth="700px" topHeight="450px" topTitle="新增功能号信息">
 			  <i class="layui-icon">&#xe654;</i>新增
 			</button>
-			<button class="layui-btn" function="top" topUrl="edit.html" topWidth="700px" topHeight="450px" isSelect="1" topTitle="编辑功能号信息" inputs="id:">
+			<button class="layui-btn" function="top" topUrl="views/complexDatagrid/edit.html" topWidth="700px" topHeight="450px" isSelect="1" topTitle="编辑功能号信息" inputs="id:">
 			  <i class="layui-icon">&#xe642;</i>编辑
 			</button>
 			<button class="layui-btn" function="refresh">
@@ -111,7 +111,7 @@
 		</script>
 		
 		<script type="text/html" id="barDemo">
- 		 <a class="layui-btn layui-btn-xs" lay-event="top" topUrl="/views/complexDatagrid/paramIndex.html" topWidth="800px" topHeight="460px" isMaxWindow="" topTitle="入参管理" inputs="funcId:$id">入参管理</a>
+ 		 <a class="layui-btn layui-btn-xs" lay-event="top" topUrl="views/complexDatagrid/paramIndex.html" topWidth="800px" topHeight="460px" isMaxWindow="" topTitle="入参管理" inputs="funcId:$id">入参管理</a>
 		</script>
 	      </div>
 	    </div>

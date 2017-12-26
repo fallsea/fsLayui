@@ -1,5 +1,9 @@
 /**
- * 主页面
+ * @Description: 主页面
+ * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
+ * @author: fallsea
+ * @version 1.6.1
+ * @License：MIT
  */
 layui.use(['layer','fsTab'], function(){
 	var fsTab = layui.fsTab;
@@ -27,6 +31,8 @@ layui.use(['layer','fsTab'], function(){
 					fsTab.add(dom.find("a").html(),dom.find("a").attr("dataUrl"),layId);
 				}
 				fsTab.tabChange(layId);
+				
+				fsTab.menuSelectCss(layId);
 			}
 		}
 	}
@@ -49,6 +55,11 @@ layui.use(['layer','fsTab'], function(){
 	//渲染tab
 	fsTab.render();
 	
+	//新增tab
+	function addTab(title,dataUrl,layId){
+		fsTab.add(title,dataUrl,layId);
+	}
+	
 	//手机设备的简单适配
 	var treeMobile = $('.site-tree-mobile'),
 		shadeMobile = $('.site-mobile-shade')
@@ -61,5 +72,16 @@ layui.use(['layer','fsTab'], function(){
 		$('body').removeClass('site-mobile');
 	});
 	
+	
+	//菜单绑定
+	
+	$(".fsSwitchMenu").on("click",function(){
+		if($(this).find("i.icon-category").length>0){
+			$(this).find("i").removeClass("icon-category").addClass("icon-viewgallery");
+		}else{
+			$(this).find("i").removeClass("icon-viewgallery").addClass("icon-category");
+		}
+	 	$(".layui-layout-admin").toggleClass("showMenu");
+	});
 	
 });

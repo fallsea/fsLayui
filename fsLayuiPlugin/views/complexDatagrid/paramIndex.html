@@ -12,12 +12,12 @@
 	<meta name="format-detection" content="telephone=no"/>
 	<script src="https://cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
 	<link href="https://cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="/plugins/layui/css/layui.css" media="all"/>
-	<link rel="stylesheet" type="text/css" href="/css/fs.css" media="all"/>
-	<script type="text/javascript" src="/plugins/layui/layui.js"></script>
-	<script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
-	<script type="text/javascript" src="/plugins/frame/js/fs.js?v=1.5.0"></script>
-	<script type="text/javascript" src="/plugins/frame/js/frame.js?v=1.5.0"></script>
+	<link rel="stylesheet" type="text/css" href="../../plugins/layui/css/layui.css" media="all"/>
+	<link rel="stylesheet" type="text/css" href="../../css/fs.css" media="all"/>
+	<script type="text/javascript" src="../../plugins/layui/layui.js"></script>
+	<script type="text/javascript" src="../../plugins/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="../../plugins/frame/js/fs.js?v=1.5.0"></script>
+	<script type="text/javascript" src="../../plugins/frame/js/frame.js?v=1.5.0"></script>
 </head>
 <body>
 <div class="layui-fluid">  
@@ -51,7 +51,7 @@
 </div>
     <div class="layui-col-md12 layui-col-space1">
     	<div id="table_buttion_div">
-	    	<button class="layui-btn" function="top" topUrl="/views/complexDatagrid/addParam.html" topWidth="700px" topHeight="450px" isMaxWindow="" topTitle="新增参数" inputs="funcId:#funcId">
+	    	<button class="layui-btn" function="top" topUrl="views/complexDatagrid/addParam.html" topWidth="700px" topHeight="450px" isMaxWindow="" topTitle="新增参数" inputs="funcId:#funcId">
 			  <i class="layui-icon">&#xe654;</i>新增
 			</button>
 			<button class="layui-btn" function="refresh">
@@ -85,7 +85,7 @@
 		</script>
 		
 		<script type="text/html" id="barDemo">
-			<a class="layui-btn layui-btn-xs" lay-event="top" topUrl="/views/complexDatagrid/editParam.html" topWidth="700px" topHeight="510px" topTitle="编辑参数" inputs="id:">编辑</a>
+			<a class="layui-btn layui-btn-xs" lay-event="top" topUrl="views/complexDatagrid/editParam.html" topWidth="700px" topHeight="510px" topTitle="编辑参数" inputs="id:">编辑</a>
  			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="submit" isConfirm="1" url="/fsbus/S1034" inputs="id:">删除</a>
 		</script>
     </div>
