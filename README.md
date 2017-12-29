@@ -105,6 +105,12 @@ qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k
 
 * JsonBy
 
+## 捐赠
+
+项目的发展离不开你的支持，请作者喝杯咖啡吧！
+
+![](fsLayuiPlugin/images/zhifu.png)
+
 
 ## License
 
