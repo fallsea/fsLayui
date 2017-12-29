@@ -56,6 +56,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
       {
 		 		that.pullData(that.page, that.loading());
       },
+      
       query : function(params)//查询操作
       {
     	  var options = {where : params,page:{
@@ -66,8 +67,19 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
     	  //显示第一页数据
     	  that.pullData(1, that.loading());
       },
+      sort : function(obj){//排序
+      	//排序方式
+      	that.config.fsSortType = "1"; //异步排序
+      	if(!$.isEmpty(obj)){
+      		if($.isEmpty(that.config.where)){
+      			that.config.where = {};
+      		}
+      		that.config.where["field"] = obj.field;
+      		that.config.where["order"] = obj.type;
+      	}
+      	that.pullData(that.page, that.loading());
+      },
       addRow : function(){
-      	
       	var data = table.cache[that.key];
       	if($.isEmpty(data)){
       		data = new Array();
@@ -91,17 +103,6 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
         that.renderData(res);
       },
       getData : function(){
-      	/*var arr = table.cache[that.key];
-      	if($.result(fsConfig,"global.datagridSubmitType") == "2"){
-      		if(!$.isEmpty(arr)){
-        		$.each(arr,function(i,row){
-        			if($.isEmpty(row["fsType"])){
-        				row["fsType"] = "edit";
-        			}
-        		})
-        	}
-      	}
-      	*/
       	return table.cache[that.key];
       }
     }
@@ -766,17 +767,21 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
       field: field
       ,sort: type
     };
-
-    if(type === 'asc'){ //升序
-      thisData = layui.sort(data, field);
-    } else if(type === 'desc'){ //降序
-      thisData = layui.sort(data, field, true);
-    } else { //清除排序
-      thisData = layui.sort(data, table.config.indexName);
-      delete that.sortKey;
+    if(that.config.fsSortType != "1"){
+    	if(type === 'asc'){ //升序
+        thisData = layui.sort(data, field);
+      } else if(type === 'desc'){ //降序
+        thisData = layui.sort(data, field, true);
+      } else { //清除排序
+        thisData = layui.sort(data, table.config.indexName);
+        delete that.sortKey;
+      }
+    	res[options.response.dataName] = thisData;
+     
+    }else{
+    	res[options.response.dataName] = data;
     }
     
-    res[options.response.dataName] = thisData;
     that.renderData(res, that.page, that.count, true);
     
     if(formEvent){

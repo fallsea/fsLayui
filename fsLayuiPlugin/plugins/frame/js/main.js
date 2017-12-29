@@ -2,7 +2,7 @@
  * @Description: 主页面
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.6.1
+ * @version 1.6.2
  * @License：MIT
  */
 layui.use(['layer','fsTab'], function(){
@@ -11,8 +11,12 @@ layui.use(['layer','fsTab'], function(){
 	//初始化显示菜单
 	showMenu($("#fsTopMenu li.layui-this").attr("dataPid"));
 
+	if (window.attachEvent) {
+	  window.attachEvent("hashchange", hashChanged);
+	} else if (window.addEventListener) {
+		window.addEventListener("hashchange", hashChanged, false);
+	}
 	
-	window.addEventListener("hashchange", hashChanged, false);
 	
 	hashChanged();
 	
@@ -33,6 +37,7 @@ layui.use(['layer','fsTab'], function(){
 				fsTab.tabChange(layId);
 				
 				fsTab.menuSelectCss(layId);
+				
 			}
 		}
 	}
@@ -82,6 +87,62 @@ layui.use(['layer','fsTab'], function(){
 			$(this).find("i").removeClass("icon-viewgallery").addClass("icon-category");
 		}
 	 	$(".layui-layout-admin").toggleClass("showMenu");
+	});
+	
+	
+	/**
+	 * 右边菜单
+	 */
+	$.contextMenu({
+    selector: '.layui-tab-title li', 
+    callback: function(key, options) {
+    	var layId = $(this).attr("lay-id");
+    	switch (key) {
+				case "close":
+					fsTab.del(layId);
+					break;
+				case "closeOther":
+					
+					$(this).parent().children("li").each(function(i,e){
+						
+						if($(this).find(".layui-tab-close").is(":visible")){
+							
+							var newLayId = $(this).attr("lay-id");
+							if(layId != newLayId ){
+								fsTab.del(newLayId);
+							}
+						}
+					});
+					break;
+				case "closeAll":
+					
+					$(this).parent().children("li").each(function(i,e){
+						if($(this).find(".layui-tab-close").is(":visible")){
+							var newLayId = $(this).attr("lay-id");
+							fsTab.del(newLayId);
+						}
+					});
+					break;
+				default:
+					break;
+    	}
+    },
+    items: {
+      "close": {name: "关闭",icon: function(){
+        return 'context-menu-icon context-menu-icon-quit';
+      },disabled: function(){
+      	if($(this).find(".layui-tab-close").is(":visible")){
+      		return false;
+      	}
+      	return true; 
+      }},
+      "closeOther": {name: "关闭其他",icon: function(){
+        return 'context-menu-icon context-menu-icon-quit';
+      }},
+      "closeAll": {name: "关闭全部",icon: function(){
+        return 'context-menu-icon context-menu-icon-quit';
+      }}
+    }
 	});
 	
 });

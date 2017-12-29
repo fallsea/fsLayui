@@ -2,7 +2,7 @@
  * @Description: 菜单管理
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.6.1
+ * @version 1.6.2
  * @License：MIT
  */
 layui.define(['element'], function(exports){
@@ -19,8 +19,6 @@ layui.define(['element'], function(exports){
 		var thisTab = this;
     $.extend(true, thisTab.config, options);
     
-    thisTab.bindDeleteFilter();
-    
     thisTab.bindTabFilter();
     
     //绑定左边菜单点击。
@@ -28,6 +26,11 @@ layui.define(['element'], function(exports){
 	  	var layId = $(elem).attr("lay-id");
 	  	if($.isEmpty(layId)){
 	  		layId = $.uuid();
+	  	}
+	  	
+	  	//判断导航栏是否存在
+	  	
+	  	if($('#fsTabMenu>li[lay-id="'+layId+'"]').length==0){
 	  		$(elem).attr("lay-id",layId);
 	  		var dom =$(elem).find("a");
 	  		var title = $(elem).find("a").html();
@@ -36,6 +39,7 @@ layui.define(['element'], function(exports){
 	  			thisTab.add(title,dom.attr("dataUrl"),layId);
 	  		}
 	  	}
+	  	
 	  	thisTab.tabChange(layId);
 	  	$('body').removeClass('site-mobile');
     });
@@ -62,6 +66,13 @@ layui.define(['element'], function(exports){
 		});
 	};
   
+	/**
+	 * 删除
+	 */
+	FsTab.prototype.del = function(layId) {
+		element.tabDelete(this.config.tabFilter, layId);
+	};
+	
   
 	/**
    * 删除监听

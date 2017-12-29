@@ -2,7 +2,7 @@
  * @Description: datagrid工具
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.6.1
+ * @version 1.6.2
  * @License：MIT
  */
 layui.define(["fsCommon","table",'laypage','fsConfig','form'], function(exports){
@@ -25,6 +25,7 @@ layui.define(["fsCommon","table",'laypage','fsConfig','form'], function(exports)
   	this.config = {
       id:"",//form表单id
       elem:null,//form对象
+      fsSortType : $.result(fsConfig,"global.page.sortType"),//排序方式，1 异步排序
       clickCallBack:null //点击回调函数
     }
   	
@@ -102,6 +103,10 @@ layui.define(["fsCommon","table",'laypage','fsConfig','form'], function(exports)
 	  	$.extend(formData, param);
 	  }
 	  
+	  if(!$.isEmpty(_table.attr("sortType"))){
+	  	thisDatagrid.config.fsSortType = _table.attr("sortType");
+	  }
+	  
 	  var funcNo = _table.attr("funcNo");//功能号
 	  
 	  var isPage = _table.attr("isPage");//是否分页
@@ -140,6 +145,7 @@ layui.define(["fsCommon","table",'laypage','fsConfig','form'], function(exports)
 	    id:tableId,
 	    elem: "#"+tableId, //指定原始表格元素选择器（推荐id选择器）
 	    url:url,
+	    fsSortType : thisDatagrid.config.fsSortType,
 	    where : formData, //增加条件
 	    page: isPage == "1",
 	    method : "post",
@@ -163,6 +169,12 @@ layui.define(["fsCommon","table",'laypage','fsConfig','form'], function(exports)
 	      ,dataName: isPage == "1" ? $.result(fsConfig,"global.page.response.dataNamePage","results.data.list") : $.result(fsConfig,"global.page.response.dataName","results.data") //数据列表的字段名称，默认：data
 	    }
 	  });
+	  
+	  if(thisDatagrid.config.fsSortType == "1"){
+	  	table.on('sort('+tableId+')', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+	  		thisDatagrid.sort(obj);
+	  	});
+	  }
       
   };
   
@@ -228,6 +240,16 @@ layui.define(["fsCommon","table",'laypage','fsConfig','form'], function(exports)
         this.datagrid.refresh();
     }
   };
+  
+  /**
+   * 排序
+   */
+  FsDatagrid.prototype.sort = function(obj){
+    if(!$.isEmpty(this.datagrid)){
+        this.datagrid.sort(obj);
+    }
+  };
+      
       
   /**
    * 选中的数据

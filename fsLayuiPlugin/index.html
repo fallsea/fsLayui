@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="UTF-8">
 	<meta content="text/html;charset=UTF-8"/>
 	<title>layui快速开发插件</title>
 	<meta name="keywords" content="fsLayuiPlugin,layui,layuiPlugin,layui插件,layui快速开发插件" />
@@ -17,12 +18,14 @@
 	<link href="https://cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="./plugins/layui/css/layui.css" media="all"/>
 	<link rel="stylesheet" type="text/css" href="https://at.alicdn.com/t/font_520106_q8xykrwf86ywrk9.css" media="all"/>
-	<link rel="stylesheet" type="text/css" href="./css/fs.css" media="all"/>
-	<script type="text/javascript" src="./plugins/layui/layui.js"></script>
 	<script type="text/javascript" src="./plugins/jquery/jquery.min.js"></script>
-	<script type="text/javascript" src="./plugins/frame/js/fsDict.js?v=1.6.1"></script>
-	<script type="text/javascript" src="./plugins/frame/js/fs.js?v=1.6.1"></script>
-	<script type="text/javascript" src="./plugins/frame/js/main.js?v=1.6.1"></script>
+	<link href="./plugins/contextMenu/jquery.contextMenu.min.css" rel="stylesheet">
+	<script src="./plugins/contextMenu/jquery.contextMenu.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="./css/fs.css?v=1.6.2" media="all"/>
+	<script type="text/javascript" src="./plugins/layui/layui.js"></script>
+	<script type="text/javascript" src="./plugins/frame/js/fsDict.js?v=1.6.2"></script>
+	<script type="text/javascript" src="./plugins/frame/js/fs.js?v=1.6.2"></script>
+	<script type="text/javascript" src="./plugins/frame/js/main.js?v=1.6.2"></script>
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
@@ -41,6 +44,7 @@
     <ul class="layui-nav layui-layout-right">
       <li class="layui-nav-item layui-hide-xs">
         <a href="javascript:;">
+        	<img src="http://q.qlogo.cn/qqapp/101235792/5F344D27449D79D64FE873AF8E907139/100" class="layui-nav-img">
          	FallSea
         </a>
         <dl class="layui-nav-child">
@@ -98,14 +102,14 @@
   	<div class="layui-tab layui-tab-card fsTab" lay-filter="fsTab" lay-allowClose="true">
   		
   		<!-- 菜单导航 -->
-		<ul class="layui-tab-title">
+		<ul class="layui-tab-title" id="fsTabMenu">
 			<li class="layui-this" lay-id="1"><i class="layui-icon">&#xe68e;</i><cite>首页</cite><p class="layui-tab-close" style="display: none;"></p></li>
 		</ul
 		
 		<!-- 内容 -->
 		<div class="layui-tab-content">
 			<div class="layui-tab-item layui-show" lay-id="1">
-				<iframe src="views/home/index.html"></iframe>
+				<iframe src="views/home/index.html?v=1.6.2.1"></iframe>
 			</div>
 		</div>
 	</div>

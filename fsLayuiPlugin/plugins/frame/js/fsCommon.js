@@ -2,7 +2,7 @@
  * @Description: 通用组件
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.6.1
+ * @version 1.6.2
  * @License：MIT
  */
 layui.define(['layer','form','fsConfig'], function (exports) {
@@ -80,14 +80,15 @@ layui.define(['layer','form','fsConfig'], function (exports) {
         error : function (XMLHttpRequest, textStatus, errorThrown)
         {
         	 if(textStatus=="404"){  
-        		 	fsCommon.errorMsg("请求地址出错!");
-             }else if(textStatus=="302"){  
-            	 fsCommon.errorMsg('连接网页出错!');  
-             }else if(textStatus=="timeout"){  
-            	 fsCommon.errorMsg("请求超时!");  
-             }else{
-            	 fsCommon.errorMsg('请求异常!');  
-             }
+      		 	fsCommon.errorMsg("请求地址出错!");
+           }else if(textStatus=="302"){  
+          	 fsCommon.errorMsg('连接网页出错!');  
+           }else if(textStatus=="timeout"){  
+          	 fsCommon.errorMsg("请求超时!");  
+           }else{
+          	 fsCommon.errorMsg('请求异常!');  
+           }
+        	 console.error(errorThrown);
         },
         complete : function(XMLHttpRequest, textStatus)
         {
