@@ -2,7 +2,7 @@
  * @Description: 菜单管理
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.6.2
+ * @version 1.6.3
  * @License：MIT
  */
 layui.define(['element'], function(exports){
@@ -23,29 +23,36 @@ layui.define(['element'], function(exports){
     
     //绑定左边菜单点击。
     element.on('nav('+thisTab.config.leftMenuFilter+')', function(elem){
-	  	var layId = $(elem).attr("lay-id");
-	  	if($.isEmpty(layId)){
-	  		layId = $.uuid();
-	  	}
-	  	
-	  	//判断导航栏是否存在
-	  	
-	  	if($('#fsTabMenu>li[lay-id="'+layId+'"]').length==0){
-	  		$(elem).attr("lay-id",layId);
-	  		var dom =$(elem).find("a");
-	  		var title = $(elem).find("a").html();
-	  		var dataUrl = dom.attr("dataUrl");
-	  		if(!$.isEmpty(dataUrl)){
-	  			thisTab.add(title,dom.attr("dataUrl"),layId);
-	  		}
-	  	}
-	  	
-	  	thisTab.tabChange(layId);
+    	thisTab.add(elem);
 	  	$('body').removeClass('site-mobile');
     });
-    
-    
 	};
+	
+	/**
+	 * 新增tab
+	 */
+	FsTab.prototype.add = function(elem) {
+		var thisTab = this;
+		var layId = $(elem).attr("lay-id");
+  	if($.isEmpty(layId)){
+  		layId = $.uuid();
+  	}
+  	//判断导航栏是否存在
+  	if($('#fsTabMenu>li[lay-id="'+layId+'"]').length==0){
+  		$(elem).attr("lay-id",layId);
+  		var dom =$(elem).find("a");
+  		var title = $(elem).find("a").html();
+  		var dataUrl = dom.attr("dataUrl");
+  		if(!$.isEmpty(dataUrl)){
+  			element.tabAdd(thisTab.config.tabFilter, {
+  			  title: title
+  			  ,content: '<iframe src="'+dom.attr("dataUrl")+'"></iframe>' //支持传入html
+  			  ,id: layId
+  			});
+  		}
+  	}
+  	thisTab.tabChange(layId);
+	}
 	
 	/**
 	 * 切换tab
@@ -54,18 +61,6 @@ layui.define(['element'], function(exports){
 		element.tabChange(this.config.tabFilter, layId);
 	}
 	
-  
-	/**
-   * 新增
-   */
-	FsTab.prototype.add = function(title,dataUrl,layId) {
-		element.tabAdd(this.config.tabFilter, {
-		  title: title
-		  ,content: '<iframe src="'+dataUrl+'"></iframe>' //支持传入html
-		  ,id: layId
-		});
-	};
-  
 	/**
 	 * 删除
 	 */

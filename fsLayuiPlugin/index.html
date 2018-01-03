@@ -17,15 +17,16 @@
 	<script src="https://cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
 	<link href="https://cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="./plugins/layui/css/layui.css" media="all"/>
-	<link rel="stylesheet" type="text/css" href="https://at.alicdn.com/t/font_520106_q8xykrwf86ywrk9.css" media="all"/>
+<!-- 	<link rel="stylesheet" type="text/css" href="https://at.alicdn.com/t/font_520106_q8xykrwf86ywrk9.css" media="all"/> -->
+	<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 	<script type="text/javascript" src="./plugins/jquery/jquery.min.js"></script>
 	<link href="./plugins/contextMenu/jquery.contextMenu.min.css" rel="stylesheet">
 	<script src="./plugins/contextMenu/jquery.contextMenu.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="./css/fs.css?v=1.6.2" media="all"/>
+	<link rel="stylesheet" type="text/css" href="./css/fs.css?v=1.6.3" media="all"/>
 	<script type="text/javascript" src="./plugins/layui/layui.js"></script>
-	<script type="text/javascript" src="./plugins/frame/js/fsDict.js?v=1.6.2"></script>
-	<script type="text/javascript" src="./plugins/frame/js/fs.js?v=1.6.2"></script>
-	<script type="text/javascript" src="./plugins/frame/js/main.js?v=1.6.2"></script>
+	<script type="text/javascript" src="./plugins/frame/js/fsDict.js?v=1.6.3"></script>
+	<script type="text/javascript" src="./plugins/frame/js/fs.js?v=1.6.3"></script>
+	<script type="text/javascript" src="./plugins/frame/js/main.js?v=1.6.3"></script>
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
@@ -33,12 +34,13 @@
   <!-- 顶部 -->
   <div class="layui-header">
     <a href="./index.html" class="layui-hide-xs"><div class="layui-logo">fsLayuiPlugin</div></a>
-    <a href="javascript:;" class="layui-hide-xs"><div class="fsSwitchMenu"><i class="iconfont icon-category"></i></div></a>
+    <a href="javascript:;" class="layui-hide-xs"><div class="fsSwitchMenu"><i class="fa fa-outdent"></i></div></a>
     
     <!-- 顶部菜单 -->
     <ul class="layui-nav layui-layout-left fsTopMenu" id="fsTopMenu" lay-filter="fsTopMenu">
-      <li class="layui-nav-item layui-this" dataPid="fs1"><a href="javascript:;"><i class="layui-icon">&#xe68e;</i> <cite>控制台</cite></a></li>
-      <li class="layui-nav-item" dataPid="fs2"><a href="javascript:;">测试</a></li>
+    	
+      <!-- <li class="layui-nav-item layui-this" dataPid="fs1"><a href="javascript:;"><i class="layui-icon">&#xe68e;</i> <cite>控制台</cite></a></li>
+      <li class="layui-nav-item" dataPid="fs2"><a href="javascript:;">测试</a></li> -->
     </ul>
     
     <ul class="layui-nav layui-layout-right">
@@ -52,7 +54,7 @@
           <dd><a href="javascript:;">安全设置</a></dd>
         </dl>
       </li>
-      <li class="layui-nav-item layui-hide-xs"><a href="javascript:;"><i class="iconfont icon-tuichu"></i> 退出</a></li>
+      <li class="layui-nav-item layui-hide-xs"><a href="javascript:;"><i class="fa fa-sign-out"></i> 退出</a></li>
     </ul>
   </div>
 
@@ -61,8 +63,8 @@
   <div class="layui-side layui-bg-black">
     <div class="layui-side-scroll">
       <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-      <ul class="layui-nav layui-nav-tree fsMenu"  lay-filter="fsLeftMenu" id="fsLeftMenu">
-        <li class="layui-nav-item layui-nav-itemed" dataPid="fs1" style="display: none;">
+      <ul class="layui-nav layui-nav-tree fsLeftMenu"  lay-filter="fsLeftMenu" id="fsLeftMenu">
+        <!-- <li class="layui-nav-item layui-nav-itemed" dataPid="fs1" style="display: none;">
           <a href="javascript:;">案例</a>
           <dl class="layui-nav-child">
           	<dd class="layui-this" lay-id="1"><a href="javascript:;" menuId="home" dataUrl="views/home/index.html"><i class="layui-icon">&#xe68e;</i> <cite>首页</cite></a></dd>
@@ -92,7 +94,7 @@
           </dl>
         </li>
         <li class="layui-nav-item" dataPid="fs2" style="display: none;"><a href="javascript:;" menuId="demo_badge" dataUrl="http://www.layui.com/demo/badge.html">徽章</a></li>
-        <li class="layui-nav-item" dataPid="fs2" style="display: none;"><a href="javascript:;" menuId="demo_table" dataUrl="http://www.layui.com/demo/table.html">数据表格</a></li>
+        <li class="layui-nav-item" dataPid="fs2" style="display: none;"><a href="javascript:;" menuId="demo_table" dataUrl="http://www.layui.com/demo/table.html">数据表格</a></li> -->
       </ul>
     </div>
   </div>
@@ -103,13 +105,13 @@
   		
   		<!-- 菜单导航 -->
 		<ul class="layui-tab-title" id="fsTabMenu">
-			<li class="layui-this" lay-id="1"><i class="layui-icon">&#xe68e;</i><cite>首页</cite><p class="layui-tab-close" style="display: none;"></p></li>
+			<li class="layui-this" lay-id="111"><i class="layui-icon">&#xe68e;</i><cite>首页</cite><p class="layui-tab-close" style="display: none;"></p></li>
 		</ul
 		
 		<!-- 内容 -->
 		<div class="layui-tab-content">
 			<div class="layui-tab-item layui-show" lay-id="1">
-				<iframe src="views/home/index.html?v=1.6.2.1"></iframe>
+				<iframe src="views/home/index.html?v=1.6.2.2"></iframe>
 			</div>
 		</div>
 	</div>
@@ -117,7 +119,7 @@
 
   <div class="layui-footer">
     <!-- 底部固定区域 -->
-    ©2017 <a href="http://www.fallsea.com" target="_black">www.fallsea.com</a>
+    ©2017 <a href="http://www.fallsea.com" target="_black">www.fallsea.com</a>  <button id="donate" class="layui-btn layui-btn-sm layui-btn-danger">捐赠作者</button>
   </div>
 </div>
 

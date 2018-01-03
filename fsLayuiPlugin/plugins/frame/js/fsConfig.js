@@ -2,7 +2,7 @@
  * @Description: 基础配置
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.6.2
+ * @version 1.6.3
  * @License：MIT
  */
 layui.define([], function (exports) {
@@ -29,12 +29,11 @@ layui.define([], function (exports) {
 		"uploadUrl" : "https://fs.fallsea.com/upload", //上传附件url
 		"uploadHtmlUrl" : "/plugins/frame/views/upload.html", //上传附件html地址，默认/plugins/frame/views/upload.html
 		"loadDataType":"1",//加载数据类型，1：是，0：否，默认0  （编辑或查看是否取缓存数据）
-		
 		"datagridSubmitType":"1",//数据表格提交类型，1：原数据提交，2：增删改标签提交（fsType）， 默认1
 		"result" : { //响应结果配置
 	    "statusName": "errorNo", //数据状态的字段名称，默认：errorNo
 	    "msgName": "errorInfo", //状态信息的字段名称，默认：errorInfo
-	    "dataName" : "results.data", //数据列表的字段名称，默认：results.data
+	    "dataName" : "results.data", //非表格数据的字段名称，默认：results.data
 		},
 		"page" : { //分页配置
 			"sortType":"0",//默认排序方式，0：本地排序，1：异步排序，不配置默认为0

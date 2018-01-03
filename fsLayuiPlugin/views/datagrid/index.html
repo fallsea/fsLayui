@@ -61,15 +61,17 @@
   	 <div class="layui-col-md12">
   	 	<div class="layui-row grid-demo">
 	      <div class="layui-col-md3">
-        	<button class="layui-btn" function="top" topUrl="views/datagrid/add.html" topWidth="800px" isMaximize="0" topHeight="600px" topTitle="新增demo">
-			  <i class="layui-icon">&#xe654;</i>新增
-			</button>
-			<button class="layui-btn layui-btn-danger" function="submit" url="/fsbus/1002" isMutiDml="1" isConfirm="1" confirmMsg="是否确定删除选中的数据？" inputs="id:">
-			  <i class="layui-icon">&#xe640;</i>批量删除
-			</button>
-			<button class="layui-btn" function="refresh">
-			  <i class="layui-icon">&#x1002;</i>刷新
-			</button>
+	      	<div class="layui-btn-container">
+	        	<button class="layui-btn" function="top" topUrl="views/datagrid/add.html" topWidth="800px" isMaximize="0" topHeight="600px" topTitle="新增demo">
+				  <i class="layui-icon">&#xe654;</i>新增
+				</button>
+				<button class="layui-btn layui-btn-danger" function="submit" url="/fsbus/1002" isMutiDml="1" isConfirm="1" confirmMsg="是否确定删除选中的数据？" inputs="id:">
+				  <i class="layui-icon">&#xe640;</i>批量删除
+				</button>
+				<button class="layui-btn" function="refresh">
+				  <i class="layui-icon">&#x1002;</i>刷新
+				</button>
+	      	</div>
 	      </div>
 	      <div class="layui-col-md12">
 	         <table id="fsDatagrid" lay-filter="fsDatagrid" class="fsDatagrid" isLoad="1" url="/fsbus/1000" isPage="1" sortType="1" defaultForm="query_form" height="full-130"></table>

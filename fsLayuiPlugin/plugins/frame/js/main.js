@@ -2,11 +2,14 @@
  * @Description: 主页面
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.6.2
+ * @version 1.6.3
  * @License：MIT
  */
-layui.use(['layer','fsTab'], function(){
-	var fsTab = layui.fsTab;
+layui.use(['fsMenu','layer','fsTab'], function(){
+	var fsTab = layui.fsTab,
+	fsMenu = layui.fsMenu;
+	
+	fsMenu.render();
 	
 	//初始化显示菜单
 	showMenu($("#fsTopMenu li.layui-this").attr("dataPid"));
@@ -16,7 +19,6 @@ layui.use(['layer','fsTab'], function(){
 	} else if (window.addEventListener) {
 		window.addEventListener("hashchange", hashChanged, false);
 	}
-	
 	
 	hashChanged();
 	
@@ -28,15 +30,8 @@ layui.use(['layer','fsTab'], function(){
 			//获取layId
 			var dom = $('#fsLeftMenu a[menuId="'+ menuId +'"]').parent();
 			if(dom.length>0){
-				var layId = dom.attr("lay-id");
-				if($.isEmpty(layId)){
-					layId = $.uuid();
-					dom.attr("lay-id",layId);
-					fsTab.add(dom.find("a").html(),dom.find("a").attr("dataUrl"),layId);
-				}
-				fsTab.tabChange(layId);
-				
-				fsTab.menuSelectCss(layId);
+				fsTab.add(dom);
+				fsTab.menuSelectCss(dom.attr("lay-id"));
 				
 			}
 		}
@@ -81,10 +76,10 @@ layui.use(['layer','fsTab'], function(){
 	//菜单绑定
 	
 	$(".fsSwitchMenu").on("click",function(){
-		if($(this).find("i.icon-category").length>0){
-			$(this).find("i").removeClass("icon-category").addClass("icon-viewgallery");
+		if($(this).find("i.fa-outdent").length>0){
+			$(this).find("i").removeClass("fa-outdent").addClass("fa-indent");
 		}else{
-			$(this).find("i").removeClass("icon-viewgallery").addClass("icon-category");
+			$(this).find("i").removeClass("fa-indent").addClass("fa-outdent");
 		}
 	 	$(".layui-layout-admin").toggleClass("showMenu");
 	});
@@ -143,6 +138,21 @@ layui.use(['layer','fsTab'], function(){
         return 'context-menu-icon context-menu-icon-quit';
       }}
     }
+	});
+	
+	//捐赠
+	$("#donate").on("click",function(){
+		
+		layer.open({
+		  type: 1,
+		  area: ['471px', '333px'],
+		  shade: true,
+		  shadeClose: true,
+		  shade: 0.6,
+		  title: false, //不显示标题
+		  content: "<div><img width='471' height='333'   src='./images/zhifu.png'></div>"
+		});
+		
 	});
 	
 });

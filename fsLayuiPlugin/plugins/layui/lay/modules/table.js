@@ -245,6 +245,9 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
     limit: 10 //每页显示的数量
     ,loading: true //请求数据时，是否显示loading
     ,cellMinWidth: 60 //所有单元格默认最小宽度
+    ,text: {
+      none: '无数据'
+    }
   };
 
   //表格渲染
@@ -462,6 +465,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
       var params = {};
       params[request.pageName] = curr;
       params[request.limitName] = options.limit;
+      
       $.ajax({
         type: options.method || 'get'
         ,url: options.url
@@ -469,8 +473,8 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
         ,timeout : 30000 
         ,dataType: 'json'
         ,success: function(res){
-          if($.result(res,response.statusName) != response.statusCode){
-          	//未登录处理
+           if($.result(res,response.statusName) != response.statusCode){
+            //未登录处理
           	var filters = fsConfig["filters"];
             if(!$.isEmpty(filters)){
                 var otherFunction = filters[res[response.statusName]];
@@ -621,8 +625,11 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
               if(item3.toolbar){
                 return laytpl($(item3.toolbar).html()||'').render(tplData);
               }
-              
-              return item3.templet ? laytpl($(item3.templet).html() || String(content)).render(tplData) : content;
+              return item3.templet ? function(){
+                return typeof item3.templet === 'function' 
+                  ? item3.templet(tplData)
+                : laytpl($(item3.templet).html() || String(content)).render(tplData) 
+              }() : content;
             }()
           ,'</div></td>'].join('');
           
@@ -656,10 +663,14 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
     that.key = options.id || options.index;
     table.cache[that.key] = data; //记录数据
     
+    //显示隐藏分页栏
+    //that.layPage[data.length === 0 && curr == 1 ? 'addClass' : 'removeClass'](HIDE);
+    
     //排序
     if(sort){
       return render();
     }
+    
     //同步分页状态
     if(options.page){
       options.page = $.extend({
@@ -686,6 +697,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
       laypage.render(options.page);
     }
     
+    
     if(data.length === 0){
     	
     	//解决全部删除后，页数没有改变bug
@@ -695,11 +707,11 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
     		that.pullData(that.page, that.loading());
     	}
     	
-    	that.renderForm();
+      that.renderForm();
       that.layFixed.remove();
       that.layMain.find('tbody').html('');
       that.layMain.find('.'+ NONE).remove();
-      return that.layMain.append('<div class="'+ NONE +'">无数据</div>');
+      return that.layMain.append('<div class="'+ NONE +'">'+ options.text.none +'</div>');
     }
     
     render();
@@ -708,6 +720,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
     if(that.config.clickCallBack){
  		 that.clickCallBack(0);
     }
+    
   };
   
   //找到对应的列元素
@@ -767,7 +780,8 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
       field: field
       ,sort: type
     };
-    if(that.config.fsSortType != "1"){
+
+		if(that.config.fsSortType != "1"){
     	if(type === 'asc'){ //升序
         thisData = layui.sort(data, field);
       } else if(type === 'desc'){ //降序
@@ -959,8 +973,8 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
     //操作栏
     that.layFixRight.css('right', scollWidth - 1); 
   };
-  
-  //点击回调
+
+	//点击回调
   Class.prototype.clickCallBack = function(index){
   	var that =this;
   	var ELEM_CLICK = 'layui-table-click'
@@ -969,7 +983,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
   	  that.layBody.find('tr[data-index="'+ index +'"]').addClass(ELEM_CLICK).siblings('tr').removeClass(ELEM_CLICK);
   		that.config.clickCallBack(data);
   }
-
+  
   //事件处理
   Class.prototype.events = function(){
     var that = this
@@ -1214,7 +1228,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
         ,tr: tr
         ,del: function(){
 //          table.cache[that.key][index] = [];
-        	table.cache[that.key].splice(index, 1);
+          table.cache[that.key].splice(index, 1);
           tr.remove();
           that.scrollPatch();
         }

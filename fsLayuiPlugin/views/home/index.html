@@ -15,7 +15,9 @@
 	<link href="https://cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="../../plugins/layui/css/layui.css" media="all"/>
 	<link rel="stylesheet" type="text/css" href="../../css/fs.css" media="all"/>
+	<script type="text/javascript" src="../../plugins/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="../../plugins/layui/layui.js"></script>
+	<script type="text/javascript" src="../../plugins/echarts/echarts.min.js"></script>
 </head>
 <body>
 <div class="layui-fluid">  
@@ -37,6 +39,25 @@
 				版本更新记录
 			</blockquote>
 			<ul class="layui-timeline">
+			  <li class="layui-timeline-item">
+		        <i class="layui-icon layui-timeline-axis"></i>
+		        <div class="layui-timeline-content layui-text">
+		          <div class="layui-timeline-title">
+		            <h2>1.6.3</h2>
+		            <span class="layui-badge-rim">2018-1-3</span>
+		          </div>
+		          <ul>
+		            <li>新增菜单栏配置(支持配置本地菜单和异步加载菜单)</li>
+		            <li>优化tab导航菜单</li>
+		            <li>优化默认图标，使用font-awesome图标库</li>
+		            <li>新增echarts图表案例</li>
+		            <li>优化ajax请求异步bug</li>
+		            <li>优化附件上传静态文件相对路径</li>
+		            <li>新增单页面禁用输入，<a target="_top" href="../../index.html#staticDatagrid">点击体验</a></li>
+		            <li>升级layui2.2.5版本</li>
+		          </ul>
+		        </div>
+		      </li>
 			  <li class="layui-timeline-item">
 		        <i class="layui-icon layui-timeline-axis"></i>
 		        <div class="layui-timeline-content layui-text">
@@ -319,7 +340,13 @@
 		      </li>
 			</ul>
 		</div>
+		<div class="layui-col-md6 layui-col-space5">
+			<blockquote class="layui-elem-quote">
+				图表
+			</blockquote>
+			<div id="main" style="width: 100%;height:400px;"></div>
 	</div>
 </div>
+<script type="text/javascript" src="../../scripts/home/index.js"></script>
 </body>
 </html>
