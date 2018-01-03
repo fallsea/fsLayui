@@ -138,14 +138,9 @@ layui.define(['element',"fsConfig","fsCommon"], function(exports){
 							if(!$.isEmpty(menuConfig.defaultSelectLeftMenuId) && menuConfig.defaultSelectLeftMenuId == v2[menuConfig.menuIdField]){//默认选中处理
 								menuRow += ' layui-this';
 							}
-							
-							
 							//显示三级菜单，循环判断是否有子栏目
-							
 							var menuRow3 = "";
-							
 							$.each(data,function(i3,v3){
-								
 								if(v2[menuConfig.menuIdField] === v3[menuConfig.parentMenuIdField]){
 									if($.isEmpty(menuRow3)){
 										menuRow3 = '<dl class="layui-nav-child">';

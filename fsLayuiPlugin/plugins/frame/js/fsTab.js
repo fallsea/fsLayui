@@ -75,7 +75,7 @@ layui.define(['element'], function(exports){
 	FsTab.prototype.bindDeleteFilter = function(){
 		element.on('tabDelete('+this.config.tabFilter+')', function(data){
 	  	var layId = $(this).parentsUntil().attr("lay-id");
-	  	$('.fsMenu .layui-nav-child>dd[lay-id="'+ layId +'"],.fsMenu>li[lay-id="'+ layId +'"]').removeAttr("lay-id");
+	  	$('#fsLeftMenu .layui-nav-child>dd[lay-id="'+ layId +'"],#fsLeftMenu>li[lay-id="'+ layId +'"]').removeAttr("lay-id");
 		});
 	}
 	
@@ -97,9 +97,9 @@ layui.define(['element'], function(exports){
 	 */
 	FsTab.prototype.menuSelectCss = function(layId){
 		if(!$.isEmpty(layId)){
-			$('.fsMenu .layui-this').removeClass("layui-this");//清除样式
+			$('#fsLeftMenu .layui-this').removeClass("layui-this");//清除样式
 			
-			var dom =$('.fsMenu .layui-nav-child>dd[lay-id="'+ layId +'"],.fsMenu>li[lay-id="'+ layId +'"]');
+			var dom =$('#fsLeftMenu .layui-nav-child>dd[lay-id="'+ layId +'"],#fsLeftMenu>li[lay-id="'+ layId +'"]');
 			dom.addClass("layui-this");//追加样式
 			
 			//处理头部菜单
