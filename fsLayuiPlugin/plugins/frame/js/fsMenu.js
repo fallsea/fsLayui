@@ -2,7 +2,7 @@
  * @Description: 菜单配置
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.6.3
+ * @version 1.6.4
  * @License：MIT
  */
 layui.define(['element',"fsConfig","fsCommon"], function(exports){

@@ -1158,6 +1158,13 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
       layer.close(that.tipsIndex);
       if(othis.data('off')) return;
       
+      if(that.config.clickCallBack){
+      	//行点击事件
+      	var othis = $(this).parent()
+        ,index = othis.data('index');
+      	that.clickCallBack(index);
+      }
+      
       //显示编辑表单
       if(editType){
         if(editType === 'select') { //选择框
@@ -1204,15 +1211,6 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
         });
       }
     });
-    
-    if(that.config.clickCallBack){
-    	//行点击事件
-      that.layBody.on('click', 'tr', function(){
-      	var othis = $(this)
-        ,index = othis.data('index');
-      	that.clickCallBack(index);
-      });
-    }
     
     //工具条操作事件
     that.layBody.on('click', '*[lay-event]', function(){

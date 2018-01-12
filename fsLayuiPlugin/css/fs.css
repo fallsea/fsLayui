@@ -1,3 +1,6 @@
+
+html{background-color:#FFFFFF;color:#666;}
+
 /*公共样式*/
 .childrenBody {
     margin: 10px 10px 0;
@@ -9,7 +12,8 @@
 fieldset { min-width: 100px; }
 
 
-.layui-fluid{position:relative;margin:0 auto;padding:10px 5px 5px 5px;}
+.layui-fluid{position:relative;margin:0 auto;padding:10px;}
+
 
 
 .layui-table-view{position:relative;margin:5px 0 0 0;overflow:hidden;}

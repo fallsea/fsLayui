@@ -2,15 +2,16 @@
  * @Description: datagrid工具
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.6.3
+ * @version 1.6.4
  * @License：MIT
  */
-layui.define(["fsCommon","table",'laypage','fsConfig','form'], function(exports){
+layui.define(["fsCommon","table",'laypage','fsConfig','form','fsButtionCommon'], function(exports){
   var fsCommon = layui.fsCommon,
   table = layui.table,
   form = layui.form,
   laypage = layui.laypage,
   fsConfig = layui.fsConfig,
+  fsButtion = layui.fsButtionCommon,
   statusName = $.result(fsConfig,"global.result.statusName","errorNo"),
   msgName = $.result(fsConfig,"global.result.msgName","errorInfo"),
   dataName = $.result(fsConfig,"global.result.dataName","results.data"),
@@ -113,7 +114,7 @@ layui.define(["fsCommon","table",'laypage','fsConfig','form'], function(exports)
 	  
 	  var height = _table.attr("height");//高度
 	  if($.isEmpty(height)){
-      height = "full-130";
+      height = "full-135";
 	  }
 	  
 	  var pageSize = _table.attr("pageSize");//每页数量
@@ -489,7 +490,24 @@ layui.define(["fsCommon","table",'laypage','fsConfig','form'], function(exports)
 	         }
       		
 				  break;
-      	default:;
+      	default:
+      		if(!$.isEmpty(layEvent)){
+      			try {
+      				
+      				if(!$.isEmpty(fsButtion[layEvent])){
+      					//执行
+        				fsButtion[layEvent](_this,obj.data,getDatagrid(tableId));
+      				}else{
+      					layui.fsButtion[layEvent](_this,obj.data,getDatagrid(tableId));
+      				}
+      				
+						} catch (e) {
+							console.error(e);
+						}
+      		}
+      	
+      		break;
+      	;
       }
     });
     

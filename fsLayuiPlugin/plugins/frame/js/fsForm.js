@@ -2,7 +2,7 @@
  * @Description: form表单工具
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.6.3
+ * @version 1.6.4
  * @License：MIT
  */
 layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], function(exports){
@@ -238,7 +238,7 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
     				//提示错误消息
     				fsCommon.errorMsg(data[msgName]);
     			}
-    		});
+    		},false);
     	}
     }else if(formatType == "local"){
     	
@@ -362,7 +362,7 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
 			  		//提示错误消息
 			  		fsCommon.errorMsg(data[msgName]);
 			  	}
-			  });
+			  },false);
 				
 			}
 			  
@@ -477,7 +477,7 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
     		//提示错误消息
     		fsCommon.errorMsg(data[msgName]);
     	}
-		});
+		},false);
   };
   
   var fsForm = new FsForm();

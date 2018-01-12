@@ -2,14 +2,15 @@
  * @Description: 通用组件
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.6.3
+ * @version 1.6.4
  * @License：MIT
  */
-layui.define(['layer','form','fsConfig'], function (exports) {
+layui.define(['layer','form','fsConfig','fsButtionCommon'], function (exports) {
 	
   var form = layui.form,
     layer = layui.layer,
     fsConfig = layui.fsConfig,
+    fsButtion = layui.fsButtionCommon,
     statusName = $.result(fsConfig,"global.result.statusName","errorNo"),
     msgName = $.result(fsConfig,"global.result.msgName","errorInfo"),
     dataName = $.result(fsConfig,"global.result.dataName","results.data"),
@@ -533,7 +534,28 @@ layui.define(['layer','form','fsConfig'], function (exports) {
 		    			submitFormSave();
 		    		}
 					  break;
-					default:;
+					default:
+						if(!$.isEmpty(_function)){
+	      			try {
+	      				var obj = getDatagrid(_tableId);
+	      				
+	      				var data = null;
+	      				if(null!=obj){
+	      					data = obj.getCheckData();
+	      				}
+	      				if(!$.isEmpty(fsButtion[_function])){
+	      					//执行
+	      					fsButtion[_function](_this,data,obj);
+	      				}else{
+	      					layui.fsButtion[_function](_this,data,obj);
+	      				}
+	      				
+							} catch (e) {
+								console.error(e);
+							}
+	      		}
+						break;
+					;
 				}
     	});
     },

@@ -2,7 +2,7 @@
  * @Description: 主页面
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.6.3
+ * @version 1.6.4
  * @License：MIT
  */
 layui.use(['fsMenu','layer','fsTab'], function(){

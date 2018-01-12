@@ -60,21 +60,22 @@
   	 </div>
   	 <div class="layui-col-md12">
   	 	<div class="layui-row grid-demo">
-	      <div class="layui-col-md3">
-	      	<div class="layui-btn-container">
-	        	<button class="layui-btn" function="top" topUrl="views/datagrid/add.html" topWidth="800px" isMaximize="0" topHeight="600px" topTitle="新增demo">
-				  <i class="layui-icon">&#xe654;</i>新增
-				</button>
-				<button class="layui-btn layui-btn-danger" function="submit" url="/fsbus/1002" isMutiDml="1" isConfirm="1" confirmMsg="是否确定删除选中的数据？" inputs="id:">
-				  <i class="layui-icon">&#xe640;</i>批量删除
-				</button>
-				<button class="layui-btn" function="refresh">
-				  <i class="layui-icon">&#x1002;</i>刷新
-				</button>
-	      	</div>
+	      <div class="layui-col-md12">
+        	<button class="layui-btn" function="top" topUrl="views/datagrid/add.html" topWidth="800px" isMaximize="0" topHeight="600px" topTitle="新增demo">
+			  <i class="layui-icon">&#xe654;</i>新增
+			</button>
+			<button class="layui-btn layui-btn-danger" function="submit" url="/fsbus/1002" isMutiDml="1" isConfirm="1" confirmMsg="是否确定删除选中的数据？" inputs="id:">
+			  <i class="layui-icon">&#xe640;</i>批量删除
+			</button>
+			<button class="layui-btn" function="refresh">
+			  <i class="layui-icon">&#x1002;</i>刷新
+			</button>
+			<button class="layui-btn" function="test">
+			  <i class="layui-icon">&#xe756;</i>测试
+			</button>
 	      </div>
 	      <div class="layui-col-md12">
-	         <table id="fsDatagrid" lay-filter="fsDatagrid" class="fsDatagrid" isLoad="1" url="/fsbus/1000" isPage="1" sortType="1" defaultForm="query_form" height="full-130"></table>
+	         <table id="fsDatagrid" lay-filter="fsDatagrid" class="fsDatagrid" isLoad="1" url="/fsbus/1000" isPage="1" sortType="1" defaultForm="query_form" height="full-135"></table>
 
 	         <div class="fsDatagridCols">
 	         	<p type="numbers" title="#"/>
@@ -88,7 +89,7 @@
 			    <p field="area1" title="省份" width="100" dict="area1"/>
 			    <p field="createdTime" title="创建时间" width="180"/>
 			    <p field="modifiedTime" title="修改时间" width="180"/>
-			    <p fixed="right" align="center" toolbar="#barDemo" title="操作" width="180"/>
+			    <p fixed="right" align="center" toolbar="#barDemo" title="操作" width="220"/>
 			</div>
 			
 			<script type="text/html" id="stateTpl">
@@ -98,12 +99,21 @@
 				<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="top" topUrl="views/datagrid/edit.html" topMode="readonly" topWidth="800px" topHeight="600px" topTitle="查看demo" inputs="id:">查看</a>
  				<a class="layui-btn layui-btn-xs" lay-event="top" topUrl="views/datagrid/edit.html" topWidth="800px" topHeight="600px" topTitle="编辑demo" inputs="id:">编辑</a>
   				<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="submit" url="/fsbus/1002" isConfirm="1" confirmMsg="是否确定删除当前记录？" inputs="id:">删除</a>
+				<a class="layui-btn layui-btn-xs" lay-event="test2" >测试</a>
 			</script>
 	      </div>
 	    </div>
   	 </div>
   </div>
 </div>
-  </div>
+</div>
+
+<script type="text/javascript">
+
+layui.fsButtion.test2 = function(elem,data,datagrid){
+	alert("测试自定义按钮2"+JSON.stringify(data));
+}
+
+</script>
 </body>
 </html>
