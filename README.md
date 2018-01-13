@@ -36,6 +36,11 @@ qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k
 
 ## 使用说明
 
+遇到问题请先查看**常见问题**
+
+* [常见问题](http://www.itcto.cn/layui/fsLayuiPluginFaq/)  
+
+
  * [fsLayuiPlugin介绍](http://www.itcto.cn/layui/fsLayuiPlugin%E4%BB%8B%E7%BB%8D/)  
 
 * [fsLayuiPlugin入门使用](http://www.itcto.cn/layui/fsLayuiPlugin%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/)
@@ -83,7 +88,8 @@ qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k
 * [fsLayuiPlugin菜单导航栏使用说明(二)](http://www.itcto.cn/layui/fsLayuiPlugin%E8%8F%9C%E5%8D%95%E5%AF%BC%E8%88%AA%E6%A0%8F%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E2/)
 
 
-* [常见问题](http://www.itcto.cn/layui/fsLayuiPluginFaq/)  
+* [fsLayuiPlugin自定义按钮事件回调使用说明](http://www.itcto.cn/layui/fsLayuiPlugin%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%89%E9%92%AE%E4%BA%8B%E4%BB%B6/)
+
 
 ## 版本号规范
 
