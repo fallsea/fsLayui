@@ -79,9 +79,6 @@ qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k
 
 * [fsLayuiPlugin表单和数据表格同时提交](http://www.itcto.cn/layui/fsLayuiPlugin%E8%A1%A8%E5%8D%95%E5%92%8C%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC%E5%90%8C%E6%97%B6%E6%8F%90%E4%BA%A4/)  
 
-* [fsLayuiPlugin菜单导航栏使用说明](http://www.itcto.cn/layui/fsLayuiPlugin%E8%8F%9C%E5%8D%95%E5%AF%BC%E8%88%AA%E6%A0%8F%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/)  
-
-
 * [fsLayuiPlugin菜单导航栏使用说明(一)](http://www.itcto.cn/layui/fsLayuiPlugin%E8%8F%9C%E5%8D%95%E5%AF%BC%E8%88%AA%E6%A0%8F%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/)  
 
 
