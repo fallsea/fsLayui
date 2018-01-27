@@ -2,7 +2,7 @@
  * @Description: form表单工具
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.6.4
+ * @version 1.7.0
  * @License：MIT
  */
 layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], function(exports){
@@ -45,7 +45,7 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
     
     thisForm.renderLayedit();
     
-    thisForm.bindButtionSubmit();
+    thisForm.bindButtonSubmit();
     
     return thisForm;
 	};
@@ -340,9 +340,9 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
 					if(!$.isEmpty(formDataStr)){
 						showData(JSON.parse(formDataStr));
 					}
-				}else{
+				}/*else{
 					fsCommon.errorMsg("唯一标识获取失败!");
-				}
+				}*/
 				
 			}else if(!$.isEmpty(formDom.attr("loadFuncNo")) || !$.isEmpty(formDom.attr("loadUrl"))){
 				//如果配置异步地址，默认加载异步地址
@@ -408,26 +408,15 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
 	/**
 	 * 绑定提交按钮
 	 */
-	FsForm.prototype.bindButtionSubmit = function(){
+	FsForm.prototype.bindButtonSubmit = function(){
     var thisForm = this;
     $(thisForm.config.elem).find("button").each(function(){
       var lay_filter = $(this).attr("lay-filter");
       /**监听新增提交*/
       form.on("submit("+lay_filter+")", function (data) {
-          
-        if("1" == $(this).attr("isVerifyPwd"))//是否验证密码
-        {
-          //弹出密码提示
-          layer.prompt({title: '输入验证密码，并确认', formType: 1}, function(pass, index){
-            layer.close(index);
-            data.field["loginPassword"] = pass;
-            thisForm.submitForm(data.field,$(this));
-          });
-        }
-        else
-        {
-          thisForm.submitForm(data.field,$(this));
-        }
+        
+      	var _thisButton = $(this);
+        thisForm.submitForm(data.field,_thisButton,thisForm.config.elem);
         return false;
       });
     });
@@ -443,7 +432,7 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
   /**
    * 提交请求
    */
-	FsForm.prototype.submitForm = function(param,_this){
+	FsForm.prototype.submitForm = function(param,_this,formElem){
     var url = _this.attr("url");//请求url
   	var funcNo = _this.attr("funcNo");
   	if($.isEmpty(funcNo) && $.isEmpty(url)){

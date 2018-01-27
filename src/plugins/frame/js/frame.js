@@ -2,7 +2,7 @@
  * @Description: 通用框架
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.6.4
+ * @version 1.7.0
  * @License：MIT
  */
 layui.use(['fsForm','fsDatagrid','fsTree','fsCommon','element'], function(){
@@ -33,10 +33,16 @@ layui.use(['fsForm','fsDatagrid','fsTree','fsCommon','element'], function(){
         var treeId=$(this).attr("id");
         var funcNo = $(this).attr("funcNo");
         var url = $(this).attr("url");
-        trees[treeId] = fsTree.render({id:treeId,funcNo:funcNo,url:url,clickCallback:clickCallback});
+        var tree = fsTree.render({id:treeId,funcNo:funcNo,url:url,clickCallback:clickCallback,getTree:getTree});
+        if(treeDoms.length==1){
+        	trees[treeId] = tree;
+        }else{
+        	//深度拷贝对象
+        	trees[treeId] = $.extend(true,{},tree);
+        }
       });
     //绑定按钮事件
-    fsCommon.buttionEvent("tree",getTree);
+    fsCommon.buttonEvent("tree",getTree);
 	}
 	
 	function getTree(treeId){
@@ -56,32 +62,44 @@ layui.use(['fsForm','fsDatagrid','fsTree','fsCommon','element'], function(){
   function clickCallback(e,treeId, treeNode) {
   	
   	var _this = $("#"+treeId);
-    var tableId = _this.attr("tableId");
+    var clickCallbackIds = _this.attr("clickCallbackId");//点击回调id
     
-    if($.isEmpty(tableId)){
-    	tableId = _this.attr("datagridId");
-    }
-    
-    if($.isEmpty(tableId)){
+    if($.isEmpty(clickCallbackIds)){
     	return;
     }
+    
+    $.each(clickCallbackIds.split(','),function(i,clickCallbackId){
+    	
+    	var dom = $("#"+clickCallbackId);
+    	
+    	var defaultForm = dom.attr("defaultForm");
+      if($.isEmpty(defaultForm)){
+        defaultForm = "query_form";
+      }
+      var clickCallbackInputs = _this.attr("clickCallbackInputs");
+      if(!$.isEmpty(clickCallbackInputs))
+      {
+        //获取值存入form表单
+        var param = fsCommon.getParamByInputs(clickCallbackInputs,treeNode);
+        $("#"+defaultForm).setFormData(param);
+      }
       
-    //获取表格对应的查询form
-    var defaultForm = $("#"+tableId).attr("defaultForm");
-    if($.isEmpty(defaultForm)){
-      defaultForm = "query_form";
-    }
-    var inputs = _this.attr("inputs");
-    if(!$.isEmpty(inputs))
-    {
-      //获取值存入form表单
-      var param = fsCommon.getParamByInputs(inputs,treeNode);
-      $("#"+defaultForm).setFormData(param);
-    }
-    if(!$.isEmpty(datagrids) && !$.isEmpty(datagrids[tableId])){
-      datagrids[tableId].query($("#"+defaultForm).getFormData());
-    }
-      
+    	if(dom.filter(".fsDatagrid").length == 1){//数据表格
+    		
+        if(!$.isEmpty(datagrids) && !$.isEmpty(datagrids[clickCallbackId])){
+          datagrids[clickCallbackId].query($("#"+defaultForm).getFormData());
+        }
+        
+    	}else if(dom.filter(".fsTree").length == 1){//树操作
+    		
+    		if(!$.isEmpty(trees) && !$.isEmpty(trees[clickCallbackId])){
+    			trees[clickCallbackId].query($("#"+defaultForm).getFormData());
+        }
+    		
+    	}
+    	
+    });
+    
   }
   /********* tree 处理   end *************/
 	
@@ -116,7 +134,7 @@ layui.use(['fsForm','fsDatagrid','fsTree','fsCommon','element'], function(){
   	  	}
   	  }
           
-      var datagrid = fsDatagrid.render({id:tableId,clickCallBack:clickCallBack});
+  	  var datagrid = fsDatagrid.render({id:tableId,clickCallBack:clickCallBack,getDatagrid:getDatagrid});
       
       datagrid.bindDatagridTool(getDatagrid);
       
@@ -128,10 +146,10 @@ layui.use(['fsForm','fsDatagrid','fsTree','fsCommon','element'], function(){
       }
       
     });
-    fsCommon.buttionEvent("datagrid",getDatagrid);
+    fsCommon.buttonEvent("datagrid",getDatagrid);
   }else{
     //按钮绑定
-  	fsCommon.buttionEvent("datagrid");
+  	fsCommon.buttonEvent("datagrid");
   }
   
   

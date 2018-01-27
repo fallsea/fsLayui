@@ -2,17 +2,17 @@
  * @Description: 入口
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.6.4
+ * @version 1.7.0
  * @License：MIT
  */
 layui.config({
   base : "/plugins/frame/js/",//设定扩展的Layui模块的所在目录，一般用于外部模块扩展
-	version : '1.6.4'
+	version : '1.7.0'
 });
 
 layui.fsUtil={};
 
-layui.fsButtion={};
+layui.fsButton={};
 
 /**
  * 转义字典工具
@@ -62,9 +62,53 @@ layui.fsUtil.toDict = function(dict,value){
 			});
 		}
 		
-		return _value;
+		var otherValue = data["otherValue"];
+		if($.isEmpty(_value) && !$.isEmpty(otherValue)){
+			_value = otherValue;
+		}
+		
 	}
 	return _value;
+};
+
+/**
+ * 日期转义
+ */
+layui.fsUtil.toDateString = function(d, format){
+	if($.isEmpty(d)){
+		return "";
+	}
+  var date = new Date(d || new Date())
+  ,ymd = [
+    this.digit(date.getFullYear(), 4)
+    ,this.digit(date.getMonth() + 1)
+    ,this.digit(date.getDate())
+  ]
+  ,hms = [
+    this.digit(date.getHours())
+    ,this.digit(date.getMinutes())
+    ,this.digit(date.getSeconds())
+  ];
+
+  format = format || 'yyyy-MM-dd HH:mm:ss';
+
+  return format.replace(/yyyy/g, ymd[0])
+  .replace(/MM/g, ymd[1])
+  .replace(/dd/g, ymd[2])
+  .replace(/HH/g, hms[0])
+  .replace(/mm/g, hms[1])
+  .replace(/ss/g, hms[2]);
+};
+
+//数字前置补零
+layui.fsUtil.digit = function(num, length, end){
+	var str = '';
+	num = String(num);
+	length = length || 2;
+	for(var i = num.length; i < length; i++){
+	  str += '0';
+	}
+	return num < Math.pow(10, length) ? str + (num|0) : num;
 };
 
 //jquery 插件
@@ -219,15 +263,19 @@ layui.fsUtil.toDict = function(dict,value){
 	  			}
 	  			
 	  			var dict = _this.attr("dict");
-	  			
+	  			var formatType = _this.attr("formatType");
 	  			if(!$.isEmpty(dict)){
-	  				
 	  				formatArr.push(dict);
-	  				
 	  				//自定义模板
 	  				col["templet"] = "<div>{{ layui.fsUtil.toDict('"+dict+"',d."+field+") }}</div>";
-	  				
+	  			}else if(!$.isEmpty(formatType)){
+	  				var dateFormat = "yyyy-MM-dd HH:mm:ss";
+	  				if(formatType == "date"){
+	  					dateFormat = "yyyy-MM-dd";
+	  				}
+	  				col["templet"] = "<div>{{ layui.fsUtil.toDateString(d."+field+",'"+dateFormat+"') }}</div>";
 	  			}
+	  			
 	  			colsArr.push(col);
 	      			
 				}else {//工具条

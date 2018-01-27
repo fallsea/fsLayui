@@ -2,7 +2,7 @@
  * @Description: 基础配置
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.6.4
+ * @version 1.7.0
  * @License：MIT
  */
 layui.define([], function (exports) {
@@ -60,15 +60,15 @@ layui.define([], function (exports) {
 		 */
 		"equals": function(value, item){ //value：表单的值、item：表单的DOM对象
 	    var equalsId = $(item).attr("equalsId");
-	    if(_.isEmpty(equalsId)){
+	    if($.isEmpty(equalsId)){
         return '未配置对比id';
 	    }
 	    var value2 = $("#"+equalsId).val();
 	    
-	    if(!_.eq(value,value2))
+	    if(value!==value2)
 	    {
         var equalsMsg = $(item).attr("equalsMsg");
-        if(_.isEmpty(equalsMsg))
+        if($.isEmpty(equalsMsg))
         {
         	equalsMsg = "值不相等";
         }
@@ -88,10 +88,10 @@ layui.define([], function (exports) {
 		"length": function(value, item){ //value：表单的值、item：表单的DOM对象
 	    var minLength = $(item).attr("minLength");//最小长度
 	    var maxLength = $(item).attr("maxLength");//最大长度
-	    if(!_.isEmpty(minLength) && !_.eq('0',minLength) && _.gt(minLength,value.length)){
+	    if(!$.isEmpty(minLength) && '0' !== minLength && parseInt(minLength)>value.length){
 	    	return "输入内容小于最小值:"+minLength;
 	    }
-	    if(!_.isEmpty(maxLength) && !_.eq('0',maxLength) && _.gt(value.length,maxLength)){
+	    if(!$.isEmpty(maxLength) && '0' !== maxLength && value.length>parseInt(maxLength)){
 	    	return "输入内容大于最小值:"+maxLength;
 	    }
 		}

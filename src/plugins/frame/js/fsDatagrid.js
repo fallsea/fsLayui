@@ -2,16 +2,16 @@
  * @Description: datagrid工具
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.6.4
+ * @version 1.7.0
  * @License：MIT
  */
-layui.define(["fsCommon","table",'laypage','fsConfig','form','fsButtionCommon'], function(exports){
+layui.define(["fsCommon","table",'laypage','fsConfig','form','fsButtonCommon'], function(exports){
   var fsCommon = layui.fsCommon,
   table = layui.table,
   form = layui.form,
   laypage = layui.laypage,
   fsConfig = layui.fsConfig,
-  fsButtion = layui.fsButtionCommon,
+  fsButton = layui.fsButtonCommon,
   statusName = $.result(fsConfig,"global.result.statusName","errorNo"),
   msgName = $.result(fsConfig,"global.result.msgName","errorInfo"),
   dataName = $.result(fsConfig,"global.result.dataName","results.data"),
@@ -27,7 +27,8 @@ layui.define(["fsCommon","table",'laypage','fsConfig','form','fsButtionCommon'],
       id:"",//form表单id
       elem:null,//form对象
       fsSortType : $.result(fsConfig,"global.page.sortType"),//排序方式，1 异步排序
-      clickCallBack:null //点击回调函数
+      clickCallBack:null, //点击回调函数
+      getDatagrid:null
     }
   	
     var thisDatagrid = this;
@@ -173,7 +174,7 @@ layui.define(["fsCommon","table",'laypage','fsConfig','form','fsButtionCommon'],
 	  
 	  if(thisDatagrid.config.fsSortType == "1"){
 	  	table.on('sort('+tableId+')', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-	  		thisDatagrid.sort(obj);
+	  		thisDatagrid.config.getDatagrid(tableId).sort(obj);
 	  	});
 	  }
       
@@ -347,11 +348,11 @@ layui.define(["fsCommon","table",'laypage','fsConfig','form','fsButtionCommon'],
       	case "submit" :
       		 //提交
         	function submitForm(){
-        		var funcNO = _this.attr("funcNo");
+        		var funcNo = _this.attr("funcNo");
             
             var url = _this.attr("url");//请求url
             
-            if($.isEmpty(funcNO) && $.isEmpty(url)){
+            if($.isEmpty(funcNo) && $.isEmpty(url)){
             	fsCommon.warnMsg("功能号或请求地址为空！");
               return;
             }
@@ -494,11 +495,11 @@ layui.define(["fsCommon","table",'laypage','fsConfig','form','fsButtionCommon'],
       		if(!$.isEmpty(layEvent)){
       			try {
       				
-      				if(!$.isEmpty(fsButtion[layEvent])){
+      				if(!$.isEmpty(fsButton[layEvent])){
       					//执行
-        				fsButtion[layEvent](_this,obj.data,getDatagrid(tableId));
+        				fsButton[layEvent](_this,obj.data,getDatagrid(tableId));
       				}else{
-      					layui.fsButtion[layEvent](_this,obj.data,getDatagrid(tableId));
+      					layui.fsButton[layEvent](_this,obj.data,getDatagrid(tableId));
       				}
       				
 						} catch (e) {

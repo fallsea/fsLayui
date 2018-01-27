@@ -15,11 +15,14 @@
 	<link rel="stylesheet" type="text/css" href="../../plugins/layui/css/layui.css" media="all"/>
 	<link rel="stylesheet" type="text/css" href="../../css/fs.css" media="all"/>
 	<script type="text/javascript" src="../../plugins/layui/layui.js"></script>
+	<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 	<script type="text/javascript" src="../../plugins/jquery/jquery.min.js"></script>
+	<link href="../../plugins/contextMenu/jquery.contextMenu.min.css" rel="stylesheet">
+	<script src="../../plugins/contextMenu/jquery.contextMenu.min.js"></script>
 	<link rel="stylesheet" href="../../plugins/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css"/>
 	<script type="text/javascript" src="../../plugins/ztree/js/jquery.ztree.all.min.js"></script>
-	<script type="text/javascript" src="../../plugins/frame/js/fs.js?v=1.5.0"></script>
-	<script type="text/javascript" src="../../plugins/frame/js/frame.js?v=1.5.0"></script>
+	<script type="text/javascript" src="../../plugins/frame/js/fs.js?v=1.7.0"></script>
+	<script type="text/javascript" src="../../plugins/frame/js/frame.js?v=1.7.0"></script>
 </head>
 <body>
   <div class="layui-fluid">  
@@ -30,26 +33,16 @@
          <div class="layui-field-box">
          	<div class="layui-row layui-col-space10">
          		<div class="layui-col-md12">
-         			<div class="layui-btn-group">
-				    	<button class="layui-btn layui-btn-primary layui-btn-sm fsTree" function="top" topUrl="views/treeDatagrid/add.html" topWidth="700px" topHeight="450px" isSelect="1" topTitle="新增菜单信息" inputs="parentId:$id">
-						  <i class="layui-icon">&#xe654;</i>
-						</button>
-						<button class="layui-btn layui-btn-primary layui-btn-sm fsTree" function="top" topUrl="views/treeDatagrid/edit.html" topWidth="700px" topHeight="450px" isSelect="1" topTitle="编辑菜单信息" inputs="menuId:$id">
-						  <i class="layui-icon">&#xe642;</i>
-						</button>
-						<button class="layui-btn layui-btn-sm layui-btn-danger fsTree" function="submit" url="/fsbus/S1007" isSelect="1" isConfirm="1" confirmMsg="是否确定删除选中的数据？" inputs="menuId:$id">
-						  <i class="layui-icon">&#xe640;</i>
-						</button>
-						<button class="layui-btn layui-btn-primary layui-btn-sm fsTree" function="refresh">
-						  <i class="layui-icon">&#x1002;</i>
-						</button>
-					</div>
-         		</div>
-         		<div class="layui-col-md12">
-         			<ul id="treeDemo" class="ztree fsTree" url="/fsbus/S1003" tableId="fsDatagrid" inputs="menuId:$id"></ul>
+         			<ul id="treeDemo" class="ztree fsTree" isRoot="1" url="/fsbus/S1003" clickCallbackId="fsDatagrid" clickCallbackInputs="menuId:$id" treeIdKey="id" treePIdKey="pId" treeName="name" ></ul>
+         			
+         			<div class="fsTreeRightMenu">
+         				<p function="refresh" icon="refresh" name="刷新"></p>
+         				<p function="top" icon="add" name="新增" fs:authorize="" topUrl="views/treeDatagrid/add.html" topWidth="700px" topHeight="460px" topTitle="新增菜单信息" inputs="parentId:$id"></p>
+         				<p function="top" icon="edit" name="编辑" fs:authorize="" topUrl="views/treeDatagrid/edit.html" topWidth="700px" topHeight="460px" topTitle="编辑菜单信息" inputs="menuId:$id" disabledType="rootNode"></p>
+         				<p function="submit" icon="del" name="删除" fs:authorize=""  url="/fsbus/S1007" isConfirm="1" confirmMsg="是否确定删除？" inputs="menuId:$id" disabledType="parent|rootNode"></p>
+         			</div>
          		</div>
          	</div>
-		  	
 		  </div>
 		  </fieldset>
     </div>
@@ -63,16 +56,16 @@
 			    		<form id="query_form" style="display: none;">
 			    			<input type="text" id="menuId" name="menuId" value="0"/>
 			    		</form>
-				    	<button class="layui-btn layui-btn-sm" function="top" topUrl="views/treeDatagrid/addFunc.html" topWidth="700px" topHeight="350px" topTitle="新增功能号信息" inputs="menuId:#menuId">
+				    	<button class="layui-btn layui-btn-sm" function="top" topUrl="views/treeDatagrid/addFunc.html" selectTreeId="menuId" topWidth="700px" topHeight="350px" topTitle="新增功能号信息" inputs="menuId:#menuId">
 						  <i class="layui-icon">&#xe654;</i>新增
 						</button>
-						<button class="layui-btn layui-btn-sm" function="refresh">
+						<button class="layui-btn layui-btn-sm" function="refresh" selectTreeId="menuId">
 						  <i class="layui-icon">&#x1002;</i>刷新
 						</button>
 			    	</div>
 			    </div>
 			    <div class="layui-col-md12 layui-col-space1">
-					<table id="fsDatagrid" class="fsDatagrid" lay-filter="fsDatagrid" url="/fsbus/S1009" isPage="0" defaultForm="query_form" height="full-130">
+					<table id="fsDatagrid" class="fsDatagrid" lay-filter="fsDatagrid" url="/fsbus/S1009" isLoad="0" isPage="0" defaultForm="query_form" height="full-130">
 					</table>
 					
 					<div class="fsDatagridCols">

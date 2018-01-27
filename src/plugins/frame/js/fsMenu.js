@@ -2,7 +2,7 @@
  * @Description: 菜单配置
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.6.4
+ * @version 1.7.0
  * @License：MIT
  */
 layui.define(['element',"fsConfig","fsCommon"], function(exports){
@@ -112,21 +112,33 @@ layui.define(['element',"fsConfig","fsCommon"], function(exports){
 	};
 	
 	/**
+	 * 清空菜单
+	 */
+	FsMenu.prototype.cleanMenu = function(){
+		$("#fsTopMenu").html("");
+		$("#fsLeftMenu").html("");
+	}
+	/**
 	 * 显示菜单
 	 */
 	FsMenu.prototype.showMenu = function(){
 		var thisMenu = this;
 		var data = menuConfig.data;
 		if(!$.isEmpty(data)){
+			var _index = 0;
 			//显示顶部一级菜单
 			var fsTopMenuElem = $("#fsTopMenu");
 			var fsLeftMenu = $("#fsLeftMenu");
 			$.each(data,function(i,v){
 				if(menuConfig.rootMenuId === v[menuConfig.parentMenuIdField]){
+					
 					var topStr = '<li class="layui-nav-item';
-					if(!$.isEmpty(menuConfig.defaultSelectTopMenuId) && menuConfig.defaultSelectTopMenuId == v[menuConfig.menuIdField]){//默认选中处理
+					if($.isEmpty(menuConfig.defaultSelectTopMenuId) && _index === 0){//为空默认选中第一个
+						topStr += ' layui-this';
+					}else if(!$.isEmpty(menuConfig.defaultSelectTopMenuId) && menuConfig.defaultSelectTopMenuId == v[menuConfig.menuIdField]){//默认选中处理
 						topStr += ' layui-this';
 					}
+					_index ++ ;
 					topStr += '" dataPid="'+v[menuConfig.menuIdField]+'"><a href="javascript:;">'+thisMenu.getIcon(v[menuConfig.menuIconField])+' <cite>'+v[menuConfig.menuNameField]+'</cite></a></li>';
 					fsTopMenuElem.append(topStr);
 					

@@ -65,7 +65,11 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
     	  //业务参数合并
     	  that.config = $.extend({}, that.config, table.config, options);
     	  //显示第一页数据
-    	  that.pullData(1, that.loading());
+    	  if(that.layMain.is(":hidden")){
+        	that.pullData(1);
+        }else{
+        	that.pullData(1, that.loading());
+        }
       },
       sort : function(obj){//排序
       	//排序方式
@@ -327,7 +331,11 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
     }
     
     //请求数据
-    that.pullData(that.page,that.loading());
+    if(that.layMain.is(":hidden")){
+    	that.pullData(that.page);
+    }else{
+    	that.pullData(that.page,that.loading());
+    }
     that.events();
   };
   
@@ -485,7 +493,13 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
             }
             that.renderForm();
             loadIndex && layer.close(loadIndex);
-            return that.layMain.html('<div class="'+ NONE +'">'+ (res[response.msgName] || '返回的数据状态异常') +'</div>');
+            //解决固定菜单问题
+            that.layFixed.find('tbody').children().remove();
+            that.layFixed.find('.'+ NONE).remove();
+            that.layFixed.find('.layui-table-body').removeAttr("style");
+            that.layMain.find('tbody').html('');
+            that.layMain.find('.'+ NONE).remove();
+            return that.layMain.append('<div class="'+ NONE +'">'+ ($.result(res,response.msgName) || '返回的数据状态异常') +'</div>');
           }
           //解决排序失败
           var newRes ={};
@@ -496,8 +510,14 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
           typeof options.done === 'function' && options.done(res, curr, $.result(res,response.countName));
         }
         ,error: function(e, m){
-          that.layMain.html('<div class="'+ NONE +'">数据接口请求异常</div>');
-          that.renderForm();
+        	that.renderForm();
+        	//解决固定菜单问题
+          that.layFixed.find('tbody').children().remove();
+          that.layFixed.find('.'+ NONE).remove();
+          that.layFixed.find('.layui-table-body').removeAttr("style");
+          that.layMain.find('tbody').html('');
+          that.layMain.find('.'+ NONE).remove();
+          that.layMain.append('<div class="'+ NONE +'">数据接口请求异常</div>');
           loadIndex && layer.close(loadIndex);
         }
       });
@@ -569,6 +589,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
       if(!sort && that.sortKey){
         return that.sort(that.sortKey.field, that.sortKey.sort, true);
       }
+      
       layui.each(data, function(i1, item1){
         var tds = [], tds_fixed = [], tds_fixed_r = []
         ,numbers = i1 + /*options.limit*(curr - 1) */+ 1; //序号
@@ -696,7 +717,10 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
       options.page.count = count; //更新总条数
       laypage.render(options.page);
     }
-    
+    //解决固定菜单问题
+    that.layFixed.find('tbody').children().remove();
+    that.layFixed.find('.'+ NONE).remove();
+    that.layFixed.find('.layui-table-body').removeAttr("style");
     
     if(data.length === 0){
     	
@@ -708,7 +732,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form','fsConfig'], function(exports
     	}
     	
       that.renderForm();
-      that.layFixed.remove();
+      
       that.layMain.find('tbody').html('');
       that.layMain.find('.'+ NONE).remove();
       return that.layMain.append('<div class="'+ NONE +'">'+ options.text.none +'</div>');

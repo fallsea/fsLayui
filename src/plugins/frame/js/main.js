@@ -2,11 +2,15 @@
  * @Description: 主页面
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.6.4
+ * @version 1.7.0
  * @License：MIT
  */
-layui.use(['fsMenu','layer','fsTab'], function(){
+layui.use(['fsMenu','layer','fsTab','fsCommon','fsConfig'], function(){
 	var fsTab = layui.fsTab,
+	fsConfig = layui.fsConfig,
+	fsCommon = layui.fsCommon,
+	statusName = $.result(fsConfig,"global.result.statusName","errorNo"),
+  msgName = $.result(fsConfig,"global.result.msgName","errorInfo"),
 	fsMenu = layui.fsMenu;
 	
 	fsMenu.render();
@@ -38,7 +42,7 @@ layui.use(['fsMenu','layer','fsTab'], function(){
 	}
 	
 	
-	$("#fsTopMenu li").bind("click",function(){
+	$("#fsTopMenu").on("click","li",function(){
 		var dataPid = $(this).attr("dataPid");
 		showMenu(dataPid);
 	});
@@ -123,20 +127,14 @@ layui.use(['fsMenu','layer','fsTab'], function(){
     	}
     },
     items: {
-      "close": {name: "关闭",icon: function(){
-        return 'context-menu-icon context-menu-icon-quit';
-      },disabled: function(){
+      "close": {name: "关闭标签",icon:"fa-close",disabled: function(){
       	if($(this).find(".layui-tab-close").is(":visible")){
       		return false;
       	}
       	return true; 
       }},
-      "closeOther": {name: "关闭其他",icon: function(){
-        return 'context-menu-icon context-menu-icon-quit';
-      }},
-      "closeAll": {name: "关闭全部",icon: function(){
-        return 'context-menu-icon context-menu-icon-quit';
-      }}
+      "closeOther": {name: "关闭其他",icon:"fa-window-close-o"},
+      "closeAll": {name: "关闭全部",icon:"fa-window-close"}
     }
 	});
 	
@@ -154,5 +152,4 @@ layui.use(['fsMenu','layer','fsTab'], function(){
 		});
 		
 	});
-	
 });
