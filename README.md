@@ -99,17 +99,17 @@ qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k
 ## 效果图
 
 
-![](fsLayuiPlugin/images/2017-12-26_10-50-53.gif)
+![](src/images/2017-12-26_10-50-53.gif)
 
-![](fsLayuiPlugin/images/2017-12-20_17-29-51.gif)
+![](src/images/2017-12-20_17-29-51.gif)
 
-![](fsLayuiPlugin/images/2017-12-20_17-48-15.gif)
+![](src/images/2017-12-20_17-48-15.gif)
 
-![](fsLayuiPlugin/images/treeDatagrid.png)
+![](src/images/treeDatagrid.png)
 
-![](fsLayuiPlugin/images/multiDatagrid.png)
+![](src/images/multiDatagrid.png)
 
-![](fsLayuiPlugin/images/linkageDatagrid2.png)
+![](src/images/linkageDatagrid2.png)
 
 
 
@@ -121,7 +121,7 @@ qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k
 
 项目的发展离不开你的支持，请作者喝杯咖啡吧！
 
-![](fsLayuiPlugin/images/zhifu.png)
+![](src/images/zhifu.png)
 
 
 ## License
