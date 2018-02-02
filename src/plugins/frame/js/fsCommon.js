@@ -2,7 +2,7 @@
  * @Description: 通用组件
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.7.0
+ * @version 1.7.1
  * @License：MIT
  */
 layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
@@ -328,7 +328,7 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
 	    			
 	    			fsCommon.confirm("提示", confirmMsg, function(index)
 	    			{
-	    				layer.close(index);
+	    				top.layer.close(index);
 	    				submitForm();
 	    			});
 	    		}else{
@@ -562,7 +562,7 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
 	    			
 	    			fsCommon.confirm("提示", confirmMsg, function(index)
 	    			{
-	    				layer.close(index);
+	    				top.layer.close(index);
 	    				submitFormSave();
 	    			});
 	    		}else{

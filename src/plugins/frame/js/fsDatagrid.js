@@ -2,7 +2,7 @@
  * @Description: datagrid工具
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.7.0
+ * @version 1.7.1
  * @License：MIT
  */
 layui.define(["fsCommon","table",'laypage','fsConfig','form','fsButtonCommon'], function(exports){
@@ -154,7 +154,7 @@ layui.define(["fsCommon","table",'laypage','fsConfig','form','fsButtonCommon'], 
 //	    skin : 'row',
 	    height: height, //容器高度
 	    limits: defaultLimits,//每页数据选择项
-	    limit: defaultLimit ,//默认采用50
+	    limit: pageSize ,//默认采用50
 	    cols:  _cols,
 	    clickCallBack: thisDatagrid.config.clickCallBack,
 	    data: [],
@@ -398,7 +398,7 @@ layui.define(["fsCommon","table",'laypage','fsConfig','form','fsButtonCommon'], 
             
             fsCommon.confirm("提示", confirmMsg, function(index)
             {
-              layer.close(index);
+              top.layer.close(index);
               submitForm();
             });
           }else{
@@ -483,7 +483,7 @@ layui.define(["fsCommon","table",'laypage','fsConfig','form','fsButtonCommon'], 
 	           
 	           fsCommon.confirm("提示", confirmMsg, function(index)
 	           {
-	             layer.close(index);
+	             top.layer.close(index);
 	             submit();
 	           });
 	         }else{
