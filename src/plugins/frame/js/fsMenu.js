@@ -10,6 +10,7 @@ layui.define(['element',"fsConfig","fsCommon"], function(exports){
 	var menuConfig = {
 			dataType : "local" , //获取数据方式，local本地获取，server 服务端获取
 			loadUrl : "", //加载数据地址
+			method : "post",//请求类型，默认post
 			rootMenuId : "0", //根目录菜单id
 			defaultSelectTopMenuId : "1", //默认选中头部菜单id
 			defaultSelectLeftMenuId : "111", //默认选中左边菜单id
@@ -85,7 +86,7 @@ layui.define(['element',"fsConfig","fsCommon"], function(exports){
   				//提示错误消息
   				fsCommon.errorMsg(data[msgName]);
   			}
-  		},false);
+  		},false,menuConfig.method);
 
 		}
 
