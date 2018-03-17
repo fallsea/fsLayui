@@ -23,7 +23,7 @@
 <body>
 	<div class="layui-fluid">
 
-	<form class="layui-form" id="edit_form" isLoad="1" loadUrl="/fsbus/1003">
+	<form class="layui-form" id="edit_form" isLoad="1" method="get" loadUrl="/fsbus/1003">
 	<input type="hidden" name="id"/>
 	  <div class="layui-form-item">
 	    <label class="layui-form-label">名称</label>
@@ -34,16 +34,13 @@
   	   <div class="layui-form-item">
 	    <label class="layui-form-label">类型</label>
 	    <div class="layui-input-block">
-	      <input type="checkbox" name="type" title="写作" value="write">
-	      <input type="checkbox" name="type" title="阅读" value="read">
-	      <input type="checkbox" name="type" title="发呆" value="dai">
+	      <input type="checkbox" name="type" class="fsDict" dict="type" lay-skin="primary">
 	    </div>
 	  </div>
 	  <div class="layui-form-item">
 	    <label class="layui-form-label">性别</label>
 	    <div class="layui-input-inline">
-	      <input type="radio" name="sex" value="男" title="男" checked="checked">
-	      <input type="radio" name="sex" value="女" title="女">
+	      <input type="radio" name="sex" class="fsDict" dict="sex">
 	    </div>
 	     <label class="layui-form-label">状态</label>
 	    <div class="layui-input-inline">

@@ -2,11 +2,11 @@
  * @Description: 通用组件
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.7.1
+ * @version 1.8.0
  * @License：MIT
  */
 layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
-	
+
   var form = layui.form,
     layer = layui.layer,
     fsConfig = layui.fsConfig,
@@ -15,8 +15,9 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
     msgName = $.result(fsConfig,"global.result.msgName","errorInfo"),
     dataName = $.result(fsConfig,"global.result.dataName","results.data"),
     loadDataType = $.result(fsConfig,"global.loadDataType","0"),
+    successNo = $.result(fsConfig,"global.result.successNo","0"),
   	servletUrl = $.result(fsConfig,"global.servletUrl");
-  
+
   var fsCommon = {
 
     /**错误msg提示 */
@@ -44,12 +45,12 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
       })
 
     },
-    invokeServer : function (funcNo,param,callBackFunc,async)
+    invokeServer : function (funcNo,param,callBackFunc,async,method)
     {
       var url = "/fsbus/" + funcNo;
-      fsCommon.invoke(url, param, callBackFunc,async);
+      fsCommon.invoke(url, param, callBackFunc,async,method);
     },
-    invoke : function (url,param,callBackFunc,async)
+    invoke : function (url,param,callBackFunc,async,method)
     {
       if(!$.isEmpty(servletUrl)){
         url = servletUrl + url;
@@ -57,16 +58,19 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
       if($.isEmpty(async)){
       	async = true;
       }
+      if($.isEmpty(method)){
+        method = "post";
+      }
     	//打开加载层
     	var index = layer.load();
       $.ajax({
         url: url,
-        type: 'post',
+        type: method,
         async: async,
         data: param,
         dataType : "json",
         success: function(result){
-          if(result[statusName] != "0"){
+          if(result[statusName] != successNo){
             var filters = fsConfig["filters"];
             if(!$.isEmpty(filters)){
               var otherFunction = filters[result[statusName]];
@@ -85,7 +89,7 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
       		 	fsCommon.errorMsg("请求地址出错!");
          }else if(status==302){
         	 fsCommon.errorMsg('连接网页出错!');
-         }else if(textStatus=="timeout"){  
+         }else if(textStatus=="timeout"){
         	 fsCommon.errorMsg("请求超时!");
          }else{
         	 fsCommon.errorMsg('请求异常!');
@@ -98,10 +102,10 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
         	layer.close(index);
         }
       });
-            
+
     },
     //是否需要刷新table,true 需要
-    isRefreshTable : function () 
+    isRefreshTable : function ()
     {
     	var refreshTable=top.$('meta[name="refreshTable"]').attr("content");
     	if(refreshTable == "1")
@@ -176,7 +180,7 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
   		if(parseInt(_height.replace(/[^0-9]/ig,"")) > $(window.top.document).height()){
   			_height = $(window.top.document).height()+"px";
   		}
-  		
+
     	var index = top.layer.open({
 			  type: 2,
 			  title:_title,
@@ -225,18 +229,20 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
 
 			var _function = _this.attr("function");
 			var _funcNo = _this.attr("funcNo");
-			
+
+      var _method = _this.attr("method");
+
 			//判断是否是普通按钮和树按钮
 			var _tableId = _this.attr("tableId");
 			if(_this.filter('.fsTree').length==1){
 				_tableId = _this.attr("treeId");
 			}
-			
+
 
 			var selectTreeId = _this.attr("selectTreeId");
-			
+
 			if(!$.isEmpty(selectTreeId)){
-				
+
 				var value = $("#"+selectTreeId).val();
 				if($.isEmpty(value)){
 					fsCommon.warnMsg("请选择左边树！");
@@ -246,7 +252,7 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
 					return false;
 				}
 			}
-			
+
 			switch(_function){
 				case "refresh" :
 					var obj = getDatagrid(_tableId);
@@ -274,7 +280,7 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
 		    		}
 	    		}
 	    		var param = {};//参数
-	    		
+
 	    		var submitForm = function(){
 	    			var url = _this.attr("url");//请求url
             if($.isEmpty(_funcNo) && $.isEmpty(url)){
@@ -286,7 +292,7 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
             }
     				//获取参数
     				var inputs = _this.attr("inputs");
-		    		
+
 		    		if(!$.isEmpty(inputs))
 		    		{
 		    			//获取选中的数据
@@ -297,14 +303,14 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
     				//请求数据
 		    		fsCommon.invoke(url,param,function(data)
 						{
-		        	if(data[statusName] == "0")
+		        	if(data[statusName] == successNo)
 		        	{
 		        		fsCommon.setRefreshTable("1");
 		        		if(_this.attr("isRefresh")!=="0" && !$.isEmpty(getDatagrid(_tableId))){
 		        			//刷新
 		        			getDatagrid(_tableId).refresh(tid);
 		        		}
-		        		
+
 		        		if(_this.attr("isClose") == "1"){
 		        			parent.layer.close(parent.layer.getFrameIndex(window.name));
 		        		}
@@ -315,9 +321,9 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
 		        		//提示错误消息
 		        		fsCommon.errorMsg(data[msgName]);
 		        	}
-						});
+						},null,_method);
 	    		}
-	    		
+
 	    		if("1" == _this.attr("isConfirm"))
 	    		{
 	    			var confirmMsg = _this.attr("confirmMsg");
@@ -325,7 +331,7 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
 	    			{
 	    				confirmMsg="是否确定操作选中的数据?";
 	    			}
-	    			
+
 	    			fsCommon.confirm("提示", confirmMsg, function(index)
 	    			{
 	    				top.layer.close(index);
@@ -349,14 +355,14 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
 	    		}
 				  break;
 				case "top" :
-					
+
 	    		var _url = _this.attr("topUrl");
 	    		if($.isEmpty(_url))
 	    		{
 	    			fsCommon.warnMsg("url地址为空！");
 	    			return false;
 	    		}
-	    		
+
 	    		if("1" == _this.attr("isSelect"))
 	    		{
 	    			//获取选中的数据
@@ -372,16 +378,15 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
 		    			return;
 		    		}
 	    		}
-	    		
-	    		
+
 	    		var inputs = _this.attr("inputs");
-	    		
+
 	    		if(!$.isEmpty(inputs))
 	    		{
 	    			//获取选中的数据
 		    		var data = getDatagrid(_tableId).getCheckData(tid);
 		    		_url = fsCommon.getUrlByInputs(_url,inputs,data[0]);
-		    		
+
 		    		//处理数据缓存
 	          if(loadDataType == "1"){
 	          	var uuid = $.uuid();
@@ -390,7 +395,7 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
 	          	$.setSessionStorage(uuid,JSON.stringify(data[0]));
 	          }
 	    		}
-	    		
+
 	    		//弹出的方式
 	        var _mode = _this.attr("topMode");
 	        if(!$.isEmpty(_mode)){
@@ -402,13 +407,13 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
 	  				}
 	        	_url += "_mode="+_mode;
 	        }
-	    		
+
 	    		var _title = _this.attr("topTitle");
 	    		var _width = _this.attr("topWidth");
 	    		var _height = _this.attr("topHeight");
-	    		
+
 	    		var isMaximize = _this.attr("isMaximize");
-	    		
+
   			  fsCommon.open(_title,_width,_height,_url,function(){
 	    			if(_this.attr("isRefresh")!=="0" && fsCommon.isRefreshTable()){
 					  	getDatagrid(_tableId).refresh(tid);
@@ -421,14 +426,14 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
 	    		var _width = "400px";
 	    		var _height = "280px";
 	    		var _url = $.result(fsConfig,"global.uploadHtmlUrl","/plugins/frame/views/upload.html");
-	    		
+
 	    		var inputs = _this.attr("inputs");
-	    		
+
 	    		if(!$.isEmpty(inputs))
 	    		{
 		    		 _url = fsCommon.getUrlByInputs(_url,inputs,null);
 	    		}
-	    		
+
 	    		var fileParam = {};
 	    		if(!$.isEmpty(_this.attr("fileAccept"))){
 	    			fileParam["fileAccept"] = _this.attr("fileAccept");
@@ -439,7 +444,7 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
 	    		if(!$.isEmpty(_this.attr("fileSize"))){
 	    			fileParam["fileSize"] = _this.attr("fileSize");
 	    		}
-	    		
+
 	    		if(!$.isEmpty(fileParam)){
 	    			if(_url.indexOf('?') == -1)
 	    			{
@@ -449,25 +454,25 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
 	    			}
 	    			_url += "fileParam="+ escape(JSON.stringify(fileParam));
 	    		}
-	    		
+
 	    		fsCommon.open(_title,_width,_height,_url,function(){
 	    			var uploadFilePath = top.$('meta[name="uploadFilePath"]').attr("content");
-				  	
+
 				  	if(!$.isEmpty(uploadFilePath)){
 				  		if(!$.isEmpty(_this.attr("fileElem"))){
 				  			$(_this.attr("fileElem")).val(uploadFilePath);
 				  		}
 				  	}
     			});
-	    		
+
 				  break;
 				case "addRow" :
 					getDatagrid(_tableId).addRow();
 				  break;
 				case "save" :
-					
+
 					var groupId = _this.attr("groupId");//分组id
-					
+
 					if($.isEmpty(groupId)){
 						fsCommon.warnMsg("未配置分组id!");
 						return;
@@ -476,9 +481,9 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
 					var isFsForm = false;//是否有form表单
 					var fsTableData = [];//数据表格数据
 					var isFsTable = false;//是否有table表格
-					
+
 					var isFsVerifyForm = true;
-					
+
 					$("table.fsDatagrid,form").each(function(index,elem){
 						var _groupId = $(this).attr("groupId");
 						if(!$.isEmpty(_groupId) && groupId == _groupId){
@@ -500,15 +505,15 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
 							}
 						}
 					});
-					
+
 					if(!isFsVerifyForm){
 						return;
 					}
 					var param = {};//参数
-					
+
 					var submitFormSave = function(){
 	    			var url = _this.attr("url");//请求url
-            
+
             if($.isEmpty(_funcNo) && $.isEmpty(url)){
             	fsCommon.warnMsg("功能号或请求地址为空！");
               return;
@@ -518,7 +523,7 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
             }
     				//获取参数
     				var inputs = _this.attr("inputs");
-						
+
 		    		if(!$.isEmpty(inputs))
 		    		{
 			    		var param2 = fsCommon.getParamByInputs(inputs);
@@ -530,15 +535,15 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
 						if(isFsTable){
 							param["fsTableData"] = encodeURIComponent(JSON.stringify(fsTableData));
 						}
-    				
+
     				//请求数据
 		    		fsCommon.invoke(url,param,function(data)
 						{
-		        	if(data[statusName] == "0")
+		        	if(data[statusName] == successNo)
 		        	{
 		        		fsCommon.setRefreshTable("1");
 		        		fsCommon.successMsg('操作成功!');
-		        		
+
 		        		//是否自动关闭，默认是
 		        		if(_this.attr("isClose") != "0"){
 		        			parent.layer.close(parent.layer.getFrameIndex(window.name));
@@ -549,9 +554,9 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
 		        		//提示错误消息
 		        		fsCommon.errorMsg(data[msgName]);
 		        	}
-						});
+						},null,_method);
 	    		}
-					
+
 	    		if("1" == _this.attr("isConfirm"))
 	    		{
 	    			var confirmMsg = _this.attr("confirmMsg");
@@ -559,7 +564,7 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
 	    			{
 	    				confirmMsg="是否确定操作选中的数据?";
 	    			}
-	    			
+
 	    			fsCommon.confirm("提示", confirmMsg, function(index)
 	    			{
 	    				top.layer.close(index);
@@ -577,7 +582,7 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
       				if(!$.isEmpty(getDatagrid)){
       					obj = getDatagrid(_tableId)
       				}
-      				
+
       				var data = null;
       				if(null!=obj){
       					data = obj.getCheckData();
@@ -588,14 +593,14 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
       				}else if(!$.isEmpty(layui.fsButton[_function])){
       					layui.fsButton[_function](_this,data,obj,fsCommon);
       				}
-      				
+
 						} catch (e) {
 							console.error(e);
 						}
       		}
 					break;
 			}
-  	
+
     },
     /**获取参数对象**/
     getParamByInputs : function(inputs,data){
@@ -608,7 +613,7 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
 					{
 						//获取参数值，如果值为空，获取datagrid选中行数据
 						var _vaule = paramArr[1];
-						
+
 						if($.isEmpty(_vaule))
 						{
 							//多结果集,分割
@@ -628,7 +633,7 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
 									newValue += __value;
 								});
 							}
-							
+
 				    		_vaule = newValue;
 						}else if($.startsWith(_vaule,"$")){
 					    var xxxx = _vaule.substring(1);
@@ -676,7 +681,7 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
 						{
 							urlStr += '&';
 						}
-						
+
 						//获取参数值，如果值为空，获取datagrid选中行数据
 						var _vaule = paramArr[1];
 						if($.isEmpty(_vaule))//如果值为空或者值是#/$开头   $取参数，#取选择器
@@ -687,7 +692,7 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
   					}else if($.startsWith(_vaule,"#")){
   						_vaule = $(_vaule).val();
   					}
-					
+
 						if(!$.isEmpty(_vaule)){
 							urlStr += paramArr[0] + "=" + _vaule;
 						}
@@ -704,6 +709,3 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
   };
   exports('fsCommon', fsCommon);
 })
-
-
-

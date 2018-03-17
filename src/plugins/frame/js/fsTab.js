@@ -2,7 +2,7 @@
  * @Description: 菜单管理
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.7.1
+ * @version 1.8.0
  * @License：MIT
  */
 layui.define(['element'], function(exports){
@@ -14,20 +14,20 @@ layui.define(['element'], function(exports){
 			tabFilter:"fsTab"//导航栏
 		}
 	};
-	
+
 	FsTab.prototype.render = function(options){
 		var thisTab = this;
     $.extend(true, thisTab.config, options);
-    
+
     thisTab.bindTabFilter();
-    
+
     //绑定左边菜单点击。
     element.on('nav('+thisTab.config.leftMenuFilter+')', function(elem){
     	thisTab.add(elem);
 	  	$('body').removeClass('site-mobile');
     });
 	};
-	
+
 	/**
 	 * 新增tab
 	 */
@@ -53,22 +53,22 @@ layui.define(['element'], function(exports){
   	}
   	thisTab.tabChange(layId);
 	}
-	
+
 	/**
 	 * 切换tab
 	 */
 	FsTab.prototype.tabChange = function(layId) {
 		element.tabChange(this.config.tabFilter, layId);
 	}
-	
+
 	/**
 	 * 删除
 	 */
 	FsTab.prototype.del = function(layId) {
 		element.tabDelete(this.config.tabFilter, layId);
 	};
-	
-  
+
+
 	/**
    * 删除监听
    */
@@ -78,7 +78,7 @@ layui.define(['element'], function(exports){
 	  	$('#fsLeftMenu .layui-nav-child>dd[lay-id="'+ layId +'"],#fsLeftMenu>li[lay-id="'+ layId +'"]').removeAttr("lay-id");
 		});
 	}
-	
+
 	/**
 	 * 监听tab切换，处理菜单选中
 	 */
@@ -86,22 +86,22 @@ layui.define(['element'], function(exports){
 		var thisTab = this;
 		element.on('tab('+this.config.tabFilter+')', function(data){
 			var layId = $(this).attr("lay-id");
-			
+
 			thisTab.menuSelectCss(layId);
-			
+
 		});
 	}
-	
+
 	/**
 	 * 菜单选中样式
 	 */
 	FsTab.prototype.menuSelectCss = function(layId){
 		if(!$.isEmpty(layId)){
 			$('#fsLeftMenu .layui-this').removeClass("layui-this");//清除样式
-			
+
 			var dom =$('#fsLeftMenu .layui-nav-child>dd[lay-id="'+ layId +'"],#fsLeftMenu>li[lay-id="'+ layId +'"]');
 			dom.addClass("layui-this");//追加样式
-			
+
 			//处理头部菜单
 			if(dom.length==1){
 				var dataPid = null;
@@ -117,10 +117,10 @@ layui.define(['element'], function(exports){
 			}
 		}
 	}
-	
-  
+
+
 	var fsTab = new FsTab();
   //绑定按钮
 	exports("fsTab",fsTab);
-  
+
 });

@@ -64,7 +64,7 @@
         	<button class="layui-btn" function="top" topUrl="views/datagrid/add.html" topWidth="800px" isMaximize="0" topHeight="600px" topTitle="新增demo">
 			  <i class="layui-icon">&#xe654;</i>新增
 			</button>
-			<button class="layui-btn layui-btn-danger" function="submit" url="/fsbus/1002" isMutiDml="1" isConfirm="1" confirmMsg="是否确定删除选中的数据？" inputs="id:">
+			<button class="layui-btn layui-btn-danger" function="submit" method="get" url="/fsbus/1002" isMutiDml="1" isConfirm="1" confirmMsg="是否确定删除选中的数据？" inputs="id:">
 			  <i class="layui-icon">&#xe640;</i>批量删除
 			</button>
 			<button class="layui-btn" function="refresh">
@@ -78,27 +78,27 @@
 	         <table id="fsDatagrid" lay-filter="fsDatagrid" class="fsDatagrid" isLoad="1" url="/fsbus/1000" isPage="1" sortType="1" pageSize="10" defaultForm="query_form" height="full-135"></table>
 
 	         <div class="fsDatagridCols">
-	         	<p type="numbers" title="#"/>
-				<p checkbox="true"/>
-			    <p field="id" title="ID" width="100" sort="true"/>
-			    <p field="name" title="名称" width="30%" sort="true" />
-			    <p field="type" title="类型" width="150" dict="type"/>
-			    <p field="city" title="城市" width="100" dict="city"/>
-			    <p field="sex" title="性别" width="100" />
-			    <p field="state" title="状态" width="100" templet="#stateTpl"/>
-			    <p field="area1" title="省份" width="100" dict="area1"/>
-			    <p field="createdTime" title="创建时间" width="180"/>
-			    <p field="modifiedTime" title="修改时间" width="180"/>
-			    <p fixed="right" align="center" toolbar="#barDemo" title="操作" width="220"/>
-			</div>
-			
+						<p type="numbers" title="#"/>
+						<p checkbox="true"/>
+						<p field="id" title="ID" width="100" sort="true"/>
+						<p field="name" title="名称" width="30%" sort="true" />
+						<p field="type" title="类型" width="150" dict="type"/>
+						<p field="city" title="城市" width="100" dict="city"/>
+						<p field="sex" title="性别" width="100" />
+						<p field="state" title="状态" width="100" templet="#stateTpl"/>
+						<p field="area1" title="省份" width="100" dict="area1"/>
+						<p field="createdTime" title="创建时间" width="180"/>
+						<p field="modifiedTime" title="修改时间" width="180"/>
+						<p fixed="right" align="center" toolbar="#barDemo" title="操作" width="220"/>
+					</div>
+
 			<script type="text/html" id="stateTpl">
 				<input type="checkbox" name="state" lay-skin="switch" disabled lay-text="开启|关闭" {{ d.state == 1 ? 'checked' : '' }}>
 			</script>
 			<script type="text/html" id="barDemo">
 				<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="top" topUrl="views/datagrid/edit.html" topMode="readonly" topWidth="800px" topHeight="600px" topTitle="查看demo" inputs="id:">查看</a>
  				<a class="layui-btn layui-btn-xs" lay-event="top" topUrl="views/datagrid/edit.html" topWidth="800px" topHeight="600px" topTitle="编辑demo" inputs="id:">编辑</a>
-  				<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="submit" url="/fsbus/1002" isConfirm="1" confirmMsg="是否确定删除当前记录？" inputs="id:">删除</a>
+  				<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="submit" url="/fsbus/1002" isConfirm="1" method="get" confirmMsg="是否确定删除当前记录？" inputs="id:">删除</a>
 				<a class="layui-btn layui-btn-xs" lay-event="test2" >测试</a>
 			</script>
 	      </div>

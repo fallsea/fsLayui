@@ -2,13 +2,13 @@
  * @Description: 基础配置
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.7.1
+ * @version 1.8.0
  * @License：MIT
  */
 layui.define([], function (exports) {
 
 	var fsConfig = {};
-	
+
 	/**
 	 * 错误码处理定义
 	 */
@@ -19,7 +19,7 @@ layui.define([], function (exports) {
 			top.window.location.href = fsConfig["global"]["loginUrl"];
 		}
 	};
-	
+
 	/**
 	 * 项目中需要调用到的常量、变量这里配置
 	 */
@@ -33,6 +33,7 @@ layui.define([], function (exports) {
 		"result" : { //响应结果配置
 	    "statusName": "errorNo", //数据状态的字段名称，默认：errorNo
 	    "msgName": "errorInfo", //状态信息的字段名称，默认：errorInfo
+			"successNo" : "0", //执行成功错误码统一配置
 	    "dataName" : "results.data", //非表格数据的字段名称，默认：results.data
 		},
 		"page" : { //分页配置
@@ -50,7 +51,7 @@ layui.define([], function (exports) {
 //			"limits":[10,20,30,50,100]//每页数据选择项，默认[10,20,30,50,100]
 		}
 	};
-	
+
 	/**
 	 * 拓展form表单验证规则
 	 */
@@ -64,7 +65,7 @@ layui.define([], function (exports) {
         return '未配置对比id';
 	    }
 	    var value2 = $("#"+equalsId).val();
-	    
+
 	    if(value!==value2)
 	    {
         var equalsMsg = $(item).attr("equalsMsg");

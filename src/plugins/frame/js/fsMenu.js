@@ -2,11 +2,11 @@
  * @Description: 菜单配置
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.7.1
+ * @version 1.8.0
  * @License：MIT
  */
 layui.define(['element',"fsConfig","fsCommon"], function(exports){
-	
+
 	var menuConfig = {
 			dataType : "local" , //获取数据方式，local本地获取，server 服务端获取
 			loadUrl : "", //加载数据地址
@@ -26,7 +26,7 @@ layui.define(['element',"fsConfig","fsCommon"], function(exports){
 				{"menuId":"111","menuName":"首页","menuIcon":"&#xe68e;","menuHref":"views/home/index.html","parentMenuId":"11"},
 				{"menuId":"datagrid","menuName":"数据表格","menuIcon":"fa-list","menuHref":"views/datagrid/index.html","parentMenuId":"11"},
 				{"menuId":"datagrid2","menuName":"数据表格2","menuIcon":"fa-list","menuHref":"views/datagrid2/index.html","parentMenuId":"11"},
-				{"menuId":"treeDatagrid","menuName":"数+表格","menuIcon":"fa-list","menuHref":"views/treeDatagrid/index.html","parentMenuId":"11"},
+				{"menuId":"treeDatagrid","menuName":"树+表格","menuIcon":"fa-list","menuHref":"views/treeDatagrid/index.html","parentMenuId":"11"},
 				{"menuId":"multiDatagrid","menuName":"多数据表格","menuIcon":"fa-list","menuHref":"views/multiDatagrid/index.html","parentMenuId":"11"},
 				{"menuId":"tabDatagrid","menuName":"tab数据表格","menuIcon":"fa-list","menuHref":"views/tabDatagrid/index.html","parentMenuId":"11"},
 				{"menuId":"complexDatagrid","menuName":"复杂数据表格","menuIcon":"fa-list","menuHref":"views/complexDatagrid/index.html","parentMenuId":"11"},
@@ -42,40 +42,41 @@ layui.define(['element',"fsConfig","fsCommon"], function(exports){
 				{"menuId":"213","menuName":"选项卡","menuIcon":"","menuHref":"http://www.layui.com/demo/tab.html","parentMenuId":"21"}
 		 ] //本地数据
 	};
-	
+
 	var element = layui.element,
 	fsCommon = layui.fsCommon,
 	fsConfig = layui.fsConfig,
 	statusName = $.result(fsConfig,"global.result.statusName","errorNo"),
   msgName = $.result(fsConfig,"global.result.msgName","errorInfo"),
+	successNo = $.result(fsConfig,"global.result.successNo","0"),
   dataName = $.result(fsConfig,"global.result.dataName","results.data"),
 	FsMenu = function (){
-		
+
 	};
-	
-	
+
+
 	FsMenu.prototype.render = function(){
-		
+
 		this.loadData();
-		
+
 		this.showMenu();
 	};
-	
+
 	/**
 	 * 加载数据
 	 */
 	FsMenu.prototype.loadData = function(){
-		
+
 		if(menuConfig.dataType == "server"){//服务端拉取数据
-			
+
 			var url = menuConfig.loadUrl;
 			if($.isEmpty(url)){
 				fsCommon.errorMsg("未配置请求地址！");
 				return;
 			}
-			
+
 			fsCommon.invoke(url,{},function(data){
-  			if(data[statusName] == "0")
+  			if(data[statusName] == successNo)
   			{
   				menuConfig.data = $.result(data,dataName);
   			}
@@ -85,19 +86,19 @@ layui.define(['element',"fsConfig","fsCommon"], function(exports){
   				fsCommon.errorMsg(data[msgName]);
   			}
   		},false);
-			
+
 		}
-		
+
 	}
-	
-	
+
+
 	/**
 	 * 获取图标
 	 */
 	FsMenu.prototype.getIcon = function(menuIcon){
-		
+
 		if(!$.isEmpty(menuIcon)){
-			
+
 			if(menuIcon.indexOf("<i") == 0){
 				return menuIcon;
 			}else if (menuIcon.indexOf("&#") == 0){
@@ -110,7 +111,7 @@ layui.define(['element',"fsConfig","fsCommon"], function(exports){
 		}
 		return "";
 	};
-	
+
 	/**
 	 * 清空菜单
 	 */
@@ -131,7 +132,7 @@ layui.define(['element',"fsConfig","fsCommon"], function(exports){
 			var fsLeftMenu = $("#fsLeftMenu");
 			$.each(data,function(i,v){
 				if(menuConfig.rootMenuId === v[menuConfig.parentMenuIdField]){
-					
+
 					var topStr = '<li class="layui-nav-item';
 					if($.isEmpty(menuConfig.defaultSelectTopMenuId) && _index === 0){//为空默认选中第一个
 						topStr += ' layui-this';
@@ -141,11 +142,11 @@ layui.define(['element',"fsConfig","fsCommon"], function(exports){
 					_index ++ ;
 					topStr += '" dataPid="'+v[menuConfig.menuIdField]+'"><a href="javascript:;">'+thisMenu.getIcon(v[menuConfig.menuIconField])+' <cite>'+v[menuConfig.menuNameField]+'</cite></a></li>';
 					fsTopMenuElem.append(topStr);
-					
+
 					//显示二级菜单，循环判断是否有子栏目
 					$.each(data,function(i2,v2){
 						if(v[menuConfig.menuIdField] === v2[menuConfig.parentMenuIdField]){
-							
+
 							var menuRow = '<li class="layui-nav-item';
 							if(!$.isEmpty(menuConfig.defaultSelectLeftMenuId) && menuConfig.defaultSelectLeftMenuId == v2[menuConfig.menuIdField]){//默认选中处理
 								menuRow += ' layui-this';
@@ -162,36 +163,35 @@ layui.define(['element',"fsConfig","fsCommon"], function(exports){
 										menuRow3 += ' class="layui-this"';
 										menuRow += ' layui-nav-itemed';//默认展开二级菜单
 									}
-									
+
 									menuRow3 += ' lay-id="'+v3[menuConfig.menuIdField]+'"><a href="javascript:;" menuId="'+v3[menuConfig.menuIdField]+'" dataUrl="'+v3[menuConfig.menuHrefField]+'">'+thisMenu.getIcon(v3[menuConfig.menuIconField])+' <cite>'+v3[menuConfig.menuNameField]+'</cite></a></dd>';
-									
+
 								}
-								
+
 							});
-							
+
 							menuRow += '" lay-id="'+v2[menuConfig.menuIdField]+'" dataPid="'+v2[menuConfig.parentMenuIdField]+'" style="display: none;"><a href="javascript:;" menuId="'+v2[menuConfig.menuIdField]+'" dataUrl="'+v2[menuConfig.menuHrefField]+'">'+thisMenu.getIcon(v2[menuConfig.menuIconField])+' <cite>'+v2[menuConfig.menuNameField]+'</cite></a>';
-							
-							
+
+
 							if(!$.isEmpty(menuRow3)){
 								menuRow3 += '</dl>';
-								
+
 								menuRow += menuRow3;
 							}
-							
+
 							menuRow += '</li>';
-							
+
 							fsLeftMenu.append(menuRow);
 						}
-						
+
 					});
-					
+
 				}
 			});
 		}
 		element.render("nav");
 	};
-	
+
 	var fsMenu = new FsMenu();
 	exports("fsMenu",fsMenu);
 });
-

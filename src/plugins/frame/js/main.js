@@ -2,19 +2,17 @@
  * @Description: 主页面
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.7.1
+ * @version 1.8.0
  * @License：MIT
  */
 layui.use(['fsMenu','layer','fsTab','fsCommon','fsConfig'], function(){
 	var fsTab = layui.fsTab,
 	fsConfig = layui.fsConfig,
 	fsCommon = layui.fsCommon,
-	statusName = $.result(fsConfig,"global.result.statusName","errorNo"),
-  msgName = $.result(fsConfig,"global.result.msgName","errorInfo"),
 	fsMenu = layui.fsMenu;
-	
+
 	fsMenu.render();
-	
+
 	//初始化显示菜单
 	showMenu($("#fsTopMenu li.layui-this").attr("dataPid"));
 
@@ -23,9 +21,9 @@ layui.use(['fsMenu','layer','fsTab','fsCommon','fsConfig'], function(){
 	} else if (window.addEventListener) {
 		window.addEventListener("hashchange", hashChanged, false);
 	}
-	
+
 	hashChanged();
-	
+
 	function hashChanged(){
 		//获取路由信息
 		var hash = window.location.hash;
@@ -36,18 +34,18 @@ layui.use(['fsMenu','layer','fsTab','fsCommon','fsConfig'], function(){
 			if(dom.length>0){
 				fsTab.add(dom);
 				fsTab.menuSelectCss(dom.attr("lay-id"));
-				
+
 			}
 		}
 	}
-	
-	
+
+
 	$("#fsTopMenu").on("click","li",function(){
 		var dataPid = $(this).attr("dataPid");
 		showMenu(dataPid);
 	});
-	
-	
+
+
 	//显示菜单
 	function showMenu(dataPid){
 		if(!$.isEmpty(dataPid)){
@@ -55,15 +53,15 @@ layui.use(['fsMenu','layer','fsTab','fsCommon','fsConfig'], function(){
 			$('#fsLeftMenu>li[dataPid="'+ dataPid +'"]').show();
 		}
 	}
-	
+
 	//渲染tab
 	fsTab.render();
-	
+
 	//新增tab
-	function addTab(title,dataUrl,layId){
-		fsTab.add(title,dataUrl,layId);
+	function addTab(elem){
+		fsTab.add(elem);
 	}
-	
+
 	//手机设备的简单适配
 	var treeMobile = $('.site-tree-mobile'),
 		shadeMobile = $('.site-mobile-shade')
@@ -75,10 +73,10 @@ layui.use(['fsMenu','layer','fsTab','fsCommon','fsConfig'], function(){
 	shadeMobile.on('click', function(){
 		$('body').removeClass('site-mobile');
 	});
-	
-	
+
+
 	//菜单绑定
-	
+
 	$(".fsSwitchMenu").on("click",function(){
 		if($(this).find("i.fa-outdent").length>0){
 			$(this).find("i").removeClass("fa-outdent").addClass("fa-indent");
@@ -87,13 +85,13 @@ layui.use(['fsMenu','layer','fsTab','fsCommon','fsConfig'], function(){
 		}
 	 	$(".layui-layout-admin").toggleClass("showMenu");
 	});
-	
-	
+
+
 	/**
 	 * 右边菜单
 	 */
 	$.contextMenu({
-    selector: '.layui-tab-title li', 
+    selector: '.layui-tab-title li',
     callback: function(key, options) {
     	var layId = $(this).attr("lay-id");
     	switch (key) {
@@ -101,11 +99,11 @@ layui.use(['fsMenu','layer','fsTab','fsCommon','fsConfig'], function(){
 					fsTab.del(layId);
 					break;
 				case "closeOther":
-					
+
 					$(this).parent().children("li").each(function(i,e){
-						
+
 						if($(this).find(".layui-tab-close").is(":visible")){
-							
+
 							var newLayId = $(this).attr("lay-id");
 							if(layId != newLayId ){
 								fsTab.del(newLayId);
@@ -114,7 +112,7 @@ layui.use(['fsMenu','layer','fsTab','fsCommon','fsConfig'], function(){
 					});
 					break;
 				case "closeAll":
-					
+
 					$(this).parent().children("li").each(function(i,e){
 						if($(this).find(".layui-tab-close").is(":visible")){
 							var newLayId = $(this).attr("lay-id");
@@ -131,16 +129,16 @@ layui.use(['fsMenu','layer','fsTab','fsCommon','fsConfig'], function(){
       	if($(this).find(".layui-tab-close").is(":visible")){
       		return false;
       	}
-      	return true; 
+      	return true;
       }},
-      "closeOther": {name: "关闭其他",icon:"fa-window-close-o"},
+      "closeOther": {name: "关闭其他",icon:"fa-ban"},
       "closeAll": {name: "关闭全部",icon:"fa-window-close"}
     }
 	});
-	
+
 	//捐赠
 	$("#donate").on("click",function(){
-		
+
 		layer.open({
 		  type: 1,
 		  area: ['471px', '333px'],
@@ -150,6 +148,6 @@ layui.use(['fsMenu','layer','fsTab','fsCommon','fsConfig'], function(){
 		  title: false, //不显示标题
 		  content: "<div><img width='471' height='333'   src='./images/zhifu.png'></div>"
 		});
-		
+
 	});
 });

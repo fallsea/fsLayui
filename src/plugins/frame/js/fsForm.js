@@ -2,7 +2,7 @@
  * @Description: form表单工具
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.7.1
+ * @version 1.8.0
  * @License：MIT
  */
 layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], function(exports){
@@ -15,6 +15,7 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
   statusName = $.result(fsConfig,"global.result.statusName","errorNo"),
   msgName = $.result(fsConfig,"global.result.msgName","errorInfo"),
   dataName = $.result(fsConfig,"global.result.dataName","results.data"),
+  successNo = $.result(fsConfig,"global.result.successNo","0"),
   loadDataType = $.result(fsConfig,"global.loadDataType","0");
   selectVals = {},//下拉框默认值
   FsForm = function (){
@@ -23,33 +24,33 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
 			elem:null//form对象
 		}
 	};
-	
+
 	var layEdits = {};
-	
+
 	FsForm.prototype.render = function(options){
 		var thisForm = this;
     $.extend(true, thisForm.config, options);
-    
+
     if($.isEmpty(thisForm.config.id) && $.isEmpty(thisForm.config.elem)){
     	fsCommon.warnMsg("form选择器不能为空!");
     	return;
     }
-	    
+
     if(!$.isEmpty(thisForm.config.id)){
       thisForm.config.elem = $("#"+thisForm.config.id);
     }
-    
+
     thisForm.loadFormData();
-    
+
     thisForm.renderDate();
-    
+
     thisForm.renderLayedit();
-    
+
     thisForm.bindButtonSubmit();
-    
+
     return thisForm;
 	};
-	
+
 	//渲染日期控件绑定
 	FsForm.prototype.renderDate = function(){
     var thisForm = this;
@@ -61,7 +62,7 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
 		  var dateFormat = _this.attr("dateFormat");//自定义格式
 		  var dateMin = _this.attr("dateMin");//最大值
 		  var dateMax = _this.attr("dateMax");//最小值
-		  
+
 		  options["elem"] = this; //指定元素;
 		  if(dateRange=="1"){
 			  options["range"] = true;
@@ -82,11 +83,11 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
 		  if(!$.isEmpty(dateMax)){
 			  options["max"] = dateMax;
 		  }
-		  
+
 		  laydate.render(options);
 	  });
 	};
-	
+
 	/**
 	 * 渲染lay编辑器
 	 */
@@ -111,25 +112,59 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
     	}
     });
 	};
-	
+
+  /**
+  * 渲染全部数据字典配置
+  */
+  FsForm.prototype.renderDictAll = function(b){
+    var thisForm = this;
+    //获取加载数据字典信息
+    $(thisForm.config.elem).find(".fsDict,.fsSelect").each(function(){
+	   	var _this = $(this);
+      if(!b){
+        if(_this.is('input')){//单选或者多选
+          var type = _this.attr("type").toLowerCase();
+          var dict = _this.attr("dict");
+          if(!$.isEmpty(dict) && (type == "checkbox" || type == "radio")){
+            thisForm.loadDictData(_this,false,null,type);
+          }
+
+        }
+      }else{
+        if(_this.is('input')){//单选或者多选
+          var type = _this.attr("type").toLowerCase();
+          var dict = _this.attr("dict");
+          if(!$.isEmpty(dict) && (type == "checkbox" || type == "radio")){
+            thisForm.loadDictData(_this,false,null,type);
+          }
+
+        }else if(_this.is('select')){
+          thisForm.renderSelect(_this);
+        }
+      }
+
+	  });
+
+  }
+
 	/**
 	 * 渲染全部下拉框
 	 */
 	FsForm.prototype.renderSelectAll = function(){
 		var thisForm = this;
-		 
+
 	  $(thisForm.config.elem).find("select.fsSelect").each(function(){
 	   	var _this = $(this);
 	   	thisForm.renderSelect(_this);
 	  });
 	};
-	
+
 	/**
 	 * 渲染下拉框
 	 */
 	FsForm.prototype.renderSelect = function(_this,b,value){
 		var thisForm = this;
-   	thisForm.loadSelectData(_this,b,value);
+   	thisForm.loadDictData(_this,b,value,"select");
    	//绑定选择器
    	var childrenSelectId = _this.attr("childrenSelectId");
    	var lay_filter = _this.attr("lay-filter");
@@ -140,14 +175,13 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
    			if(!$.isEmpty(data.value)){
    				thisForm.renderSelect($("#"+childrenSelectId),true,data.value);
    			}
-   			
    		});
-   		
+
    	}
-   	
+
    	form.render("select"); //更新全部
 	};
-	
+
 	/**
 	 * 清空下拉框
 	 */
@@ -166,38 +200,40 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
     	_childerThis.append("<option></option>");
     }
     form.render("select"); //更新全部
-    
+
     this.cleanSelectData(_childerThis);//递推处理子选择器
 	};
-	
+
 	/**
-	 * 加载下拉框数据
+	 * 加载数据
 	 */
-	FsForm.prototype.loadSelectData =function(_this,b,value){
+  	FsForm.prototype.loadDictData = function(_this,b,value,type){
 		var thisForm = this;
-		
+
 		var addNull = _this.attr("addNull");//是否显示空值，1 显示
     var isLoad = _this.attr("isLoad");//是否自动加载，1 是
-    _this.empty();//清空
-    if(addNull == "1"){
-    	_this.append("<option></option>");
+    if(type == "select"){
+      _this.empty();//清空
+      if(addNull == "1"){
+      	_this.append("<option></option>");
+      }
     }
     var dict = _this.attr("dict");
     if($.isEmpty(dict)){
     	return false;
     }
-    
+
     var dictObj = layui.fsDict[dict];
-    
+
     if($.isEmpty(dictObj)){
     	return false;
     }
-    
+
     var labelField = dictObj["labelField"];
 		var valueField = dictObj["valueField"];
-    
+    var method = dictObj["method"];
     var formatType = dictObj["formatType"];//格式化类型
-    if($.isEmpty(formatType) || formatType == "server"){
+    if(formatType == "server"){
     	var funcNo = dictObj["loadFuncNo"];
     	var url = dictObj["loadUrl"];//请求url
     	var inputs = dictObj["inputs"];
@@ -220,45 +256,88 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
     				param[paramArr[0]] = _vaule;
     			}
     		});
-    		
+
     	}
     	if($.isEmpty(url)){
     		url = "/fsbus/" + funcNo;
     	}
-    	
+
     	if(!$.isEmpty(url) && (isLoad !="0" || b)){
     		fsCommon.invoke(url,param,function(data){
-    			if(data[statusName] == "0")
+    			if(data[statusName] == successNo)
     			{
     				var list = $.result(data,dataName);
-    				thisForm.selectDataRender(_this,labelField,valueField,list);
+            thisForm.dictDataRender(_this,labelField,valueField,list,type);
     			}
     			else
     			{
     				//提示错误消息
     				fsCommon.errorMsg(data[msgName]);
     			}
-    		},false);
+    		},false,method);
     	}
-    }else if(formatType == "local"){
-    	
+    }else{
+
   		var list = dictObj["data"];
-  		thisForm.selectDataRender(_this,labelField,valueField,list);
+      thisForm.dictDataRender(_this,labelField,valueField,list,type);
     }
-    
+
 	};
-	
+
+
+  FsForm.prototype.dictDataRender = function(_this,labelField,valueField,list,type){
+    var thisForm = this;
+    if(type == "select"){
+      thisForm.selectDataRender(_this,labelField,valueField,list);
+    }else if(type == "checkbox"){
+      thisForm.checkboxDataRender(_this,labelField,valueField,list);
+    }else if(type == "radio"){
+      thisForm.radioDataRender(_this,labelField,valueField,list);
+    }
+  }
+
+  /**
+	 * 复选框数据渲染
+	 */
+  FsForm.prototype.checkboxDataRender = function(_this,labelField,valueField,list){
+    var thisForm = this;
+    var name = _this.attr("name");
+    var laySkin = _this.attr("lay-skin");
+		$(list).each(function(i,v){
+			var checkbox="<input type=\"checkbox\" name=\""+name+"\" lay-skin=\""+laySkin+"\" title=\""+v[labelField]+"\" value=\""+v[valueField]+"\">";
+			_this.parent().append(checkbox);
+		});
+    _this.next().remove();
+    _this.remove();
+    form.render("checkbox"); //更新全部
+  }
+
+  /**
+	 *  单选框数据渲染
+	 */
+  FsForm.prototype.radioDataRender = function(_this,labelField,valueField,list){
+    var thisForm = this;
+    var name = _this.attr("name");
+		$(list).each(function(i,v){
+			var checkbox="<input type=\"radio\" name=\""+name+"\" title=\""+v[labelField]+"\" value=\""+v[valueField]+"\">";
+			_this.parent().append(checkbox);
+		});
+    _this.next().remove();
+    _this.remove();
+    form.render("checkbox"); //更新全部
+  }
+
 	/**
 	 * select数据渲染
 	 */
 	FsForm.prototype.selectDataRender = function(_this,labelField,valueField,list){
 		var thisForm = this;
-		
+
 		$(list).each(function(i,v){
 			var option="<option value=\""+v[valueField]+"\">"+v[labelField]+"</option>";
 			_this.append(option);
 		});
-		
+
 		//默认值
 		var defaultValue = selectVals[_this.attr("name")];
 		if(!$.isEmpty(defaultValue)){
@@ -268,11 +347,11 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
 			if(!$.isEmpty(childrenSelectId)){
 				thisForm.renderSelect($("#"+childrenSelectId),true,defaultValue);
 			}
-			
+
 		}
 		form.render("select"); //更新全部
 	};
-	
+
 	/**
 	 * 自动填充form表单数据
 	 */
@@ -280,15 +359,15 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
     var thisForm = this;
 		//参数处理，如果有参数，自动填充form表单
 		var urlParam = fsCommon.getUrlParam();
-		
+
 		var formDom = $(thisForm.config.elem);
-		
+
 		//判断模式
 		var _mode = urlParam["_mode"];
 		if(!$.isEmpty(_mode)){
 			delete urlParam["_mode"];
 			formDom.append("<input type=\"hidden\" name=\"_mode\" value=\""+_mode+"\"/>");
-			
+
 			if("readonly" == _mode){//只读
 				formDom.attr("isLoad","1");
 				//隐藏所有的非关闭按钮
@@ -318,13 +397,13 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
 				formDom.find("input.fsEditReadonly").addClass("layui-disabled").attr("disabled","disabled");
 				formDom.find("select.fsEditReadonly,textarea.fsEditReadonly").attr("disabled","disabled");
 			}
-			
+
 		}
-		
+
 		if(!$.isEmpty(urlParam)){
 			$(thisForm.config.elem).setFormData(urlParam);
 		}
-		
+
 		//如果isLoad =1 并且功能号不为空，查询
 		var _fsUuid = urlParam["_fsUuid"];
 		if(!$.isEmpty(_fsUuid)){
@@ -332,7 +411,9 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
 		}
 		if(formDom.attr("isLoad") == "1")
 		{
-			
+      //加载单选框和复选框
+      thisForm.renderDictAll(false);
+
 			//从缓存中获取
 			if(loadDataType == "1" && $.isEmpty(formDom.attr("loadFuncNo")) && $.isEmpty(formDom.attr("loadUrl"))){
 				if(!$.isEmpty(_fsUuid)){
@@ -343,8 +424,9 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
 				}/*else{
 					fsCommon.errorMsg("唯一标识获取失败!");
 				}*/
-				
+
 			}else if(!$.isEmpty(formDom.attr("loadFuncNo")) || !$.isEmpty(formDom.attr("loadUrl"))){
+        var _method = formDom.attr("method");
 				//如果配置异步地址，默认加载异步地址
 				var funcNo = formDom.attr("loadFuncNo");
 		    var url = formDom.attr("loadUrl");//请求url
@@ -352,7 +434,7 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
 	        url = "/fsbus/" + funcNo;
 	      }
 	      fsCommon.invoke(url,urlParam,function(data){
-					if(data[statusName] == "0")
+					if(data[statusName] == successNo)
 			  	{
 						var formData = $.result(data,dataName);
 						showData(formData);
@@ -362,20 +444,20 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
 			  		//提示错误消息
 			  		fsCommon.errorMsg(data[msgName]);
 			  	}
-			  },false);
-				
+			  },false,_method);
+
 			}
-			  
+
 	  }else{
-	  	thisForm.renderSelectAll();
+	  	thisForm.renderDictAll(true);
 	  }
-		
+
 		if(!$.isEmpty(_fsUuid)){
 			//删除
 			$.removeSessionStorage(_fsUuid);
-			
+
 		}
-		
+
 		//显示数据
 		function showData(formData){
 			if($.isEmpty(formData)){
@@ -384,7 +466,7 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
 			}
 			formDom.setFormData(formData);
 			form.render(); //更新全部
-			
+
 			//联动下拉框处理，
 			//1.先把联动下拉框数据缓存
 			//2.异步加载完后，赋值
@@ -392,7 +474,7 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
 				var _name = $(this).attr("name");
 				selectVals[_name] = formData[_name];
 			});
-			
+
 			$(thisForm.config.elem).find("select.fsSelect").each(function(){
 				var selectDom = $(this);
 				if(selectDom.attr("isLoad") != "0"){//一级下拉
@@ -400,11 +482,11 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
 				}
 			});
 		}
-		  
+
 	};
-  
- 
-  
+
+
+
 	/**
 	 * 绑定提交按钮
 	 */
@@ -414,21 +496,21 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
       var lay_filter = $(this).attr("lay-filter");
       /**监听新增提交*/
       form.on("submit("+lay_filter+")", function (data) {
-        
+
       	var _thisButton = $(this);
         thisForm.submitForm(data.field,_thisButton,thisForm.config.elem);
         return false;
       });
     });
 	}
-	
+
 	/**
 	 * form表单格式验证
 	 */
 	if(!$.isEmpty(fsConfig["verify"])){
-    form.verify(fsConfig["verify"]); 
+    form.verify(fsConfig["verify"]);
 	}
-    
+
   /**
    * 提交请求
    */
@@ -442,20 +524,20 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
   	if($.isEmpty(url)){
       url = "/fsbus/" + funcNo;
     }
-  	
+
   	//处理layedit编辑器内容
   	$.each(layEdits, function(key, val) {
   		param[key] = layedit.getContent(val);
   	});
-  	
-  	
+
+
   	fsCommon.invoke(url,param,function(data)
 		{
-    	if(data[statusName] == "0")
+    	if(data[statusName] == successNo)
     	{
     		fsCommon.successMsg('操作成功!');
     		fsCommon.setRefreshTable("1");
-    		
+
     		//是否自动关闭，默认是
     		if(_this.attr("isClose") != "0"){
     			parent.layer.close(parent.layer.getFrameIndex(window.name));
@@ -468,7 +550,7 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
     	}
 		},false);
   };
-  
+
   var fsForm = new FsForm();
     //绑定按钮
 	exports("fsForm",fsForm);

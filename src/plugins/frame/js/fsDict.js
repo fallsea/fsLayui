@@ -2,7 +2,7 @@
  * @Description: 字典配置
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.7.1
+ * @version 1.8.0
  * @License：MIT
  */
 layui.fsDict = {
@@ -30,10 +30,21 @@ layui.fsDict = {
 				{"code":"dai","name":"发呆","css":"layui-badge layui-bg-cyan"}]
 		}
 		,
+		//性别
+		sex : {
+			formatType : "local",
+			labelField : "name",
+			valueField : "code",
+			spaceMode : "",//展示多个数据分隔符，默认,
+			data:[{"code":"男","name":"男"},
+				{"code":"女","name":"女"}]
+		}
+		,
 		//省份
 		area1 : {
 			formatType : "server",
 			loadUrl : "/fsbus/1005",
+			method : "get",
 			inputs : "parentid:0",
 			labelField : "name",
 			valueField : "id"
