@@ -14,15 +14,6 @@ layui.fsUtil={};
 
 layui.fsButton={};
 
-
-layui.use(['laypage', 'layedit'], function(laypage, layedit){
-
-  //使用分页
-  laypage();
-
-  //建立编辑器
-  layedit.build();
-});
 /**
  * 转义字典工具
  */
