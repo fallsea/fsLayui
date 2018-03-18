@@ -51,6 +51,7 @@ layui.use(['upload','layer','fsConfig','fsCommon'], function(){
   isSelectFile = false,//是否选择文件，默认false
   statusName = $.result(fsConfig,"global.result.statusName","errorNo"),
   msgName = $.result(fsConfig,"global.result.msgName","errorInfo"),
+	successNo = $.result(fsConfig,"global.result.successNo","0"),
   uploadUrl = $.result(fsConfig,"global.uploadUrl",""),
   dataName = $.result(fsConfig,"global.result.dataName","results.data");
   
@@ -110,7 +111,7 @@ layui.use(['upload','layer','fsConfig','fsCommon'], function(){
     ,done: function(result){
 		layer.closeAll(loadIndex); //关闭loading
 		
-		if(result[statusName] != "0"){
+		if(result[statusName] != successNo){
 			var filters = fsConfig["filters"];
 		   	if(!$.isEmpty(filters)){
 	     	  var otherFunction = filters[result[statusName]];

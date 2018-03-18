@@ -17,7 +17,7 @@ layui.define(["fsCommon","table",'laypage','fsConfig','form','fsButtonCommon'], 
   dataName = $.result(fsConfig,"global.result.dataName","results.data"),
   defaultLimit = $.result(fsConfig,"global.page.limit",20),//默认分页数量
   defaultLimits = $.result(fsConfig,"global.page.limits",[10,20,30,50,100]),//默认每页数据选择项
-  loadDataType = $.result(fsConfig,"global.loadDataType","0");
+  loadDataType = $.result(fsConfig,"global.loadDataType","0"),
   successNo = $.result(fsConfig,"global.result.successNo","0"),
   datagridSubmitType = $.result(fsConfig,"global.datagridSubmitType","1");
   FsDatagrid = function (){

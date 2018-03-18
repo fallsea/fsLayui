@@ -25,7 +25,6 @@ layui.fsUtil.toDict = function(dict,value){
 
 		var labelField = data["labelField"];
 		var valueField = data["valueField"];
-    var formatType = data["formatType"];//格式化类型
 
 		var list=data["data"];
 

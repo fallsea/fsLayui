@@ -339,11 +339,12 @@ layui.define(['layer',"fsCommon",'fsConfig'], function(exports){
 	 * 查询
 	 */
 	FsTree.prototype.query = function(param) {
-		var _this = this;
 		//处理查询表单
 		var _this = this;
 		var zTree = $.fn.zTree.getZTreeObj(_this.config.id);
 		zTree.setting.async.otherParam = param;
+		//强制加载
+		$("#"+_this.config.id).attr("isLoad","1");
 		_this.refresh();
 	}
 
