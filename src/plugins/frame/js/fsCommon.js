@@ -196,17 +196,6 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
     	}
     },
     /**
-     * 获取token信息
-     */
-    getToken : function ()
-    {
-    	var _csrf_code=$('meta[name="_csrf_code"]').attr("content");
-      var _csrf_name=$('meta[name="_csrf_name"]').attr("content");
-      var token = {};
-      token[_csrf_name] = _csrf_code;
-      return token;
-    },
-    /**
      * 按钮事件绑定
      */
     buttonEvent : function (fsType,getDatagrid)

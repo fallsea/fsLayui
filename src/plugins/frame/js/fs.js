@@ -116,26 +116,6 @@ layui.fsUtil.digit = function(num, length, end){
 (function($){
 
 	/**
-   * 获取token信息
-   */
-  var getToken = function ()
-  {
-  	var _csrf_code=$('meta[name="_csrf_code"]').attr("content");
-    var _csrf_name=$('meta[name="_csrf_name"]').attr("content");
-    var token = {};
-    token[_csrf_name] = _csrf_code;
-    return token;
-  };
-
-	$.ajaxSetup({
-		  headers : getToken(),
-      type: 'POST',
-      async: true,
-      dataType : "json",
-      timeout : 30000
-	 });
-
-	/**
 	 * 获取form表单数据
 	 */
 	$.fn.getFormData = function (isValid) {
