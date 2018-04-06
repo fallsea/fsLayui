@@ -192,7 +192,7 @@ layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {
 			  end: _end
   		});
     	if(isMaximize == "1"){
-    		layer.full(index);
+    		top.layer.full(index);
     	}
     },
     /**

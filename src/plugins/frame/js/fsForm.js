@@ -44,11 +44,90 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
 
     thisForm.renderDate();
 
+    thisForm.renderEditor();
+
     thisForm.renderLayedit();
 
     thisForm.bindButtonSubmit();
 
     return thisForm;
+	};
+
+  //渲染富文本编辑器
+	FsForm.prototype.renderEditor = function(){
+
+		 	var thisForm = this;
+		  $(thisForm.config.elem).find(".fsEditor").each(function(){
+
+		  	var _height = $(this).attr("height");
+		  	if($.isEmpty(_height)){
+		  		_height = 100;
+		  	}
+
+		  	tinymce.init({
+		  	  selector: "#"+$(this).attr("id"),
+		  	  height: _height,
+		  		language:'zh_CN',
+			  	 plugins: [
+			  	    "advlist autolink autosave link image lists charmap print preview hr anchor pagebreak",
+			  	    "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+			  	    "table contextmenu directionality emoticons template textcolor paste fullpage textcolor colorpicker textpattern"
+			  	  ],
+
+			  	  toolbar1: "bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect",
+			  	  toolbar2: "cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | insertdatetime preview | forecolor backcolor",
+			  	  toolbar3: "table | hr removeformat | subscript superscript | charmap emoticons | print fullscreen | ltr rtl | visualchars visualblocks nonbreaking template pagebreak restoredraft",
+
+			  	  menubar: false,
+			  	  toolbar_items_size: 'small',
+
+			  	  style_formats: [{
+			  	    title: 'Bold text',
+			  	    inline: 'b'
+			  	  }, {
+			  	    title: 'Red text',
+			  	    inline: 'span',
+			  	    styles: {
+			  	      color: '#ff0000'
+			  	    }
+			  	  }, {
+			  	    title: 'Red header',
+			  	    block: 'h1',
+			  	    styles: {
+			  	      color: '#ff0000'
+			  	    }
+			  	  }, {
+			  	    title: 'Example 1',
+			  	    inline: 'span',
+			  	    classes: 'example1'
+			  	  }, {
+			  	    title: 'Example 2',
+			  	    inline: 'span',
+			  	    classes: 'example2'
+			  	  }, {
+			  	    title: 'Table styles'
+			  	  }, {
+			  	    title: 'Table row 1',
+			  	    selector: 'tr',
+			  	    classes: 'tablerow1'
+			  	  }],
+
+			  	  templates: [{
+			  	    title: 'Test template 1',
+			  	    content: 'Test 1'
+			  	  }, {
+			  	    title: 'Test template 2',
+			  	    content: 'Test 2'
+			  	  }],
+
+			  	  init_instance_callback: function () {
+			  	    window.setTimeout(function() {
+			  	      $("#div").show();
+			  	     }, 1000);
+			  	  }
+			  });
+			});
+
 	};
 
 	//渲染日期控件绑定
@@ -515,6 +594,7 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
    * 提交请求
    */
 	FsForm.prototype.submitForm = function(param,_this,formElem){
+    var thisForm = this;
     var url = _this.attr("url");//请求url
   	var funcNo = _this.attr("funcNo");
   	if($.isEmpty(funcNo) && $.isEmpty(url)){
@@ -530,6 +610,10 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
   		param[key] = layedit.getContent(val);
   	});
 
+    //处理的tinymce编辑器值
+	  $(thisForm.config.elem).find(".fsEditor").each(function(i,v){
+	  	param[$(this).attr("name")] = tinymce.editors[i].getBody().innerHTML;
+	  });
 
   	fsCommon.invoke(url,param,function(data)
 		{
