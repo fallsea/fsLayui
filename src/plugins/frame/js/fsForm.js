@@ -64,7 +64,7 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
 		  		_height = 100;
 		  	}
 
-		  	tinymce.init({
+        tinymce.init({
 		  	  selector: "#"+$(this).attr("id"),
 		  	  height: _height,
 		  		language:'zh_CN',
@@ -74,12 +74,36 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
 			  	    "table contextmenu directionality emoticons template textcolor paste fullpage textcolor colorpicker textpattern"
 			  	  ],
 
-			  	  toolbar1: "bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect",
-			  	  toolbar2: "cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | insertdatetime preview | forecolor backcolor",
+			  	  toolbar1: "bold italic underline forecolor backcolor strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect",
+			  	  toolbar2: "undo redo | searchreplace | bullist numlist | outdent indent blockquote | link unlink anchor image media code | insertdatetime preview",
 			  	  toolbar3: "table | hr removeformat | subscript superscript | charmap emoticons | print fullscreen | ltr rtl | visualchars visualblocks nonbreaking template pagebreak restoredraft",
 
 			  	  menubar: false,
 			  	  toolbar_items_size: 'small',
+//			  	  images_upload_url: '/upload',
+			  	  images_upload_handler: function (blobInfo, success, failure) {
+			  	  	var xhr, formData;
+			  	    xhr = new XMLHttpRequest();
+			  	    xhr.withCredentials = false;
+			  	    xhr.open('POST', $.result(fsConfig,"global.uploadUrl"));
+			  	    xhr.onload = function() {
+
+			  	      if (xhr.status != 200) {
+			  	        failure('HTTP Error: ' + xhr.status);
+			  	        return;
+			  	      }
+			  	      var result = JSON.parse(xhr.responseText);
+
+			  	      if(result[statusName] != successNo){
+			  	      	failure(result[msgName]);
+			  	        return;
+			  	      }
+			  	     success($.result(result,$.result(fsConfig,"global.result.file.path")));
+			  	    };
+			  	    formData = new FormData();
+			  	    formData.append('file', blobInfo.blob(), blobInfo.filename());
+			  	    xhr.send(formData);
+			  	  },
 
 			  	  style_formats: [{
 			  	    title: 'Bold text',

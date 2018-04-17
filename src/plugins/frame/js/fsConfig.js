@@ -2,7 +2,7 @@
  * @Description: 基础配置
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.8.0
+ * @version 1.8.2
  * @License：MIT
  */
 layui.define([], function (exports) {
@@ -35,6 +35,9 @@ layui.define([], function (exports) {
 	    "msgName": "errorInfo", //状态信息的字段名称，默认：errorInfo
 			"successNo" : "0", //执行成功错误码统一配置
 	    "dataName" : "results.data", //非表格数据的字段名称，默认：results.data
+			"file" : { //文件配置
+	    	"path" : "results.data.filePath"  //返回文件路径属性
+	    }
 		},
 		"page" : { //分页配置
 			"sortType":"0",//默认排序方式，0：本地排序，1：异步排序，不配置默认为0

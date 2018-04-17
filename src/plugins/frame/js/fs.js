@@ -2,12 +2,12 @@
  * @Description: 入口
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.8.0
+ * @version 1.8.2
  * @License：MIT
  */
 layui.config({
   base : "/plugins/frame/js/",//设定扩展的Layui模块的所在目录，一般用于外部模块扩展
-	version : '1.8.0'
+	version : '1.8.2'
 });
 
 layui.fsUtil={};

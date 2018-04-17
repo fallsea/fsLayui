@@ -2,7 +2,7 @@
  * @Description: 菜单管理
  * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.8.0
+ * @version 1.8.2
  * @License：MIT
  */
 layui.define(['element'], function(exports){
