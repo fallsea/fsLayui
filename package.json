@@ -1,0 +1,21 @@
+{
+  "name": "fsLayui",
+  "version": "1.8.1",
+  "description": "**fsLayui** 是一个基于layui的快速开发插件，支持数据表格增删改查操作，提供通用的组件，通过配置html实现数据请求，减少前端js重复开发的工作。目前支持单数据表格、多数据表格、tab数据表格、树+数据表格、联动数据表格、layeidt编辑器、下拉框联动、数据字典功能、表格编辑和提交等。",
+  "scripts": {
+    "start": "start http://localhost:3000 & node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fallsea/fsLayui.git"
+  },
+  "author": "fallsea",
+  "license": "MIT License",
+  "bugs": {
+    "url": "https://github.com/fallsea/fsLayui/issues"
+  },
+  "homepage": "https://github.com/fallsea/fsLayui#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}

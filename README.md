@@ -36,8 +36,26 @@ qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k
 
 ## 使用说明
 
-
 [API文档](http://www.itcto.cn/docs/fslayui)
+
+
+## 开发
+
+```
+# 克隆项目
+git clone https://github.com/fallsea/fsLayui.git
+
+# 安装依赖
+npm install
+
+# 建议不要用cnpm安装 会有各种诡异的bug 可以通过如下操作解决 npm 下载速度慢的问题
+npm install --registry=https://registry.npm.taobao.org
+
+# 启动服务
+npm start
+```
+
+浏览器访问 http://localhost:3000
 
 
 ## 版本号规范
@@ -65,6 +83,7 @@ qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k
 ## 贡献者
 
 * JsonBy
+* [shuxinl](https://github.com/shuxinl)
 
 ## 捐赠
 
