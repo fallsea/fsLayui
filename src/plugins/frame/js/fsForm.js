@@ -1,6 +1,6 @@
 /**
  * @Description: form表单工具
- * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
+ * @Copyright: 2017 wueasy.com Inc. All rights reserved.
  * @author: fallsea
  * @version 1.8.0
  * @License：MIT

@@ -1,6 +1,6 @@
 /**
  * @Description: 基础配置
- * @Copyright: 2017 www.fallsea.com Inc. All rights reserved.
+ * @Copyright: 2017 wueasy.com Inc. All rights reserved.
  * @author: fallsea
  * @version 1.8.2
  * @License：MIT
