@@ -13,6 +13,8 @@ qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k
 [我要点赞](http://fly.layui.com/case/u/1154664)
 
 
+[社区提问](https://bbs.wueasy.com/plate/fslayui)
+
 ## 支持功能
 
 * 简单数据表格增删改查
