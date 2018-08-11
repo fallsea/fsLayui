@@ -69,7 +69,7 @@
   	 <div class="layui-col-md12">
   	 	<div class="layui-row grid-demo">
 	      <div class="layui-col-md12">
-	         <table id="fsDatagrid" lay-filter="fsDatagrid" class="fsDatagrid" clickRenderTable="fsDatagrid2" clickRenderTableInputs="funcId:$id" isLoad="1" defaultForm="query_form" url="/fsbus/S1023" isPage="1" height="260"></table>
+	         <table id="fsDatagrid" lay-filter="fsDatagrid" class="fsDatagrid" clickRenderTable="fsDatagrid2" clickRenderTableInputs="funcId:$id" isLoad="1" defaultForm="query_form" url="/fsbus/DEMO1010" isPage="1" height="260"></table>
 
 			<div class="fsDatagridCols">
 				<p type="numbers" title="#"/>
@@ -81,7 +81,7 @@
 			    <p field="createdTime" title="创建时间" width="180"/>
 			    <p fixed="right" align="center" toolbar="#barDemo" title="操作" width="150"/>
 			</div>
-		
+
 			<script type="text/html" id="typeTpl">
   			{{#  if(d.funcType == 'c'){ }}
   			      功能号实现类
@@ -106,9 +106,9 @@
 	      </div>
 	    </div>
   	 </div>
-  	 
+
   	 <hr class="layui-bg-red">
-  	 
+
   	 <div class="layui-col-md12">
   	 	<div class="layui-form-query">
 			<form class="layui-form" id="query_form2">
@@ -146,9 +146,9 @@
     	</div>
     </div>
   	 <div class="layui-col-md12">
-  	 	<table id="fsDatagrid2" class="fsDatagrid" lay-filter="fsDatagrid2" url="/fsbus/S1030" isLoad="0" defaultForm="query_form2" height="260" isPage="0">
+  	 	<table id="fsDatagrid2" class="fsDatagrid" lay-filter="fsDatagrid2" url="/fsbus/DEMO1014" isLoad="0" defaultForm="query_form2" height="260" isPage="0">
 		</table>
-		
+
 		<div class="fsDatagridCols">
 			<p type="numbers" title="#"/>
 		    <p field="attribute" title="参数" width="100" sort="true"/>
@@ -161,7 +161,7 @@
 		    <p field="maxLength" title="最大长度" width="100"/>
 		    <p fixed="right" align="center" toolbar="#barDemo2" title="操作" width="150"/>
 		</div>
-		
+
 		<script type="text/html" id="notEmptyTpl">
   			{{#  if(d.notEmpty == '1'){ }}
   			    <span style="color: #FF5722">是</span>
@@ -171,7 +171,7 @@
 		</script>
 		<script type="text/html" id="barDemo2">
 			<a class="layui-btn layui-btn-xs" lay-event="top" topUrl="views/complexDatagrid/editParam.html" topWidth="700px" topHeight="510px" topTitle="编辑参数" inputs="id:">编辑</a>
- 			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="submit" isConfirm="1" url="/fsbus/S1034" inputs="id:">删除</a>
+ 			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="submit" isConfirm="1" url="/fsbus/DEMO1018" inputs="id:">删除</a>
 		</script>
 
   	 </div>

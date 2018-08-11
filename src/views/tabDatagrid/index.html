@@ -70,7 +70,7 @@
 					        	<button class="layui-btn" function="top" topUrl="views/tabDatagrid/add.html" topWidth="700px" topHeight="500px" topTitle="新增demo" inputs="type:#type">
 								  <i class="layui-icon">&#xe654;</i>新增
 								</button>
-								<button class="layui-btn layui-btn-danger" function="submit" url="/fsbus/1002" isSelect="1" isConfirm="1" confirmMsg="是否确定删除选中的数据？" inputs="id:">
+								<button class="layui-btn layui-btn-danger" function="submit" url="/fsbus/DEMO1003" isSelect="1" isConfirm="1" confirmMsg="是否确定删除选中的数据？" inputs="id:">
 								  <i class="layui-icon">&#xe640;</i>删除
 								</button>
 								<button class="layui-btn" function="refresh">
@@ -78,8 +78,8 @@
 								</button>
 						      </div>
 						      <div class="layui-col-md12">
-						         <table id="fsDatagrid" lay-filter="fsDatagrid" class="fsDatagrid" url="/fsbus/1000" isPage="1" defaultForm="query_form" height="full-210"></table>
-					
+						         <table id="fsDatagrid" lay-filter="fsDatagrid" class="fsDatagrid" url="/fsbus/DEMO1001" isPage="1" defaultForm="query_form" height="full-210"></table>
+
 						         <div class="fsDatagridCols">
 						         	<p type="numbers" title="#"/>
 									<p checkbox="true"/>
@@ -92,7 +92,7 @@
 								    <p field="modifiedTime" title="修改时间" width="180"/>
 								    <p fixed="right" align="center" toolbar="#barDemo" title="操作" width="150"/>
 								</div>
-								
+
 								<script type="text/html" id="cityTpl">
   									{{# if(d.city == '0'){ }}
   										   北京
@@ -106,13 +106,13 @@
 										杭州
  									{{#  } }}
 								</script>
-							
+
 								<script type="text/html" id="stateTpl">
 									<input type="checkbox" name="state" lay-skin="switch" disabled lay-text="开启|关闭" {{ d.state == 1 ? 'checked' : '' }}>
 								</script>
 								<script type="text/html" id="barDemo">
  									<a class="layui-btn layui-btn-xs" lay-event="top" topUrl="views/tabDatagrid/edit.html" topWidth="700px" topHeight="500px" topTitle="编辑demo" inputs="id:">编辑</a>
-  									<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="submit" url="/fsbus/1002" isConfirm="1" confirmMsg="是否确定删除当前记录？" inputs="id:">删除</a>
+  									<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="submit" url="/fsbus/DEMO1003" isConfirm="1" confirmMsg="是否确定删除当前记录？" inputs="id:">删除</a>
 								</script>
 						      </div>
 						    </div>
@@ -159,7 +159,7 @@
 					        	<button class="layui-btn" function="top" topUrl="views/tabDatagrid/add.html" tableId="fsDatagrid2" topWidth="700px" topHeight="500px" topTitle="新增demo" inputs="type:#type2">
 								  <i class="layui-icon">&#xe654;</i>新增
 								</button>
-								<button class="layui-btn layui-btn-danger" function="submit" tableId="fsDatagrid2" url="/fsbus/1002" isSelect="1" isConfirm="1" confirmMsg="是否确定删除选中的数据？" inputs="id:">
+								<button class="layui-btn layui-btn-danger" function="submit" tableId="fsDatagrid2" url="/fsbus/DEMO1003" isSelect="1" isConfirm="1" confirmMsg="是否确定删除选中的数据？" inputs="id:">
 								  <i class="layui-icon">&#xe640;</i>删除
 								</button>
 								<button class="layui-btn" tableId="fsDatagrid2" function="refresh">
@@ -167,8 +167,8 @@
 								</button>
 						      </div>
 						      <div class="layui-col-md12">
-						         <table id="fsDatagrid2" lay-filter="fsDatagrid2" class="fsDatagrid" url="/fsbus/1000" isPage="1" defaultForm="query_form2" height="full-210"></table>
-					
+						         <table id="fsDatagrid2" lay-filter="fsDatagrid2" class="fsDatagrid" url="/fsbus/DEMO1001" isPage="1" defaultForm="query_form2" height="full-210"></table>
+
 						         <div class="fsDatagridCols">
 						         	<p type="numbers" title="#"/>
 									<p checkbox="true"/>
@@ -181,7 +181,7 @@
 								    <p field="modifiedTime" title="修改时间" width="180"/>
 								    <p fixed="right" align="center" toolbar="#barDemo2" title="操作" width="150"/>
 								</div>
-								
+
 								<script type="text/html" id="cityTpl2">
   									{{# if(d.city == '0'){ }}
   										   北京
@@ -195,13 +195,13 @@
 										杭州
  									{{#  } }}
 								</script>
-							
+
 								<script type="text/html" id="stateTpl2">
 									<input type="checkbox" name="state" lay-skin="switch" disabled lay-text="开启|关闭" {{ d.state == 1 ? 'checked' : '' }}>
 								</script>
 								<script type="text/html" id="barDemo2">
  									<a class="layui-btn layui-btn-xs" lay-event="top" topUrl="views/tabDatagrid/edit.html" topWidth="700px" topHeight="500px" topTitle="编辑demo" inputs="id:">编辑</a>
-  									<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="submit" url="/fsbus/1002" isConfirm="1" confirmMsg="是否确定删除当前记录？" inputs="id:">删除</a>
+  									<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="submit" url="/fsbus/DEMO1003" isConfirm="1" confirmMsg="是否确定删除当前记录？" inputs="id:">删除</a>
 								</script>
 						      </div>
 						    </div>
@@ -248,7 +248,7 @@
 					        	<button class="layui-btn" function="top" topUrl="views/tabDatagrid/add.html" tableId="fsDatagrid3" topWidth="700px" topHeight="500px" topTitle="新增demo" inputs="type:#type3">
 								  <i class="layui-icon">&#xe654;</i>新增
 								</button>
-								<button class="layui-btn layui-btn-danger" function="submit" tableId="fsDatagrid3" url="/fsbus/1002" isSelect="1" isConfirm="1" confirmMsg="是否确定删除选中的数据？" inputs="id:">
+								<button class="layui-btn layui-btn-danger" function="submit" tableId="fsDatagrid3" url="/fsbus/DEMO1003" isSelect="1" isConfirm="1" confirmMsg="是否确定删除选中的数据？" inputs="id:">
 								  <i class="layui-icon">&#xe640;</i>删除
 								</button>
 								<button class="layui-btn" tableId="fsDatagrid3" function="refresh">
@@ -256,8 +256,8 @@
 								</button>
 						      </div>
 						      <div class="layui-col-md12">
-						         <table id="fsDatagrid3" lay-filter="fsDatagrid3" class="fsDatagrid" url="/fsbus/1000" isPage="1" defaultForm="query_form3" height="full-210"></table>
-					
+						         <table id="fsDatagrid3" lay-filter="fsDatagrid3" class="fsDatagrid" url="/fsbus/DEMO1001" isPage="1" defaultForm="query_form3" height="full-210"></table>
+
 						         <div class="fsDatagridCols">
 						         	<p type="numbers" title="#"/>
 									<p checkbox="true"/>
@@ -270,7 +270,7 @@
 								    <p field="modifiedTime" title="修改时间" width="180"/>
 								    <p fixed="right" align="center" toolbar="#barDemo3" title="操作" width="150"/>
 								</div>
-								
+
 								<script type="text/html" id="cityTpl3">
   									{{# if(d.city == '0'){ }}
   										   北京
@@ -284,13 +284,13 @@
 										杭州
  									{{#  } }}
 								</script>
-							
+
 								<script type="text/html" id="stateTpl3">
 									<input type="checkbox" name="state" lay-skin="switch" disabled lay-text="开启|关闭" {{ d.state == 1 ? 'checked' : '' }}>
 								</script>
 								<script type="text/html" id="barDemo3">
  									<a class="layui-btn layui-btn-xs" lay-event="top" topUrl="views/tabDatagrid/edit.html" topWidth="700px" topHeight="500px" topTitle="编辑demo" inputs="id:">编辑</a>
-  									<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="submit" url="/fsbus/1002" isConfirm="1" confirmMsg="是否确定删除当前记录？" inputs="id:">删除</a>
+  									<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="submit" url="/fsbus/DEMO1003" isConfirm="1" confirmMsg="是否确定删除当前记录？" inputs="id:">删除</a>
 								</script>
 						      </div>
 						    </div>
@@ -298,8 +298,8 @@
 			  	  	 </div>
 				  </div>
 			  </div>
-			</div>      
-  	 
+			</div>
+
   		 </div>
 
   </div>

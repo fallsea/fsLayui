@@ -25,7 +25,7 @@
   	 <div class="layui-col-md12">
   	 	<div class="layui-row grid-demo">
 	      <div class="layui-col-md12">
-	         <table id="fsDatagrid" lay-filter="fsDatagrid" class="fsDatagrid" clickRenderTable="fsDatagrid2" clickRenderTableInputs="funcId:$id" isLoad="1" url="/fsbus/S1023" isPage="1" height="260"></table>
+	         <table id="fsDatagrid" lay-filter="fsDatagrid" class="fsDatagrid" clickRenderTable="fsDatagrid2" clickRenderTableInputs="funcId:$id" isLoad="1" url="/fsbus/DEMO1010" isPage="1" height="260"></table>
 
 			<div class="fsDatagridCols">
 				<p type="numbers" title="#"/>
@@ -36,7 +36,7 @@
 			    <p field="resource" title="资源信息" width="300"/>
 			    <p field="createdTime" title="创建时间" width="180"/>
 			</div>
-		
+
 			<script type="text/html" id="typeTpl">
   			{{#  if(d.funcType == 'c'){ }}
   			      功能号实现类
@@ -60,9 +60,9 @@
   	 </div>
   	 <hr class="layui-bg-red">
   	 <div class="layui-col-md12">
-  	 	<table id="fsDatagrid2" class="fsDatagrid" lay-filter="fsDatagrid2" url="/fsbus/S1030" isLoad="0" height="260" isPage="0">
+  	 	<table id="fsDatagrid2" class="fsDatagrid" lay-filter="fsDatagrid2" url="/fsbus/DEMO1014" isLoad="0" height="260" isPage="0">
 		</table>
-		
+
 		<div class="fsDatagridCols">
 			<p type="numbers" title="#"/>
 		    <p field="attribute" title="参数" width="100" sort="true"/>
@@ -74,7 +74,7 @@
 		    <p field="minLength" title="最小长度" width="100"/>
 		    <p field="maxLength" title="最大长度" width="100"/>
 		</div>
-		
+
 		<script type="text/html" id="notEmptyTpl">
   			{{#  if(d.notEmpty == '1'){ }}
   			    <span style="color: #FF5722">是</span>
