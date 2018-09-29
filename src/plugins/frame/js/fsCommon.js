@@ -2,7 +2,7 @@
  * @Description: 通用组件
  * @Copyright: 2017 wueasy.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.8.3
+ * @version 1.8.4
  * @License：MIT
  */
 layui.define(['layer','form','fsConfig','fsButtonCommon'], function (exports) {

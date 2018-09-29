@@ -2,7 +2,7 @@
  * @Description: form表单工具
  * @Copyright: 2017 wueasy.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.8.3
+ * @version 1.8.4
  * @License：MIT
  */
 layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], function(exports){
