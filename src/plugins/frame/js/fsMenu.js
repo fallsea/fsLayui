@@ -2,7 +2,7 @@
  * @Description: 菜单配置
  * @Copyright: 2017 wueasy.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.8.2
+ * @version 1.8.3
  * @License：MIT
  */
 layui.define(['element',"fsConfig","fsCommon"], function(exports){
@@ -20,9 +20,9 @@ layui.define(['element',"fsConfig","fsCommon"], function(exports){
 			menuHrefField : "menuHref" , //菜单链接
 			parentMenuIdField : "parentMenuId" ,//父菜单id
 			data : [
-				{"menuId":"1","menuName":"控制台","menuIcon":"fa-cog","menuHref":"","parentMenuId":"0"},
-				{"menuId":"2","menuName":"测试","menuIcon":"","menuHref":"","parentMenuId":"0"},
-				{"menuId":"11","menuName":"案例","menuIcon":"fa-table","menuHref":"","parentMenuId":"1"},
+				{"menuId":"1","menuName":"控制台","menuIcon":"fa-cog","menuHref":"","parentMenuId":0},
+				{"menuId":"2","menuName":"测试","menuIcon":"","menuHref":"","parentMenuId":0},
+				{"menuId":"11","menuName":"案例","menuIcon":"fa-table","menuHref":"","parentMenuId":1},
 				{"menuId":"12","menuName":"其他页面","menuIcon":"","menuHref":"","parentMenuId":"1"},
 				{"menuId":"111","menuName":"首页","menuIcon":"&#xe68e;","menuHref":"views/home/index.html","parentMenuId":"11"},
 				{"menuId":"datagrid","menuName":"数据表格","menuIcon":"fa-list","menuHref":"views/datagrid/index.html","parentMenuId":"11"},
@@ -132,7 +132,7 @@ layui.define(['element',"fsConfig","fsCommon"], function(exports){
 			var fsTopMenuElem = $("#fsTopMenu");
 			var fsLeftMenu = $("#fsLeftMenu");
 			$.each(data,function(i,v){
-				if(menuConfig.rootMenuId === v[menuConfig.parentMenuIdField]){
+				if(menuConfig.rootMenuId == v[menuConfig.parentMenuIdField]){
 
 					var topStr = '<li class="layui-nav-item';
 					if($.isEmpty(menuConfig.defaultSelectTopMenuId) && _index === 0){//为空默认选中第一个
@@ -146,7 +146,7 @@ layui.define(['element',"fsConfig","fsCommon"], function(exports){
 
 					//显示二级菜单，循环判断是否有子栏目
 					$.each(data,function(i2,v2){
-						if(v[menuConfig.menuIdField] === v2[menuConfig.parentMenuIdField]){
+						if(v[menuConfig.menuIdField] == v2[menuConfig.parentMenuIdField]){
 
 							var menuRow = '<li class="layui-nav-item';
 							if(!$.isEmpty(menuConfig.defaultSelectLeftMenuId) && menuConfig.defaultSelectLeftMenuId == v2[menuConfig.menuIdField]){//默认选中处理
@@ -155,7 +155,7 @@ layui.define(['element',"fsConfig","fsCommon"], function(exports){
 							//显示三级菜单，循环判断是否有子栏目
 							var menuRow3 = "";
 							$.each(data,function(i3,v3){
-								if(v2[menuConfig.menuIdField] === v3[menuConfig.parentMenuIdField]){
+								if(v2[menuConfig.menuIdField] == v3[menuConfig.parentMenuIdField]){
 									if($.isEmpty(menuRow3)){
 										menuRow3 = '<dl class="layui-nav-child">';
 									}

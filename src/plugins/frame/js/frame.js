@@ -2,7 +2,7 @@
  * @Description: 通用框架
  * @Copyright: 2017 wueasy.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.8.2
+ * @version 1.8.3
  * @License：MIT
  */
 layui.use(['fsForm','fsDatagrid','fsTree','fsCommon','element'], function(){

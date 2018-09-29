@@ -2,7 +2,7 @@
  * @Description: form表单工具
  * @Copyright: 2017 wueasy.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.8.0
+ * @version 1.8.3
  * @License：MIT
  */
 layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], function(exports){
@@ -506,7 +506,6 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
 		if(!$.isEmpty(urlParam)){
 			$(thisForm.config.elem).setFormData(urlParam);
 		}
-
 		//如果isLoad =1 并且功能号不为空，查询
 		var _fsUuid = urlParam["_fsUuid"];
 		if(!$.isEmpty(_fsUuid)){
@@ -554,6 +553,9 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
 	  }else{
 	  	thisForm.renderDictAll(true);
 	  }
+
+    //加载完数据字典后，重新设置表单值，解决新增无法赋值问题
+    $(thisForm.config.elem).setFormData(urlParam);
 
 		if(!$.isEmpty(_fsUuid)){
 			//删除
