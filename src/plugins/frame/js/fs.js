@@ -2,14 +2,9 @@
  * @Description: 入口
  * @Copyright: 2017 wueasy.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.8.4
+ * @version 1.8.5
  * @License：MIT
  */
-layui.config({
-    base : "/plugins/frame/js/",//设定扩展的Layui模块的所在目录，一般用于外部模块扩展
-	version : '1.8.4'
-});
-
 layui.fsUtil={};
 
 layui.fsButton={};
@@ -409,3 +404,51 @@ layui.fsUtil.digit = function(num, length, end){
   });
 
 }(jQuery));
+/**
+ *获取根目录
+ */
+ function getRootPath(type){
+
+   var fsRootPath = $.getSessionStorage("fsRootPath");
+   if(!$.isEmpty(fsRootPath)){
+     return fsRootPath;
+   }
+
+   //type类型，1：根路径，2：项目目录
+   var path = "/";
+   if(type==="1"){
+     path="/";
+   }else if(type==="2"){
+     var pathName = document.location.pathname;
+ 		if(window.location.protocol =="file:"){//本地路径
+ 			//默认当前目录
+ 			var index = pathName.substr(1).lastIndexOf("/");
+ 	    path = pathName.substr(0,index+1)+"/";
+ 		}else{
+ 			var index = pathName.substr(1).indexOf("/");
+ 	    path = pathName.substr(0,index+1)+"/";
+ 		}
+   }
+   $.ajax({
+     type : "get",
+     url : path+"plugins/check/check.txt",
+     async : false,
+ 		dataType : "text",
+     success : function(data){
+ 			$.setSessionStorage("fsRootPath",path);//缓存
+     },error:function(){
+         if(type==="1"){
+           path = getRootPath("2");//加载失败，继续加载
+         }
+       }
+     });
+     return path;
+ }
+
+//获取根目录
+var rootPath = getRootPath("1");
+
+layui.config({
+  base : rootPath+"plugins/frame/js/",//设定扩展的Layui模块的所在目录，一般用于外部模块扩展
+	version : '1.8.5'
+});

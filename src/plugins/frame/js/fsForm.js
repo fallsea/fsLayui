@@ -2,7 +2,7 @@
  * @Description: form表单工具
  * @Copyright: 2017 wueasy.com Inc. All rights reserved.
  * @author: fallsea
- * @version 1.8.4
+ * @version 1.8.5
  * @License：MIT
  */
 layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], function(exports){
@@ -552,10 +552,9 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
 
 	  }else{
 	  	thisForm.renderDictAll(true);
+      //加载完数据字典后，重新设置表单值，解决新增无法赋值问题
+      $(thisForm.config.elem).setFormData(urlParam);
 	  }
-
-    //加载完数据字典后，重新设置表单值，解决新增无法赋值问题
-    $(thisForm.config.elem).setFormData(urlParam);
 
 		if(!$.isEmpty(_fsUuid)){
 			//删除
