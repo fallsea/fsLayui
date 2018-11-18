@@ -5,7 +5,7 @@
 qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k=5uImi0a)  
 > [GitHub下载](https://github.com/fallsea/fsLayuiPlugin)   
 [码云下载](https://gitee.com/fallsea/fsLayuiPlugin)  
-> **演示环境** [http://fslayui.fallsea.com](http://fslayui.fallsea.com) ***最好先清空缓存***  
+> **演示环境** [http://fslayui.itcto.cn](http://fslayui.fallsea.com) ***最好先清空缓存***  
 > [版本更新说明](https://github.com/fallsea/fsLayui/releases)  
 
 
