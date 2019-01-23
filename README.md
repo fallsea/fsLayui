@@ -1,5 +1,5 @@
 
-**fsLayui2**正式开源，点击了解[https://github.com/wueasy/fslayui](https://github.com/wueasy/fslayui)
+ # **fsLayui2**正式开源，点击了解[https://github.com/wueasy/fslayui](https://github.com/wueasy/fslayui)
 
 
 # fsLayui
