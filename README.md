@@ -71,6 +71,11 @@ npm start
 浏览器访问 http://localhost:3000
 
 
+## 贡献代码
+
+[请参考贡献指南](https://github.com/fallsea/fsLayui/wiki/%E5%BC%80%E6%BA%90%E8%B4%A1%E7%8C%AE%E6%8C%87%E5%8D%97)
+
+
 ## 版本号规范
 
 > [语义化版本2.0.0](http://www.itcto.cn/news/%E8%AF%AD%E4%B9%89%E5%8C%96%E7%89%88%E6%9C%AC2/)
