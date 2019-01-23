@@ -4,6 +4,14 @@
 
 # fsLayui
 
+[![](https://img.shields.io/github/stars/fallsea/fsLayui.svg)](https://github.com/fallsea/fsLayui/stargazers)
+[![](https://img.shields.io/github/forks/fallsea/fsLayui.svg)](https://github.com/fallsea/fsLayui/network/members)
+[![](https://img.shields.io/github/release/fallsea/fsLayui.svg)](https://github.com/fallsea/fsLayui/releases)
+[![](https://img.shields.io/github/issues/fallsea/fsLayui.svg)](https://github.com/fallsea/fsLayui/issues)
+[![](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://github.com/fallsea/fsLayui/blob/master/LICENSE)
+[![star](https://gitee.com/fallsea/fsLayuiPlugin/badge/star.svg?theme=dark)](https://gitee.com/fallsea/fsLayuiPlugin/stargazers)
+[![fork](https://gitee.com/fallsea/fsLayuiPlugin/badge/fork.svg?theme=dark)](https://gitee.com/fallsea/fsLayuiPlugin/members)
+
 
 > **fsLayui** 是一个基于layui的前端快速开发框架，支持数据表格增删改查操作，提供通用的组件，通过配置html实现数据请求，减少前端js重复开发的工作。目前支持单数据表格、多数据表格、tab数据表格、树+数据表格、联动数据表格、layeidt编辑器、下拉框联动、数据字典功能、表格编辑和提交等。  
 qq交流群：**24017956** [点击链接加入群](https://jq.qq.com/?_wv=1027&k=5uImi0a)  
