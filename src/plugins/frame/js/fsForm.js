@@ -362,7 +362,7 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
 
     	}
     	if($.isEmpty(url)){
-    		url = "/fsbus/" + funcNo;
+    		url = "/servlet/" + funcNo;
     	}
 
     	if(!$.isEmpty(url) && (isLoad !="0" || b)){
@@ -533,7 +533,7 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
 				var funcNo = formDom.attr("loadFuncNo");
 		    var url = formDom.attr("loadUrl");//请求url
 	      if($.isEmpty(url)){
-	        url = "/fsbus/" + funcNo;
+	        url = "/servlet/" + funcNo;
 	      }
 	      fsCommon.invoke(url,urlParam,function(data){
 					if(data[statusName] == successNo)
@@ -627,7 +627,7 @@ layui.define(['layer',"fsCommon","form",'laydate',"fsConfig",'layedit'], functio
   		return;
   	}
   	if($.isEmpty(url)){
-      url = "/fsbus/" + funcNo;
+      url = "/servlet/" + funcNo;
     }
 
   	//处理layedit编辑器内容

@@ -157,7 +157,7 @@ layui.define(['layer',"fsCommon",'fsConfig'], function(exports){
 			return;
 		}
 		if($.isEmpty(url)){
-      url = "/fsbus/" + funcNo;
+      url = "/servlet/" + funcNo;
     }
 		var servletUrl = $.result(fsConfig,"global.servletUrl");
 		if(!$.isEmpty(servletUrl)){
@@ -237,7 +237,7 @@ layui.define(['layer',"fsCommon",'fsConfig'], function(exports){
 			return;
 		}
 		if($.isEmpty(url)){
-			url = "/fsbus/" + funcNo;
+			url = "/servlet/" + funcNo;
 		}
 		var domTree = $("#"+_this.config.id);
 

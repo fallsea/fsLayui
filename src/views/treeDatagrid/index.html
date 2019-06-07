@@ -33,13 +33,13 @@
          <div class="layui-field-box">
          	<div class="layui-row layui-col-space10">
          		<div class="layui-col-md12">
-         			<ul id="treeDemo" class="ztree fsTree" method="get" isRoot="1" url="/fsbus/DEMO1019" clickCallbackId="fsDatagrid" clickCallbackInputs="menuId:$id" treeIdKey="id" treePIdKey="pId" treeName="name" ></ul>
+         			<ul id="treeDemo" class="ztree fsTree" method="get" isRoot="1" url="/servlet/DEMO1019" clickCallbackId="fsDatagrid" clickCallbackInputs="menuId:$id" treeIdKey="id" treePIdKey="pId" treeName="name" ></ul>
 
          			<div class="fsTreeRightMenu">
          				<p function="refresh" icon="refresh" name="刷新"></p>
          				<p function="top" icon="add" name="新增" fs:authorize="" topUrl="views/treeDatagrid/add.html" topWidth="700px" topHeight="460px" topTitle="新增菜单信息" inputs="parentId:$id"></p>
          				<p function="top" icon="edit" name="编辑" fs:authorize="" topUrl="views/treeDatagrid/edit.html" topWidth="700px" topHeight="460px" topTitle="编辑菜单信息" inputs="menuId:$id" disabledType="rootNode"></p>
-         				<p function="submit" icon="del" name="删除" fs:authorize="" method="get"  url="/fsbus/DEMO1023" isConfirm="1" confirmMsg="是否确定删除？" inputs="menuId:$id" disabledType="parent|rootNode"></p>
+         				<p function="submit" icon="del" name="删除" fs:authorize="" method="get"  url="/servlet/DEMO1023" isConfirm="1" confirmMsg="是否确定删除？" inputs="menuId:$id" disabledType="parent|rootNode"></p>
          			</div>
          		</div>
          	</div>
@@ -65,7 +65,7 @@
 			    	</div>
 			    </div>
 			    <div class="layui-col-md12 layui-col-space1">
-					<table id="fsDatagrid" class="fsDatagrid" lay-filter="fsDatagrid" url="/fsbus/DEMO1024" isLoad="0" isPage="0" defaultForm="query_form" height="full-130">
+					<table id="fsDatagrid" class="fsDatagrid" lay-filter="fsDatagrid" url="/servlet/DEMO1024" isLoad="0" isPage="0" defaultForm="query_form" height="full-130">
 					</table>
 
 					<div class="fsDatagridCols">
@@ -79,7 +79,7 @@
 
 					<script type="text/html" id="barDemo">
 						 <a id="edit" class="layui-btn layui-btn-xs" lay-event="top" topUrl="views/treeDatagrid/editFunc.html" topWidth="700px" topHeight="350px" isSelect="1" topTitle="编辑功能号信息" inputs="id:">编辑</a>
-  						 <a id="del" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="submit" isConfirm="1" url="/fsbus/DEMO1028" inputs="id:">删除</a>
+  						 <a id="del" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="submit" isConfirm="1" url="/servlet/DEMO1028" inputs="id:">删除</a>
 					</script>
 			    </div>
 			  </div>

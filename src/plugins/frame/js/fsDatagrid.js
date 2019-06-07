@@ -130,7 +130,7 @@ layui.define(["fsCommon","table",'laypage','fsConfig','form','fsButtonCommon'], 
 
 	  var url = _table.attr("url");//请求url
 	  if($.isEmpty(url)){
-      url = "/fsbus/" + funcNo;
+      url = "/servlet/" + funcNo;
 	  }
 	  var servletUrl = $.result(fsConfig,"global.servletUrl");
 	  if(!$.isEmpty(servletUrl)){
@@ -367,7 +367,7 @@ layui.define(["fsCommon","table",'laypage','fsConfig','form','fsButtonCommon'], 
             }
 
             if($.isEmpty(url)){
-              url = "/fsbus/" + funcNo;
+              url = "/servlet/" + funcNo;
             }
 
             //获取参数
