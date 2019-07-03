@@ -114,30 +114,55 @@ layui.use(['fsForm','fsDatagrid','fsTree','fsCommon','element'], function(){
       	return;
       }
       var clickRenderTable = $(this).attr("clickRenderTable");//点击需要渲染的tableid
-      var clickCallBack;//点击事件
-  	  if(!$.isEmpty(clickRenderTable)){
+      //有逗号
+      if(!$.isEmpty(clickRenderTable)&&clickRenderTable.indexOf(",")>0){
+        var clickCallBack;//点击事件
+        var clickRenderTablesArr = clickRenderTable.split(",");
+        var clickRenderTableInputs = $("#"+tableId).attr("clickRenderTableInputs");//点击需要传入的参数信息
+        clickCallBack = function(data){
+         //获取参数
+         var formData = fsCommon.getParamByInputs(clickRenderTableInputs,data);
+            var clickRenderOneTable;
+            $(clickRenderTablesArr).each(function(i) {
+              clickRenderOneTable= clickRenderTablesArr[i];
+              if(!$.isEmpty(clickRenderOneTable)){
+                var defaultForm= $("#"+clickRenderOneTable).attr("defaultForm");//默认form表单id
+                //点击后，为查询form表单赋值
+                if(!$.isEmpty(defaultForm)){
+                  $("#"+defaultForm).setFormData(formData);
+                }
+                datagrids[clickRenderOneTable].reload(formData);
+              }
+            })
+        }
+        var datagrid = fsDatagrid.render({id:tableId,clickCallBack:clickCallBack,getDatagrid:getDatagrid});
+        datagrid.bindDatagridTool(getDatagrid);
 
-  	  	var defaultForm= $("#"+clickRenderTable).attr("defaultForm");//默认form表单id
+      }else{
+        var clickCallBack;//点击事件
+        if(!$.isEmpty(clickRenderTable)){
 
-  	  	var clickRenderTableInputs = $(this).attr("clickRenderTableInputs");//点击需要传入的参数信息
+          var defaultForm= $("#"+clickRenderTable).attr("defaultForm");//默认form表单id
 
-  	  	clickCallBack = function(data){
-  	  		//获取参数
-  	  		var formData = fsCommon.getParamByInputs(clickRenderTableInputs,data);
+          var clickRenderTableInputs = $(this).attr("clickRenderTableInputs");//点击需要传入的参数信息
 
-  	  		//点击后，为查询form表单赋值
-  	  		if(!$.isEmpty(defaultForm)){
-  	  			$("#"+defaultForm).setFormData(formData);
-  	  		}
+          clickCallBack = function(data){
+            //获取参数
+            var formData = fsCommon.getParamByInputs(clickRenderTableInputs,data);
 
-	  			datagrids[clickRenderTable].reload(formData);
-  	  	}
-  	  }
+            //点击后，为查询form表单赋值
+            if(!$.isEmpty(defaultForm)){
+              $("#"+defaultForm).setFormData(formData);
+            }
 
-  	  var datagrid = fsDatagrid.render({id:tableId,clickCallBack:clickCallBack,getDatagrid:getDatagrid});
+            datagrids[clickRenderTable].reload(formData);
+          }
+        }
 
-      datagrid.bindDatagridTool(getDatagrid);
+        var datagrid = fsDatagrid.render({id:tableId,clickCallBack:clickCallBack,getDatagrid:getDatagrid});
 
+        datagrid.bindDatagridTool(getDatagrid);
+      }
       if(tabs.length==1){
       	datagrids[tableId] = datagrid;
       }else{
