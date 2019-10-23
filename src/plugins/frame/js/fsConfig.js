@@ -34,9 +34,9 @@ layui.define([], function (exports) {
 	    "statusName": "errorNo", //数据状态的字段名称，默认：errorNo
 	    "msgName": "errorInfo", //状态信息的字段名称，默认：errorInfo
 			"successNo" : "0", //执行成功错误码统一配置
-	    "dataName" : "results.data", //非表格数据的字段名称，默认：results.data
+	    "dataName" : "data", //非表格数据的字段名称，默认：results.data
 			"file" : { //文件配置
-	    	"path" : "results.data.filePath"  //返回文件路径属性
+	    	"path" : "data.filePath"  //返回文件路径属性
 	    }
 		},
 		"page" : { //分页配置
@@ -46,9 +46,9 @@ layui.define([], function (exports) {
 				"limitName": "pageSize" //每页数据量的参数名，默认：pageSize
 			},
 			"response": {//响应配置
-				"countName": "results.data.total", //数据总数的字段名称，默认：results.data.total
-				"dataName" : "results.data", //数据列表的字段名称，默认：results.data
-				"dataNamePage": "results.data.list" //分页数据列表的字段名称，默认：results.data.list
+				"countName": "data.total", //数据总数的字段名称，默认：results.data.total
+				"dataName" : "data", //数据列表的字段名称，默认：results.data
+				"dataNamePage": "data.list" //分页数据列表的字段名称，默认：results.data.list
 			}//,
 //			"limit":10,//每页分页数量。默认20
 //			"limits":[10,20,30,50,100]//每页数据选择项，默认[10,20,30,50,100]
