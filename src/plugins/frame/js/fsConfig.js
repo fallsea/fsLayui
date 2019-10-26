@@ -24,7 +24,7 @@ layui.define([], function (exports) {
 	 * 项目中需要调用到的常量、变量这里配置
 	 */
 	fsConfig["global"] = {
-		"servletUrl":"http://39.108.135.245:10100", //异步请求地址,本地工程可以不填
+		"servletUrl":"https://adminl.demo.wueasy.com", //异步请求地址,本地工程可以不填
 		"loginUrl" : "/login", //登录url
 		"uploadUrl" : "", //上传附件url
 		"uploadHtmlUrl" : "/plugins/frame/views/upload.html", //上传附件html地址，默认/plugins/frame/views/upload.html
