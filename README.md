@@ -103,6 +103,13 @@ npm start
 * JsonBy
 * [shuxinl](https://github.com/shuxinl)
 
+## admin2演示
+
+[admin后端管理系统（基础版）](https://admins.demo.wueasy.com)
+
+[admin后端管理系统（专业版）](https://adminpro.demo.wueasy.com)
+
+
 ## 捐赠
 
 项目的发展离不开你的支持，请作者喝杯咖啡吧！
